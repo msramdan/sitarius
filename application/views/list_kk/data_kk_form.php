@@ -397,6 +397,22 @@
 
 		})
 
+		function composeObject(object) {
+			// looping data_new to convert to json
+			let data_new_temp = {}
+			$.each(object, function(i, field) {
+
+				if(field.value == ''){
+					alert('Data tidak boleh kosong!')
+					return false
+				}
+
+				data_new_temp[field.name] = field.value
+			})
+
+			return data_new_temp
+		}
+
 		$(document).on('click', '.editAnggota', function(e) {
 
 			e.preventDefault()
@@ -443,20 +459,10 @@
 				var datas = getDataListanggotakk()
 
 				var data_new = $(this).serializeArray()
-
-				data_new_temp = {}
-				// looping data_new to convert to json
-				$.each(data_new, function(i, field) {
-
-					if(field.value == ''){
-						alert('Data tidak boleh kosong!')
-						return false
-					}
-
-					data_new_temp[field.name] = field.value
-				})
-
 				var id_data_anggota = data_new[0].value
+
+				data_new = composeObject(data_new)
+
 				
 				// find index of object by datas.id_data_anggota
 				var index = datas.findIndex(function(item, i){
@@ -465,7 +471,7 @@
 				
 				console.log(datas[index])
 				
-				datas[index] = data_new_temp;
+				datas[index] = data_new;
 
 				console.log(datas[index])
 
@@ -482,19 +488,9 @@
 				// convert this form value to json as data_new
 				var data_new = $(this).serializeArray()
 
-
-				data_new_temp = {}
-				// looping data_new to convert to json
-				$.each(data_new, function(i, field) {
-
-					if(field.value == ''){
-						alert('Data tidak boleh kosong!')
-						return false
-					}
-
-					data_new_temp[field.name] = field.value
-				})
-				addDataAnggota(data_new_temp)
+				data_new = composeObject(data_new)
+				
+				addDataAnggota(data_new)
 			}
 
 			// createElement(data_new_temp)
