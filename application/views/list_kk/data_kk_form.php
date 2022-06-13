@@ -22,7 +22,7 @@
 							<div class="row">
 								<div class="col-sm-6">
 									<input type="text" name="anggotakeluarga" id="anggotakeluarga" value="[]">
-									<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form">
+									<button type="button" class="btn btn-primary btnAddAnggota">
 										<i class="fa fa-plus"></i>
 										Tambah
 									</button>
@@ -41,7 +41,7 @@
 											<tr>
 												<td colspan="3" style="text-align: center;">
 													<p>Tambah Anggota Keluarga pada tombol dibawah</p>
-													<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form">
+													<button type="button" class="btn btn-primary btnAddAnggota">
 														<i class="fa fa-plus"></i>
 														Tambah
 													</button>
@@ -125,27 +125,28 @@
 </div>
 
 <!-- create modal  -->
-<div class="modal fade" id="modal_form" role="dialog">
+<div class="modal fade" id="modal_form_anggotakk" role="dialog">
 	<div class="modal-dialog">
 		<div class="modal-content">
 			<div class="modal-header">
 				<button type="button" class="close close_modal_form" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-				<h3 class="modal-title">Form Data KK</h3>
+				<h3 class="modal-title">Form Data Anggota KK</h3>
 			</div>
 			<div class="modal-body form">
 				<form id="formdataanggotakk" class="form-horizontal"> 
+					<input type="text" value="" name="id_data_anggota" id="id_data_anggota" />
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-3">No KTP</label>
 							<div class="col-md-9">
-								<input name="no_ktp_anggota_kk" placeholder="Masukan Nomor KTP" class="form-control" type="text">
+								<input required name="no_ktp_anggota_kk" placeholder="Masukan Nomor KTP" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-3">Nama Lengkap</label>
 							<div class="col-md-9">
-								<input name="nama_anggota_kk" placeholder="Masukan Nama Lengkap" class="form-control" type="text">
+								<input required name="nama_anggota_kk" placeholder="Masukan Nama Lengkap" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
@@ -153,7 +154,7 @@
 							<label class="control-label col-md-3">Jenis Kelamin</label>
 							<div class="col-md-9">
 								<!-- combobox jenis kelamin -->
-								<select name="jenis_kelamin_anggota_kk" id="jenis_kelamin_anggota_kk" class="form-control">
+								<select required name="jeniskelamin_anggota_kk" id="jeniskelamin_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<option value="Laki-laki">Laki-laki</option>
 									<option value="Perempuan">Perempuan</option>
@@ -166,10 +167,10 @@
 								<table style="width: 100%;">
 									<tr>
 										<td style="padding: 5px;">
-											<input name="tempat_lahir" id="tempat_lahir_anggota_kk" placeholder="Masukan Tempat Lahir" class="form-control" type="text"/>
+											<input required name="tempatlahir_anggota_kk" id="tempatlahir_anggota_kk" placeholder="Masukan Tempat Lahir" class="form-control" type="text"/>
 										</td>
 										<td>
-											<input name="tanggal_lahir" id="tanggal_lahir_anggota_kk" placeholder="Masukan Tanggal Lahir" class="form-control" type="date"/>
+											<input required name="tanggallahir_anggota_kk" id="tanggallahir_anggota_kk" placeholder="Masukan Tanggal Lahir" class="form-control" type="date"/>
 										</td>
 									</tr>
 								</table>
@@ -179,7 +180,7 @@
 							<label class="control-label col-md-3">Agama</label>
 							<div class="col-md-9">
 								<!-- combobox jenis kelamin -->
-								<select name="agama_anggota_kk" id="agama_anggota_kk" class="form-control">
+								<select required name="agama_anggota_kk" id="agama_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<option value="Islam">Islam</option>
 									<option value="Kristen">Kristen</option>
@@ -196,7 +197,7 @@
 							<label class="control-label col-md-3">Pendidikan</label>
 							<div class="col-md-9">
 								<!-- combobox jenis kelamin -->
-								<select name="pendidikan_anggota_kk" id="pendidikan_anggota_kk" class="form-control">
+								<select required name="pendidikan_anggota_kk" id="pendidikan_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<?php
 									
@@ -211,7 +212,7 @@
 							<label class="control-label col-md-3">Pekerjaan</label>
 							<div class="col-md-9">
 								<!-- combobox jenis kelamin -->
-								<select name="pekerjaan_anggota_kk" id="pekerjaan_anggota_kk" class="form-control">
+								<select required name="pekerjaan_anggota_kk" id="pekerjaan_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<?php
 									
@@ -226,7 +227,7 @@
 							<label class="control-label col-md-3">Golongan Darah</label>
 							<div class="col-md-9">
 								<!-- combobox jenis kelamin -->
-								<select name="golongandarah_anggota_kk" id="golongandarah_anggota_kk" class="form-control">
+								<select required name="golongandarah_anggota_kk" id="golongandarah_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<?php
 									// array of golongan darah
@@ -241,13 +242,13 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Hubungan Keluarga</label>
 							<div class="col-md-9">
-								<input name="hubungankeluarga_anggota_kk" placeholder="Hubungan Keluarga" class="form-control" type="text">
+								<input required name="hubungankeluarga_anggota_kk" placeholder="Hubungan Keluarga" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="submit" id="btnSave"class="btn btn-primary">Save</button>
+						<button type="submit" id="btnSave" class="btn btn-primary">Save</button>
 						<button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
 					</div>
 				</form>
@@ -273,6 +274,17 @@
 			var data = getDataListanggotakk()
 
 			data.push(data_baru)
+
+			// parse to JSON
+			var data = JSON.stringify(data)
+
+			$('#anggotakeluarga').val(data)
+		}
+
+		function updateDataAnggota(data_baru) {
+			var data = getDataListanggotakk()
+
+			data[data_baru.id] = data_baru
 
 			// parse to JSON
 			var data = JSON.stringify(data)
@@ -322,7 +334,7 @@
 			var html = `<tr class='item' id='${data.id}'>
 				<td>${data.no_ktp_anggota_kk}</td>
 				<td>${data.nama_anggota_kk}</td>
-				<td><input type="text" class="detailny" value='${s}'/><button class="btn-edit"><i class="fa fa-edit"></i></button><button class="btn-delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+				<td><input type="text" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
 			</tr>`
 
 			$('#tabellistanggotakk').find('tbody#tabel-anggota-keluarga-list').append(html);
@@ -365,32 +377,125 @@
 			
 		})
 
+		$(document).on('click', '.btnAddAnggota', function() {
+
+			// show modal
+			$('#modal_form_anggotakk').modal({
+				backdrop: 'static',
+				keyboard: false,
+				show: true
+			})
+
+			var datas = getDataListanggotakk()
+
+			$('#id_data_anggota').val(datas.length + 1)
+			$('#no_ktp_anggota_kk').val('')
+			$('#nama_anggota_kk').val('')
+			$('#hubungankeluarga_anggota_kk').val('')
+
+			$('#modal_form_anggotakk').find('#btnSave').attr('data-action', 'create').text('Tambah');
+
+		})
+
+		$(document).on('click', '.editAnggota', function(e) {
+
+			e.preventDefault()
+
+			var data = $(this).parents('tr').find('input.detailny').val();
+
+			$('#modal_form_anggotakk').modal({
+				backdrop: 'static',
+				keyboard: false,
+				show: true
+			})
+
+			var data = JSON.parse(data);
+
+			$('#id_data_anggota').val(data.id_data_anggota)
+			$('#no_ktp_anggota_kk').val(data.no_ktp_anggota_kk)
+			$('#nama_anggota_kk').val(data.nama_anggota_kk)
+
+			$('#jeniskelamin_anggota_kk').val(data.jeniskelamin_anggota_kk)
+			$('#tempatlahir_anggota_kk').val(data.tempatlahir_anggota_kk)
+			$('#tanggallahir_anggota_kk').val(data.tanggallahir_anggota_kk)
+			$('#agama_anggota_kk').val(data.agama_anggota_kk)
+			$('#pendidikan_anggota_kk').val(data.pendidikan_anggota_kk)
+			$('#pekerjaan_anggota_kk').val(data.pekerjaan_anggota_kk)
+			$('#alamat_anggota_kk').val(data.alamat_anggota_kk)
+			$('#golongandarah_anggota_kk').val(data.golongandarah_anggota_kk)
+			$('#hubungankeluarga_anggota_kk').val(data.hubungankeluarga_anggota_kk)
+
+			$('#modal_form_anggotakk').find('#btnSave').attr('data-action', 'edit').text('Update');
+
+		})
+
 		$(document).on('submit', '#formdataanggotakk', function(e) {
 			// serialize data
 			e.preventDefault()
 
-			var datas = getDataListanggotakk()
+			// get this active submit button
+			var action = $(this).find('#btnSave').attr('data-action');
 
-			var lengthdatas = datas.length
+			alert(action)
 
-			// convert this form value to json as data_new
-			var data_new = $(this).serializeArray()
+			if(action == 'edit') {
 
-			let data_new_temp = {
-				"id" : lengthdatas + 1,
+				var datas = getDataListanggotakk()
+
+				var data_new = $(this).serializeArray()
+
+				data_new_temp = {}
+				// looping data_new to convert to json
+				$.each(data_new, function(i, field) {
+
+					if(field.value == ''){
+						alert('Data tidak boleh kosong!')
+						return false
+					}
+
+					data_new_temp[field.name] = field.value
+				})
+
+				var id_data_anggota = data_new[0].value
+				
+				// find index of object by datas.id_data_anggota
+				var index = datas.findIndex(function(item, i){
+					return item.id_data_anggota == id_data_anggota
+				});
+				
+				console.log(datas[index])
+				
+				datas[index] = data_new_temp;
+
+				console.log(datas[index])
+
+				// parse to JSON
+				var data = JSON.stringify(datas);
+				$('#anggotakeluarga').val(data);
 			}
 
-			// looping data_new to convert to json
-			$.each(data_new, function(i, field) {
+			if(action == 'create') {
+				var datas = getDataListanggotakk()
 
-				if(field.value == ''){
-					alert('Data tidak boleh kosong!')
-					return false
-				}
+				var lengthdatas = datas.length
 
-				data_new_temp[field.name] = field.value
-			})
-			addDataAnggota(data_new_temp)
+				// convert this form value to json as data_new
+				var data_new = $(this).serializeArray()
+
+
+				data_new_temp = {}
+				// looping data_new to convert to json
+				$.each(data_new, function(i, field) {
+
+					if(field.value == ''){
+						alert('Data tidak boleh kosong!')
+						return false
+					}
+
+					data_new_temp[field.name] = field.value
+				})
+				addDataAnggota(data_new_temp)
+			}
 
 			// createElement(data_new_temp)
 			refreshDataListAnggotakk()
