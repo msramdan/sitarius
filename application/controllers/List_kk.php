@@ -68,7 +68,7 @@ class List_kk extends CI_Controller
             'tgl_dikeluarkan' => set_value('tgl_dikeluarkan'),
             'pendidikanlist' => $this->Pendidikan_model->get_all(),
             'pekerjaanlist' => $this->Pekerjaan_model->get_all(),
-            'anggota_keluarga' => array(),
+            'anggotakeluarga' => set_value('anggotakeluarga'),
         );
         $this->template->load('template', 'list_kk/data_kk_form', $data);
     }
@@ -94,9 +94,18 @@ class List_kk extends CI_Controller
                 'tgl_dikeluarkan' => $this->input->post('tgl_dikeluarkan', TRUE),
             );
 
-            $this->List_kk_model->insert($data);
-            $this->session->set_flashdata('message', 'Create Record Success');
-            redirect(site_url('list_kk'));
+            $anggotakeluarga = $this->input->post('anggotakeluarga', TRUE);
+
+            $anggotakeluarga = json_decode($anggotakeluarga, TRUE);
+
+            echo '<pre>';
+            print_r($data);
+            print_r($anggotakeluarga);
+            echo '</pre>';
+
+            // $this->List_kk_model->insert($data);
+            // $this->session->set_flashdata('message', 'Create Record Success');
+            // redirect(site_url('list_kk'));
         }
     }
 
@@ -171,6 +180,11 @@ class List_kk extends CI_Controller
 
     public function _rules()
     {
+        // detect anggotakeluarga array > 0
+        
+        // set custom rules for anggotakeluarga if array > 0
+        $this->form_validation->set_rules('anggotakeluarga', 'Anggota Keluarga', 'trim|required');
+
         $this->form_validation->set_rules('kepala_keluarga', 'kepala keluarga', 'trim|required');
         $this->form_validation->set_rules('no_kk', 'no kk', 'trim|required');
         $this->form_validation->set_rules('alamat', 'alamat', 'trim|required');

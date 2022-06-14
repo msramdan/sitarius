@@ -40,11 +40,11 @@ table.scroll {
 				</div>
 				<div class="panel-body">
 
-					<form data-action="<?php echo $action; ?>">
+					<form action="<?php echo $action; ?>" method="POST">
 						
 							<div class="row">
 								<div class="col-sm-6">
-									<input type="hidden" name="anggotakeluarga" id="anggotakeluarga" value="[]">
+									<input type="text" name="anggotakeluarga" id="anggotakeluarga" value="<?= $anggotakeluarga ?>">
 									<table class="table table-bordered table-hover table-td-valign-middle scroll" id="tabellistanggotakk">
 										<thead>
 											<tr>
@@ -81,23 +81,10 @@ table.scroll {
 								<div class="col-sm-6">
 									<table class="table table-bordered table-hover table-td-valign-middle">
 										<tr>
-											<td>Kepala Keluarga <?php echo form_error('kepala_keluarga') ?></td>
+											<td>Kepala Keluarga <?php echo form_error('kepala_keluarga'); ?></td>
 											<td>
 												<select class="form-control" name="kepala_keluarga" id="kepala_keluarga" placeholder="Kepala Keluarga">
-													<?php
-														if(count($anggota_keluarga) <= 0) {
-															echo '<option value="">Tidak ada anggota keluarga</option>';
-														} else {
-															foreach($anggota_keluarga as $row) {
-
-																if($anggota_keluarga->id_anggota_keluarga == $kepala_keluarga) {
-																	echo '<option value="'.$row->id_anggota_keluarga.'" selected>'.$row->nama.'</option>';
-																} else {
-																	echo '<option value="'.$row->id_anggota_keluarga.'">'.$row->nama.'</option>';
-																}
-															}
-														}
-													?>
+													<option value="">Mengambil data...</option>
 												</select>
 											</td>
 										</tr>
@@ -322,15 +309,35 @@ table.scroll {
 	$(document).on('ready', function() {
 
 		function getListProvince() {
-			$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`, function(data) {
-				let html = '<option value="">-Pilih-</option>';
-				
-				$.each(data, function(key, val) {
-					html += `<option value="${val.id}">${val.name}</option>`;
-				});
+			let provinsi_editdata = '<?php echo $provinsi ?>'
 
-				$('#provinsi').html(html);
-			});
+			if(provinsi_editdata != '') {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+
+						if(val.id == provinsi_editdata) {
+							html += `<option value="${val.id}" selected>${val.name}</option>`;
+						} else {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						}
+					});
+
+					$('#provinsi').html(html);
+				});
+				getListKabupaten();
+			} else {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						html += `<option value="${val.id}">${val.name}</option>`;
+					});
+
+					$('#provinsi').html(html);
+				});
+			}
 		}
 		getListProvince()
 
@@ -357,15 +364,20 @@ table.scroll {
 					$('#kabupaten_kota').html(html);
 				})
 			} else {
-				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi_id}.json`, function(data) {
-					let html = '<option value="">-Pilih-</option>';
-					
-					$.each(data, function(key, val) {
-						html += `<option value="${val.id}">${val.name}</option>`;
-					});
+				if(provinsi_id != '') {
+					$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi_id}.json`, function(data) {
+						let html = '<option value="">-Pilih-</option>';
+						
+						$.each(data, function(key, val) {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						});
+	
+						$('#kabupaten_kota').html(html);
+					})
+				} else {
+					$('#kabupaten_kota').html('<option value="">Harap pilih provinsi</option>');
+				}
 
-					$('#kabupaten_kota').html(html);
-				})
 			}
 		}
 
@@ -392,15 +404,19 @@ table.scroll {
 					$('#kecamatan').html(html);
 				})
 			} else {
-				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupaten_id}.json`, function(data) {
-					let html = '<option value="">-Pilih-</option>';
-					
-					$.each(data, function(key, val) {
-						html += `<option value="${val.id}">${val.name}</option>`;
-					});
-
-					$('#kecamatan').html(html);
-				})
+				if(kabupaten_id != ''){
+					$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupaten_id}.json`, function(data) {
+						let html = '<option value="">-Pilih-</option>';
+						
+						$.each(data, function(key, val) {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						});
+	
+						$('#kecamatan').html(html);
+					})
+				} else {
+					$('#kecamatan').html('<option value="">Harap pilih kabupaten/kota</option>');
+				}
 			}
 		}
 		
@@ -417,7 +433,7 @@ table.scroll {
 					let html = '<option value="">-Pilih-</option>';
 					
 					$.each(data, function(key, val) {
-						if(kecamatan_editdata == val.id) {
+						if(kelurahan_editdata == val.id) {
 							html += `<option value="${val.id}" selected>${val.name}</option>`;
 						} else {
 							html += `<option value="${val.id}">${val.name}</option>`;
@@ -427,18 +443,26 @@ table.scroll {
 					$('#desa_kelurahan').html(html);
 				})
 			} else {
-				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan_id}.json`, function(data) {
-					let html = '<option value="">-Pilih-</option>';
-					
-					$.each(data, function(key, val) {
-						html += `<option value="${val.id}">${val.name}</option>`;
-					});
+				if(kecamatan_id != '') {
+					$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan_id}.json`, function(data) {
+						let html = '<option value="">-Pilih-</option>';
+						
+						$.each(data, function(key, val) {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						});
 
-					$('#desa_kelurahan').html(html);
-				})
+						$('#desa_kelurahan').html(html);
+					})
+				} else {
+					$('#desa_kelurahan').html('<option value="">Harap pilih kecamatan</option>');
+				}
 			}
 
 		}
+
+
+		getListKecamatan()
+		getListKelurahan()
 		
 		function getDataListanggotakk() {
 			var data = $('#anggotakeluarga').val()
@@ -448,6 +472,7 @@ table.scroll {
 
 			return data
 		}
+
 
 		function addDataAnggota(data_baru) {
 			var data = getDataListanggotakk()
@@ -567,15 +592,24 @@ table.scroll {
 		function refreshComboboxKepalaKeluarga() {
 			var datas = getDataListanggotakk()
 
+			let kepala_keluarga = '<?= $kepala_keluarga ?>'
+			console.log(datas.length)
 			if(datas.length > 0) {
+				console.log('masuk')
+				
 				let html = '<option value="">-Pilih Kepala Keluarga-</option>'
 	
 				$.each(datas,function(index) {
-					html += `<option value="${datas[index].id_data_anggota}">(${datas[index].hubungankeluarga_anggota_kk})${datas[index].nama_anggota_kk}</option>`
+					if(datas[index].id_data_anggota == kepala_keluarga){
+						html += `<option value="${datas[index].id_data_anggota}" selected>${datas[index].nama_anggota_kk}</option>`
+					} else {
+						html += `<option value="${datas[index].id_data_anggota}">(${datas[index].hubungankeluarga_anggota_kk})${datas[index].nama_anggota_kk}</option>`
+					}	
 				});
 	
 				$('#kepala_keluarga').html(html)
 			} else {
+				console.log('asu')
 				$('#kepala_keluarga').html(`<option value="">Tidak ada anggota keluarga</option>`)
 			}
 
@@ -696,8 +730,6 @@ table.scroll {
 			// get this active submit button
 			var action = $(this).find('#btnSave').attr('data-action');
 
-			alert(action)
-
 			// get data from form
 			var data_new = $(this).serializeArray();
 
@@ -778,5 +810,9 @@ table.scroll {
 		$(document).on('change', '#kecamatan', function() {
 			getListKelurahan()
 		})
+
+		refreshDataListAnggotakk()
+
+		refreshComboboxKepalaKeluarga()
 	})
 </script>
