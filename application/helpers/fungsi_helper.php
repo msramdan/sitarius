@@ -27,3 +27,81 @@ function check_admin()
 		redirect('dashboard_user');
 	}
 }
+
+function getnamaanggotakk($no_kk, $personalid)
+{
+	$ci = &get_instance();
+	$ci->load->model('Anggotakk_model');
+	$anggotakk = $ci->Anggotakk_model->get_by_personalidandnokk($personalid, $no_kk);
+	return $anggotakk->nama_lengkap;
+}
+
+
+function getprovinsiAPI($id)
+{
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json';
+	// get API from http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $urlAPI);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$output = curl_exec($ch);
+	curl_close($ch);
+	$data = json_decode($output, true);
+	foreach ($data as $key => $value) {
+		if ($value['id'] == $id) {
+			return $value['name'];
+		}
+	}
+}
+
+function getkabupatenkotaAPI($regencies, $province)
+{
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/regencies/'.$province.'.json';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $urlAPI);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$output = curl_exec($ch);
+	curl_close($ch);
+	$data = json_decode($output, true);
+	foreach ($data as $key => $value) {
+		if ($value['id'] == $regencies) {
+			return $value['name'];
+		}
+	}
+}
+
+function getkecamatanAPI($district, $regencies)
+{
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/districts/'.$regencies.'.json';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $urlAPI);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$output = curl_exec($ch);
+	curl_close($ch);
+	$data = json_decode($output, true);
+	foreach ($data as $key => $value) {
+		if ($value['id'] == $district) {
+			return $value['name'];
+		}
+	}
+}
+
+function getkelurahanAPI($villages, $district)
+{
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/villages/'.$district.'.json';
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $urlAPI);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($ch, CURLOPT_HEADER, 0);
+	$output = curl_exec($ch);
+	curl_close($ch);
+	$data = json_decode($output, true);
+	foreach ($data as $key => $value) {
+		if ($value['id'] == $villages) {
+			return $value['name'];
+		}
+	}
+}

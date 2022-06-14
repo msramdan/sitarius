@@ -10,6 +10,7 @@ class List_kk extends CI_Controller
         parent::__construct();
         // is_login();
         $this->load->model('List_kk_model');
+        $this->load->model('Anggotakk_model');
         $this->load->library('form_validation');
         $this->load->model('Pendidikan_model');
         $this->load->model('Pekerjaan_model');
@@ -22,31 +23,6 @@ class List_kk extends CI_Controller
             'list_kk_data' => $list_kk,
         );
         $this->template->load('template', 'list_kk/data_kk_list', $data);
-    }
-
-    public function read($id)
-    {
-        $row = $this->List_kk_model->get_by_id(decrypt_url($id));
-        if ($row) {
-            $data = array(
-                'kk_id' => $row->kk_id,
-                'kepala_keluarga' => $row->kepala_keluarga,
-                'no_kk' => $row->no_kk,
-                'alamat' => $row->alamat,
-                'rt' => $row->rt,
-                'rw' => $row->rw,
-                'kode_pos' => $row->kode_pos,
-                'desa_kelurahan' => $row->desa_kelurahan,
-                'kecamatan' => $row->kecamatan,
-                'kabupaten_kota' => $row->kabupaten_kota,
-                'provinsi' => $row->provinsi,
-                'tgl_dikeluarkan' => $row->tgl_dikeluarkan,
-            );
-            $this->template->load('template', 'list_kk/data_kk_read', $data);
-        } else {
-            $this->session->set_flashdata('message', 'Record Not Found');
-            redirect(site_url('list_kk'));
-        }
     }
 
     public function create()
@@ -98,14 +74,31 @@ class List_kk extends CI_Controller
 
             $anggotakeluarga = json_decode($anggotakeluarga, TRUE);
 
-            echo '<pre>';
-            print_r($data);
-            print_r($anggotakeluarga);
-            echo '</pre>';
+            $this->List_kk_model->insert($data);
 
-            // $this->List_kk_model->insert($data);
-            // $this->session->set_flashdata('message', 'Create Record Success');
-            // redirect(site_url('list_kk'));
+            $id_kk = $this->db->insert_id();
+
+            foreach ($anggotakeluarga as $key => $value) {
+                $data_anggota = array(
+                    'personal_id' => $value['id_data_anggota'],
+                    'kk_id' => $id_kk,
+                    'nik' => $value['no_ktp_anggota_kk'],
+                    'nama_lengkap' => $value['nama_anggota_kk'],
+                    'jenis_kelamin' => $value['jeniskelamin_anggota_kk'],
+                    'tempat_lahir' => $value['tempatlahir_anggota_kk'],
+                    'tgl_lahir' => $value['tanggallahir_anggota_kk'],
+                    'agama' => $value['agama_anggota_kk'],
+                    'pendidikan_id' => $value['pendidikan_anggota_kk'],
+                    'pekerjaan_id' => $value['pekerjaan_anggota_kk'],
+                    'golongan_darah' => $value['golongandarah_anggota_kk'],
+                    'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
+                );
+
+                $this->Anggotakk_model->insert($data_anggota);
+            }
+
+            $this->session->set_flashdata('message', 'Create Record Success');
+            redirect(site_url('list_kk'));
         }
     }
 
@@ -114,6 +107,27 @@ class List_kk extends CI_Controller
         $row = $this->List_kk_model->get_by_id(decrypt_url($id));
 
         if ($row) {
+
+            $dataanggotakk = $this->Anggotakk_model->get_by_kk_id($row->kk_id);
+
+            $tempdataanggotakk = array();
+
+            foreach ($dataanggotakk as $key => $value) {
+
+                $tempdataanggotakk[$key]['id_data_anggota'] = $value['personal_id'];
+                $tempdataanggotakk[$key]['no_ktp_anggota_kk'] = $value['nik'];
+                $tempdataanggotakk[$key]['nama_anggota_kk'] = $value['nama_lengkap'];
+                $tempdataanggotakk[$key]['jeniskelamin_anggota_kk'] = $value['jenis_kelamin'];
+                $tempdataanggotakk[$key]['tempatlahir_anggota_kk'] = $value['tempat_lahir'];
+                $tempdataanggotakk[$key]['tanggallahir_anggota_kk'] = $value['tgl_lahir'];
+                $tempdataanggotakk[$key]['agama_anggota_kk'] = $value['agama'];
+                $tempdataanggotakk[$key]['pendidikan_anggota_kk'] = $value['pendidikan_id'];
+                $tempdataanggotakk[$key]['pekerjaan_anggota_kk'] = $value['pekerjaan_id'];
+                $tempdataanggotakk[$key]['golongandarah_anggota_kk'] = $value['golongan_darah'];
+                $tempdataanggotakk[$key]['hubungankeluarga_anggota_kk'] = $value['hubungan_keluarga'];
+                
+            }
+
             $data = array(
                 'button' => 'Update',
                 'action' => site_url('list_kk/update_action'),
@@ -129,7 +143,11 @@ class List_kk extends CI_Controller
                 'kabupaten_kota' => set_value('kabupaten_kota', $row->kabupaten_kota),
                 'provinsi' => set_value('provinsi', $row->provinsi),
                 'tgl_dikeluarkan' => set_value('tgl_dikeluarkan', $row->tgl_dikeluarkan),
+                'anggotakeluarga' => json_encode($tempdataanggotakk),
+                'pendidikanlist' => $this->Pendidikan_model->get_all(),
+                'pekerjaanlist' => $this->Pekerjaan_model->get_all(),
             );
+            // print_r($data);
             $this->template->load('template', 'list_kk/data_kk_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
@@ -144,6 +162,9 @@ class List_kk extends CI_Controller
         if ($this->form_validation->run() == FALSE) {
             $this->update($this->input->post('kk_id', TRUE));
         } else {
+
+            $kk_id = $this->input->post('kk_id', TRUE);
+
             $data = array(
                 'kepala_keluarga' => $this->input->post('kepala_keluarga', TRUE),
                 'no_kk' => $this->input->post('no_kk', TRUE),
@@ -158,7 +179,32 @@ class List_kk extends CI_Controller
                 'tgl_dikeluarkan' => $this->input->post('tgl_dikeluarkan', TRUE),
             );
 
-            $this->List_kk_model->update($this->input->post('kk_id', TRUE), $data);
+            $anggotakeluarga = $this->input->post('anggotakeluarga', TRUE);
+
+            $anggotakeluarga = json_decode($anggotakeluarga, TRUE);
+            foreach ($anggotakeluarga as $key => $value) {
+
+                $personal_id = $value['id_data_anggota'];
+
+                $data_anggota = array(
+                    'personal_id' => $personal_id,
+                    'nik' => $value['no_ktp_anggota_kk'],
+                    'nama_lengkap' => $value['nama_anggota_kk'],
+                    'jenis_kelamin' => $value['jeniskelamin_anggota_kk'],
+                    'tempat_lahir' => $value['tempatlahir_anggota_kk'],
+                    'tgl_lahir' => $value['tanggallahir_anggota_kk'],
+                    'agama' => $value['agama_anggota_kk'],
+                    'pendidikan_id' => $value['pendidikan_anggota_kk'],
+                    'pekerjaan_id' => $value['pekerjaan_anggota_kk'],
+                    'golongan_darah' => $value['golongandarah_anggota_kk'],
+                    'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
+                );
+
+                $this->Anggotakk_model->update_by_personalidandkkid($kk_id, $personal_id, $data_anggota);
+            }
+
+            $this->List_kk_model->update($kk_id, $data);
+
             $this->session->set_flashdata('message', 'Update Record Success');
             redirect(site_url('list_kk'));
         }
@@ -170,6 +216,7 @@ class List_kk extends CI_Controller
 
         if ($row) {
             $this->List_kk_model->delete(decrypt_url($id));
+            $this->Anggotakk_model->delete_by_kkid(decrypt_url($id));
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('list_kk'));
         } else {

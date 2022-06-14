@@ -44,7 +44,7 @@ table.scroll {
 						
 							<div class="row">
 								<div class="col-sm-6">
-									<input type="text" name="anggotakeluarga" id="anggotakeluarga" value="<?= $anggotakeluarga ?>">
+									<input type="hidden" name="anggotakeluarga" id="anggotakeluarga" value='<?= $anggotakeluarga == null ? '[]' : $anggotakeluarga; ?>'>
 									<table class="table table-bordered table-hover table-td-valign-middle scroll" id="tabellistanggotakk">
 										<thead>
 											<tr>
@@ -595,21 +595,18 @@ table.scroll {
 			let kepala_keluarga = '<?= $kepala_keluarga ?>'
 			console.log(datas.length)
 			if(datas.length > 0) {
-				console.log('masuk')
-				
 				let html = '<option value="">-Pilih Kepala Keluarga-</option>'
 	
 				$.each(datas,function(index) {
 					if(datas[index].id_data_anggota == kepala_keluarga){
-						html += `<option value="${datas[index].id_data_anggota}" selected>${datas[index].nama_anggota_kk}</option>`
+						html += `<option value="${datas[index].id_data_anggota}" selected>(${datas[index].hubungankeluarga_anggota_kk}) ${datas[index].nama_anggota_kk}</option>`
 					} else {
-						html += `<option value="${datas[index].id_data_anggota}">(${datas[index].hubungankeluarga_anggota_kk})${datas[index].nama_anggota_kk}</option>`
+						html += `<option value="${datas[index].id_data_anggota}">(${datas[index].hubungankeluarga_anggota_kk}) ${datas[index].nama_anggota_kk}</option>`
 					}	
 				});
 	
 				$('#kepala_keluarga').html(html)
 			} else {
-				console.log('asu')
 				$('#kepala_keluarga').html(`<option value="">Tidak ada anggota keluarga</option>`)
 			}
 
