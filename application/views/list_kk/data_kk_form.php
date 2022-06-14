@@ -80,7 +80,24 @@ table.scroll {
 									<table class="table table-bordered table-hover table-td-valign-middle">
 										<tr>
 											<td>Kepala Keluarga <?php echo form_error('kepala_keluarga') ?></td>
-											<td><input type="text" class="form-control" name="kepala_keluarga" id="kepala_keluarga" placeholder="Kepala Keluarga" value="<?php echo $kepala_keluarga; ?>" /></td>
+											<td>
+												<select class="form-control" name="kepala_keluarga" id="kepala_keluarga" placeholder="Kepala Keluarga">
+													<?php
+														if(count($anggota_keluarga) <= 0) {
+															echo '<option value="">Tidak ada anggota keluarga</option>';
+														} else {
+															foreach($anggota_keluarga as $row) {
+
+																if($anggota_keluarga->id_anggota_keluarga == $kepala_keluarga) {
+																	echo '<option value="'.$row->id_anggota_keluarga.'" selected>'.$row->nama.'</option>';
+																} else {
+																	echo '<option value="'.$row->id_anggota_keluarga.'">'.$row->nama.'</option>';
+																}
+															}
+														}
+													?>
+												</select>
+											</td>
 										</tr>
 
 										<tr>
@@ -161,14 +178,14 @@ table.scroll {
 						<div class="form-group">
 							<label class="control-label col-md-3">No KTP</label>
 							<div class="col-md-9">
-								<input required name="no_ktp_anggota_kk" placeholder="Masukan Nomor KTP" class="form-control" type="text">
+								<input required name="no_ktp_anggota_kk" id="no_ktp_anggota_kk" placeholder="Masukan Nomor KTP" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
 						<div class="form-group">
 							<label class="control-label col-md-3">Nama Lengkap</label>
 							<div class="col-md-9">
-								<input required name="nama_anggota_kk" placeholder="Masukan Nama Lengkap" class="form-control" type="text">
+								<input required name="nama_anggota_kk" id="nama_anggota_kk" placeholder="Masukan Nama Lengkap" class="form-control" type="text">
 								<span class="help-block"></span>
 							</div>
 						</div>
@@ -267,7 +284,7 @@ table.scroll {
 								<select name="hubungankeluarga_anggota_kk" id="hubungankeluarga_anggota_kk" class="form-control">
 									<option value="">-Pilih-</option>
 									<?php
-										$hubungan_keluarga = array('Kepala Keluarga', 'Anak', 'Istri', 'Suami', 'Mertua', 'Menantu', 'Cucu', 'Orang Tua', 'Kakek', 'Nenek', 'Keponakan', 'Lainnya');
+										$hubungan_keluarga = array('Istri', 'Suami','Anak', 'Mertua', 'Menantu', 'Cucu', 'Orang Tua', 'Kakek', 'Nenek', 'Keponakan', 'Lainnya');
 										
 										foreach ($hubungan_keluarga as $key => $value) {
 											echo '<option value="'.$value.'">'.$value.'</option>';
@@ -380,6 +397,15 @@ table.scroll {
 			});
 		}
 
+		function cleanForms(elementForm) {
+			$(elementForm).find('input').each(function(index, el) {
+				$(this).val('')
+			});
+			$(elementForm).find('select').each(function(index, el) {
+				$(this).val('')
+			});
+		}
+
 		function delete_anggota_kk(id){
 
 			var datas = getDataListanggotakk()
@@ -402,6 +428,23 @@ table.scroll {
 
 		}
 
+		function refreshComboboxKepalaKeluarga() {
+			var datas = getDataListanggotakk()
+
+			if(datas.length > 0) {
+				let html = '<option value="">-Pilih Kepala Keluarga-</option>'
+	
+				$.each(datas,function(index) {
+					html += `<option value="${datas[index].id_data_anggota}">(${datas[index].hubungankeluarga_anggota_kk})${datas[index].nama_anggota_kk}</option>`
+				});
+	
+				$('#kepala_keluarga').html(html)
+			} else {
+				$('#kepala_keluarga').html(`<option value="">Tidak ada anggota keluarga</option>`)
+			}
+
+		}
+
 		$(document).on('click', '.deleteAnggota', function(e) {
 			e.preventDefault()
 
@@ -413,12 +456,14 @@ table.scroll {
 			$(this).parents('tr').remove()
 
 			refreshDataListAnggotakk()
+			refreshComboboxKepalaKeluarga()
 			
 		})
 
 		$(document).on('click', '.btnAddAnggota', function() {
 
 			// show modal
+			cleanForms($('#modal_form_anggotakk'))
 			$('#modal_form_anggotakk').modal({
 				backdrop: 'static',
 				keyboard: false,
@@ -434,6 +479,7 @@ table.scroll {
 
 			$('#modal_form_anggotakk').find('#btnSave').attr('data-action', 'create').text('Tambah');
 
+
 		})
 
 		function composeObject(object) {
@@ -448,13 +494,14 @@ table.scroll {
 
 				data_new_temp[field.name] = field.value
 			})
-
+			
 			return data_new_temp
 		}
-
+		
 		$(document).on('click', '.editAnggota', function(e) {
-
+			
 			e.preventDefault()
+			cleanForms($('#modal_form_anggotakk'))
 
 			var data = $(this).parents('tr').find('input.detailny').val();
 
@@ -493,11 +540,19 @@ table.scroll {
 
 			alert(action)
 
+			// get data from form
+			var data_new = $(this).serializeArray();
+
+			// if data_new[0].value is not number, return alert
+			if(isNaN(data_new[0].value)) {
+				alert('Data tidak valid! [Error 31 : ID is not created using number, are you trying to autofill it?]')
+				return false
+			}
+
 			if(action == 'edit') {
 
 				var datas = getDataListanggotakk()
 
-				var data_new = $(this).serializeArray()
 				var id_data_anggota = data_new[0].value
 
 				data_new = composeObject(data_new)
@@ -525,7 +580,6 @@ table.scroll {
 				var lengthdatas = datas.length
 
 				// convert this form value to json as data_new
-				var data_new = $(this).serializeArray()
 
 				data_new = composeObject(data_new)
 				
@@ -534,6 +588,9 @@ table.scroll {
 
 			// createElement(data_new_temp)
 			refreshDataListAnggotakk()
+			refreshComboboxKepalaKeluarga()
+
+			cleanForms($(this))
 
 			// dismiss modal
 			$('.close_modal_form').click()
