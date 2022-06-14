@@ -50,7 +50,9 @@ table.scroll {
 											<tr>
 												<th colspan="3" style="line-height: 2;padding: 4px 12px;">
 													<span style="font-size: 14px; font-weight: bold;">Anggota Keluarga</span>
-													<button type="button" class="btn btn-primary btnAddAnggota" style="float: right;transform: scale(0.6);">
+													<br>
+													<span id="jumlahAnggotaKeluarga">Jumlah: 0</span>
+													<button type="button" class="btn btn-primary btnAddAnggota" style="float: right;transform: scale(0.6);margin-top: -17px;">
 														<i class="fa fa-plus"></i>
 													</button>
 												</th>
@@ -372,6 +374,8 @@ table.scroll {
 				});
 				
 			}
+
+			$('#jumlahAnggotaKeluarga').text('Jumlah: '+ lengthdata)
 		}
 
 		function createElement(data){
@@ -381,7 +385,9 @@ table.scroll {
 			var html = `<tr class='item' id='${data.id_data_anggota}'>
 				<td>${data.no_ktp_anggota_kk}</td>
 				<td>${data.nama_anggota_kk}</td>
-				<td><input type="hidden" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+				<td style="text-align: center;">
+					<input type="hidden" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+				</td>
 			</tr>`
 
 			$('#tabellistanggotakk').find('tbody#tabel-anggota-keluarga-list').append(html);
@@ -450,14 +456,36 @@ table.scroll {
 
 			var data = $(this).parents('tr').find('input.detailny').val();
 			data = JSON.parse(data)
-			alert('will be deleted ' + data.id_data_anggota)
 
-			delete_anggota_kk(data.id_data_anggota)
-			$(this).parents('tr').remove()
-
-			refreshDataListAnggotakk()
-			refreshComboboxKepalaKeluarga()
-			
+			Swal.fire({
+				title: "Apakah anda yakin?",
+				text: "Data anggota keluarga ini akan dihapus!",
+				type: "warning",
+				icon: "warning",
+				showCancelButton: true,
+				confirmButtonColor: "#DD6B55",
+				confirmButtonText: "Ya, hapus!",
+				cancelButtonText: "Tidak, batalkan!",
+				closeOnConfirm: false,
+				closeOnCancel: false
+			}).then((result) => {
+  				if (result.isConfirmed) {
+					delete_anggota_kk(data.id_data_anggota)
+					$(this).parents('tr').remove()
+		
+					refreshDataListAnggotakk()
+					refreshComboboxKepalaKeluarga()
+					// sweetalert success with timer 1 second
+					Swal.fire({
+						title: "Berhasil!",
+						icon: "success",
+						text: "Data anggota keluarga berhasil dihapus!",
+						timer: 1000,
+						type: "success",
+						showConfirmButton: false
+					});
+				}
+			})
 		})
 
 		$(document).on('click', '.btnAddAnggota', function() {
@@ -591,6 +619,15 @@ table.scroll {
 			refreshComboboxKepalaKeluarga()
 
 			cleanForms($(this))
+
+			Swal.fire({
+				title: "Berhasil!",
+				icon: "success",
+				text: "Data anggota keluarga berhasil di " + action + "!",
+				timer: 1000,
+				type: "success",
+				showConfirmButton: false
+			});
 
 			// dismiss modal
 			$('.close_modal_form').click()
