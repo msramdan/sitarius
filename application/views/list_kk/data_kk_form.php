@@ -334,7 +334,7 @@
 			var html = `<tr class='item' id='${data.id}'>
 				<td>${data.no_ktp_anggota_kk}</td>
 				<td>${data.nama_anggota_kk}</td>
-				<td><input type="text" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+				<td><input type="text" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
 			</tr>`
 
 			$('#tabellistanggotakk').find('tbody#tabel-anggota-keluarga-list').append(html);
@@ -350,30 +350,39 @@
 			});
 		}
 
-		
-
 		function delete_anggota_kk(id){
 
 			var datas = getDataListanggotakk()
-
+			console.log(datas)
 			// find index by datas.id
 			var index = datas.findIndex(function(item, i){
-				if(item.id == id) {
-					// remove datas[i]
-					datas.splice(i, 1);
-				}
+				return item.id_data_anggota == id
 			});
 
+			datas.splice(index, 1);
+
+			// resort datas.id_data_anggota from 1 to n
+			datas.forEach(function(item, i){
+				item.id_data_anggota = i+1
+			});
+			console.log(datas)
 			// parse to JSON
 			var data = JSON.stringify(datas);
 			$('#anggotakeluarga').val(data);
 
 		}
 
-		$(document).on('click', '.deleteAnggota', function() {
-			var id = $(this).data('id');
-			var nama = $(this).data('nama');
-			$('#delete_anggota_kk').data('id', id);
+		$(document).on('click', '.deleteAnggota', function(e) {
+			e.preventDefault()
+
+			var data = $(this).parents('tr').find('input.detailny').val();
+			data = JSON.parse(data)
+			alert('will be deleted ' + data.id_data_anggota)
+
+			delete_anggota_kk(data.id_data_anggota)
+			$(this).parents('tr').remove()
+
+			refreshDataListAnggotakk()
 			
 		})
 
@@ -425,7 +434,7 @@
 				show: true
 			})
 
-			var data = JSON.parse(data);
+			data = JSON.parse(data);
 
 			$('#id_data_anggota').val(data.id_data_anggota)
 			$('#no_ktp_anggota_kk').val(data.no_ktp_anggota_kk)
