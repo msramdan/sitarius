@@ -1,3 +1,26 @@
+<style>
+
+table.scroll > tbody {
+	display: block;
+    height: 124px;
+    overflow-y: scroll;
+}
+table.scroll > thead,table.scroll >  tbody tr {
+    display:table;
+    width:100%;
+    table-layout:fixed;
+}
+table.scroll > thead {
+    width:calc(100% - 1.40em); 
+}
+table.scroll {
+    width:100%;
+}
+
+
+</style>
+
+
 <div id="content" class="content">
 	<ol class="breadcrumb pull-right">
 		<li><a href="javascript:;">Dashboard</a></li>
@@ -21,15 +44,16 @@
 						
 							<div class="row">
 								<div class="col-sm-6">
-									<input type="text" name="anggotakeluarga" id="anggotakeluarga" value="[]">
-									<button type="button" class="btn btn-primary btnAddAnggota">
-										<i class="fa fa-plus"></i>
-										Tambah
-									</button>
-									<table class="table table-bordered table-hover table-td-valign-middle" id="tabellistanggotakk">
+									<input type="hidden" name="anggotakeluarga" id="anggotakeluarga" value="[]">
+									<table class="table table-bordered table-hover table-td-valign-middle scroll" id="tabellistanggotakk">
 										<thead>
 											<tr>
-												<th colspan="3">Anggota Keluarga</th>
+												<th colspan="3" style="line-height: 2;padding: 4px 12px;">
+													<span style="font-size: 14px; font-weight: bold;">Anggota Keluarga</span>
+													<button type="button" class="btn btn-primary btnAddAnggota" style="float: right;transform: scale(0.6);">
+														<i class="fa fa-plus"></i>
+													</button>
+												</th>
 											</tr>
 											<tr>
 												<th>No.KTP</th>
@@ -53,63 +77,61 @@
 
 								</div>
 								<div class="col-sm-6">
-									<table class="table  table-bordered table-hover table-td-valign-middle">
+									<table class="table table-bordered table-hover table-td-valign-middle">
 										<tr>
 											<td>Kepala Keluarga <?php echo form_error('kepala_keluarga') ?></td>
 											<td><input type="text" class="form-control" name="kepala_keluarga" id="kepala_keluarga" placeholder="Kepala Keluarga" value="<?php echo $kepala_keluarga; ?>" /></td>
 										</tr>
 
 										<tr>
-											<td>No Kk <?php echo form_error('no_kk') ?></td>
-											<td> <textarea class="form-control" rows="3" name="no_kk" id="no_kk" placeholder="No Kk"><?php echo $no_kk; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Alamat <?php echo form_error('alamat') ?></td>
-											<td> <textarea class="form-control" rows="3" name="alamat" id="alamat" placeholder="Alamat"><?php echo $alamat; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Rt <?php echo form_error('rt') ?></td>
-											<td> <textarea class="form-control" rows="3" name="rt" id="rt" placeholder="Rt"><?php echo $rt; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Rw <?php echo form_error('rw') ?></td>
-											<td> <textarea class="form-control" rows="3" name="rw" id="rw" placeholder="Rw"><?php echo $rw; ?></textarea></td>
-										</tr>
-										<tr>
-											<td>Kode Pos <?php echo form_error('kode_pos') ?></td>
-											<td><input type="text" class="form-control" name="kode_pos" id="kode_pos" placeholder="Kode Pos" value="<?php echo $kode_pos; ?>" /></td>
-										</tr>
-
-										<tr>
-											<td>Desa Kelurahan <?php echo form_error('desa_kelurahan') ?></td>
-											<td> <textarea class="form-control" rows="3" name="desa_kelurahan" id="desa_kelurahan" placeholder="Desa Kelurahan"><?php echo $desa_kelurahan; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Kecamatan <?php echo form_error('kecamatan') ?></td>
-											<td> <textarea class="form-control" rows="3" name="kecamatan" id="kecamatan" placeholder="Kecamatan"><?php echo $kecamatan; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Kabupaten Kota <?php echo form_error('kabupaten_kota') ?></td>
-											<td> <textarea class="form-control" rows="3" name="kabupaten_kota" id="kabupaten_kota" placeholder="Kabupaten Kota"><?php echo $kabupaten_kota; ?></textarea></td>
-										</tr>
-
-										<tr>
-											<td>Provinsi <?php echo form_error('provinsi') ?></td>
-											<td> <textarea class="form-control" rows="3" name="provinsi" id="provinsi" placeholder="Provinsi"><?php echo $provinsi; ?></textarea></td>
+											<td colspan="2" style="text-align: center;">
+												<p>No Kk</p>
+												<?php echo form_error('no_kk') ?>
+												<input type="text" class="form-control" name="no_kk" id="no_kk" placeholder="No Kk" value="<?php echo $no_kk; ?>" style="font-size: 19px;font-weight: bold;height: 50px;" /></td>
 										</tr>
 
 										<tr>
 											<td>Tgl Dikeluarkan <?php echo form_error('tgl_dikeluarkan') ?></td>
-											<td> <textarea class="form-control" rows="3" name="tgl_dikeluarkan" id="tgl_dikeluarkan" placeholder="Tgl Dikeluarkan"><?php echo $tgl_dikeluarkan; ?></textarea></td>
+											<td> <input class="form-control" type="date" name="tgl_dikeluarkan" id="tgl_dikeluarkan" placeholder="Tgl Dikeluarkan" value="<?php echo $tgl_dikeluarkan; ?>">
+											</td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col">
+									<table class="table table-bordered table-hover table-td-valign-middle">
+										<tr>
+											<td rowspan="3" width="50%">Alamat <?php echo form_error('alamat') ?><textarea class="form-control" rows="10" name="alamat" id="alamat" placeholder="Alamat"><?php echo $alamat; ?></textarea></td>
+											<td>
+												Rt <?php echo form_error('rt') ?><input type="number" class="form-control" name="rt" id="rt" placeholder="Rt" value="<?php echo $rt; ?>"/>
+											</td>
+											<td>
+												Rw <?php echo form_error('rw') ?><input type="number" class="form-control" name="rw" id="rw" placeholder="Rw" value="<?php echo $rw; ?>">
+											</td>
+											<td>
+												Desa/Kelurahan <?php echo form_error('desa_kelurahan') ?><input type="text" class="form-control" name="desa_kelurahan" id="desa_kelurahan" placeholder="Desa Kelurahan" value="<?php echo $desa_kelurahan; ?>"/>
+											</td>
 										</tr>
 										<tr>
-											<td></td>
-											<td><input type="hidden" name="kk_id" value="<?php echo $kk_id; ?>" />
+											<td>
+												Kecamatan <?php echo form_error('kecamatan') ?><input type="text" class="form-control" name="kecamatan" id="kecamatan" placeholder="Kecamatan" value="<?php echo $kecamatan; ?>"/>
+											</td>
+											<td>
+												Kabupaten Kota <?php echo form_error('kabupaten_kota') ?><input type="text" class="form-control"  name="kabupaten_kota" id="kabupaten_kota" placeholder="Kabupaten Kota" value="<?php echo $kabupaten_kota; ?>"/>
+											</td>
+											<td>
+												Provinsi <?php echo form_error('provinsi') ?><input type="text" class="form-control" name="provinsi" id="provinsi" placeholder="Provinsi" value="<?php echo $provinsi; ?>">
+											</td>
+										</tr>
+										<tr>
+											<td colspan="3">
+												Kode Pos <?php echo form_error('kode_pos') ?><input type="text" class="form-control" name="kode_pos" id="kode_pos" placeholder="Kode Pos" value="<?php echo $kode_pos; ?>" />
+											</td>
+										</tr>
+										<tr>
+											<td colspan="4">
+												<input type="hidden" name="kk_id" value="<?php echo $kk_id; ?>" />
 												<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> <?php echo $button ?></button>
 												<a href="<?php echo site_url('list_kk') ?>" class="btn btn-info"><i class="fa fa-undo"></i> Kembali</a>
 											</td>
@@ -242,8 +264,16 @@
 						<div class="form-group">
 							<label class="control-label col-md-3">Hubungan Keluarga</label>
 							<div class="col-md-9">
-								<input required name="hubungankeluarga_anggota_kk" placeholder="Hubungan Keluarga" class="form-control" type="text">
-								<span class="help-block"></span>
+								<select name="hubungankeluarga_anggota_kk" id="hubungankeluarga_anggota_kk" class="form-control">
+									<option value="">-Pilih-</option>
+									<?php
+										$hubungan_keluarga = array('Kepala Keluarga', 'Anak', 'Istri', 'Suami', 'Mertua', 'Menantu', 'Cucu', 'Orang Tua', 'Kakek', 'Nenek', 'Keponakan', 'Lainnya');
+										
+										foreach ($hubungan_keluarga as $key => $value) {
+											echo '<option value="'.$value.'">'.$value.'</option>';
+										}
+									?>
+								</select>
 							</div>
 						</div>
 					</div>
@@ -306,7 +336,7 @@
 				<tr>
 					<td colspan="3" style="text-align: center;">
 						<p>Tambah Anggota Keluarga pada tombol dibawah</p>
-						<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modal_form">
+						<button type="button" class="btn btn-primary btnAddAnggota">
 							<i class="fa fa-plus"></i>
 							Tambah
 						</button>
@@ -331,10 +361,10 @@
 
 			var s = JSON.stringify(data)
 
-			var html = `<tr class='item' id='${data.id}'>
+			var html = `<tr class='item' id='${data.id_data_anggota}'>
 				<td>${data.no_ktp_anggota_kk}</td>
 				<td>${data.nama_anggota_kk}</td>
-				<td><input type="text" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
+				<td><input type="hidden" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button></td>
 			</tr>`
 
 			$('#tabellistanggotakk').find('tbody#tabel-anggota-keluarga-list').append(html);
@@ -412,7 +442,7 @@
 			$.each(object, function(i, field) {
 
 				if(field.value == ''){
-					alert('Data tidak boleh kosong!')
+					alert('Data ' + field.name +' tidak boleh kosong!')
 					return false
 				}
 
