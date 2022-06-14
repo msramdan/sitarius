@@ -129,18 +129,30 @@ table.scroll {
 												Rw <?php echo form_error('rw') ?><input type="number" class="form-control" name="rw" id="rw" placeholder="Rw" value="<?php echo $rw; ?>">
 											</td>
 											<td>
-												Desa/Kelurahan <?php echo form_error('desa_kelurahan') ?><input type="text" class="form-control" name="desa_kelurahan" id="desa_kelurahan" placeholder="Desa Kelurahan" value="<?php echo $desa_kelurahan; ?>"/>
+												Desa/Kelurahan <?php echo form_error('desa_kelurahan') ?>
+												<select class="form-control" name="desa_kelurahan" id="desa_kelurahan" placeholder="Desa Kelurahan">
+													<option value="">Harap Pilih Kecamatan</option>
+												</select>
 											</td>
 										</tr>
 										<tr>
 											<td>
-												Kecamatan <?php echo form_error('kecamatan') ?><input type="text" class="form-control" name="kecamatan" id="kecamatan" placeholder="Kecamatan" value="<?php echo $kecamatan; ?>"/>
+												Kecamatan <?php echo form_error('kecamatan') ?>
+												<select class="form-control" name="kecamatan" id="kecamatan" placeholder="Kecamatan">
+													<option value="">Harap Pilih Kabupaten/Kota</option>
+												</select>
 											</td>
 											<td>
-												Kabupaten Kota <?php echo form_error('kabupaten_kota') ?><input type="text" class="form-control"  name="kabupaten_kota" id="kabupaten_kota" placeholder="Kabupaten Kota" value="<?php echo $kabupaten_kota; ?>"/>
+												Kabupaten/Kota <?php echo form_error('kabupaten_kota') ?>
+												<select class="form-control"  name="kabupaten_kota" id="kabupaten_kota" placeholder="Kabupaten Kota">
+													<option value="">Harap Pilih Provinsi</option>
+												</select>
 											</td>
 											<td>
-												Provinsi <?php echo form_error('provinsi') ?><input type="text" class="form-control" name="provinsi" id="provinsi" placeholder="Provinsi" value="<?php echo $provinsi; ?>">
+												Provinsi <?php echo form_error('provinsi') ?>
+												<select class="form-control" name="provinsi" id="provinsi" placeholder="Provinsi">
+													<option value="">Mengambil data provinsi...</option>
+												</select>
 											</td>
 										</tr>
 										<tr>
@@ -309,6 +321,124 @@ table.scroll {
 <script>
 	$(document).on('ready', function() {
 
+		function getListProvince() {
+			$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/provinces.json`, function(data) {
+				let html = '<option value="">-Pilih-</option>';
+				
+				$.each(data, function(key, val) {
+					html += `<option value="${val.id}">${val.name}</option>`;
+				});
+
+				$('#provinsi').html(html);
+			});
+		}
+		getListProvince()
+
+		function getListKabupaten() {
+			let provinsi_id = $('#provinsi').val();
+
+			$('#kabupaten_kota').html('<option>Mengambil data...</option>')
+
+			let provinsi_editdata = '<?php echo $provinsi ?>'
+			let kabupatenKota_editdata = '<?php echo $kabupaten_kota ?>'
+
+			if(provinsi_editdata != '' || kabupatenKota_editdata != '') {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi_editdata}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						if(kabupatenKota_editdata == val.id) {
+							html += `<option value="${val.id}" selected>${val.name}</option>`;
+						} else {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						}
+					});
+
+					$('#kabupaten_kota').html(html);
+				})
+			} else {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/regencies/${provinsi_id}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						html += `<option value="${val.id}">${val.name}</option>`;
+					});
+
+					$('#kabupaten_kota').html(html);
+				})
+			}
+		}
+
+		function getListKecamatan() {
+			let kabupaten_id = $('#kabupaten_kota').val();
+
+			$('#kecamatan').html('<option value="">Mengambil Data...</option>');
+
+			let kabupaten_editdata = '<?php echo $kabupaten_kota ?>'
+			let kecamatan_editdata = '<?php echo $kecamatan ?>'
+
+			if(kabupaten_editdata != '' || kecamatan_editdata != '') {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupaten_editdata}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						if(kecamatan_editdata == val.id) {
+							html += `<option value="${val.id}" selected>${val.name}</option>`;
+						} else {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						}
+					});
+
+					$('#kecamatan').html(html);
+				})
+			} else {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/districts/${kabupaten_id}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						html += `<option value="${val.id}">${val.name}</option>`;
+					});
+
+					$('#kecamatan').html(html);
+				})
+			}
+		}
+		
+		function getListKelurahan() {
+			let kecamatan_id = $('#kecamatan').val();
+
+			$('#desa_kelurahan').html('<option value="">Mengambil Data...</option>');
+
+			let kecamatan_editdata = '<?php echo $kecamatan ?>'
+			let kelurahan_editdata = '<?php echo $desa_kelurahan ?>'
+
+			if(kecamatan_editdata != '' || kelurahan_editdata != '') {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan_editdata}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						if(kecamatan_editdata == val.id) {
+							html += `<option value="${val.id}" selected>${val.name}</option>`;
+						} else {
+							html += `<option value="${val.id}">${val.name}</option>`;
+						}
+					});
+
+					$('#desa_kelurahan').html(html);
+				})
+			} else {
+				$.getJSON(`http://www.emsifa.com/api-wilayah-indonesia/api/villages/${kecamatan_id}.json`, function(data) {
+					let html = '<option value="">-Pilih-</option>';
+					
+					$.each(data, function(key, val) {
+						html += `<option value="${val.id}">${val.name}</option>`;
+					});
+
+					$('#desa_kelurahan').html(html);
+				})
+			}
+
+		}
 		
 		function getDataListanggotakk() {
 			var data = $('#anggotakeluarga').val()
@@ -631,6 +761,22 @@ table.scroll {
 
 			// dismiss modal
 			$('.close_modal_form').click()
+		})
+
+		$(document).on('change', '#provinsi', function() {
+			getListKabupaten()
+			$('#kabupaten_kota').html('<option value="">Harap Pilih Provinsi</option>')
+			$('#kecamatan').html('<option value="">Harap Pilih Kabupaten/Kota</option>')
+			$('#desa_kelurahan').html('<option value="">Harap Pilih Kecamatan</option>')
+		})
+		
+		$(document).on('change', '#kabupaten_kota', function(){
+			getListKecamatan()
+			$('#desa_kelurahan').html('<option value="">Harap Pilih Kecamatan</option>')
+		})
+
+		$(document).on('change', '#kecamatan', function() {
+			getListKelurahan()
 		})
 	})
 </script>
