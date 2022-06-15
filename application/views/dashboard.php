@@ -7,7 +7,7 @@
 				<div class="stats-icon"><i class="fa fa-desktop"></i></div>
 				<div class="stats-info">
 					<h4>DATA PENDUDUK</h4>
-					<p>100</p>
+					<p><?= $thisnyak->countpenduduk() ?></p>
 				</div>
 				<div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -21,7 +21,7 @@
 				<div class="stats-icon"><i class="fa fa-chain-broken"></i></div>
 				<div class="stats-info">
 					<h4>JUMLAH LAKI-LAKI</h4>
-					<p>60</p>
+					<p><?= $thisnyak->countgendermale() ?></p>
 				</div>
 				<div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -35,7 +35,7 @@
 				<div class="stats-icon"><i class="fa fa-users"></i></div>
 				<div class="stats-info">
 					<h4>JUMLAH PEREMPUAN</h4>
-					<p>40</p>
+					<p><?= $thisnyak->countgenderfemale() ?></p>
 				</div>
 				<div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
@@ -49,7 +49,7 @@
 				<div class="stats-icon"><i class="fa fa-clock-o"></i></div>
 				<div class="stats-info">
 					<h4>DATA USER</h4>
-					<p>80</p>
+					<p>1</p>
 				</div>
 				<div class="stats-link">
 					<a href="javascript:;">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>

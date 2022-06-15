@@ -14,8 +14,8 @@ class Dashboard extends CI_Controller {
 
 	public function index()
 	{
-
-		$this->template->load('template','dashboard');
+		$data['thisnyak'] = $this;
+		$this->template->load('template','dashboard', $data);
 	}
 
 	function get_total_pekerjaan()
@@ -53,4 +53,18 @@ class Dashboard extends CI_Controller {
 		echo json_encode($datanya);
 	}
 
+	function countgendermale(){
+		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk WHERE jenis_kelamin = 'Laki-laki'")->row();
+		echo $data->total;
+	}
+
+	function countgenderfemale(){
+		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk WHERE jenis_kelamin = 'Perempuan'")->row();
+		echo $data->total;
+	}
+
+	function countpenduduk(){
+		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk")->row();
+		echo $data->total;
+	}
 }
