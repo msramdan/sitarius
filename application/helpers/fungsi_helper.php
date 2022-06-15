@@ -28,12 +28,24 @@ function check_admin()
 	}
 }
 
-function getnamaanggotakk($no_kk, $personalid)
+function getnamaanggotakk($kk_id, $personalid)
 {
 	$ci = &get_instance();
 	$ci->load->model('Anggotakk_model');
-	$anggotakk = $ci->Anggotakk_model->get_by_personalidandnokk($personalid, $no_kk);
+	$anggotakk = $ci->Anggotakk_model->get_by_personalidandidkk($personalid, $kk_id);
 	return $anggotakk->nama_lengkap;
+}
+
+function detectanggotakk($kk_id, $personalid)
+{
+	$ci = &get_instance();
+	$ci->load->model('Anggotakk_model');
+	$anggotakk = $ci->Anggotakk_model->get_by_personalidandidkk($personalid, $kk_id);
+	if ($anggotakk) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 

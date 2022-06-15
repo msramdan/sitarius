@@ -164,10 +164,11 @@ class List_kk extends CI_Controller
         } else {
 
             $kk_id = $this->input->post('kk_id', TRUE);
+            $no_kk = $this->input->post('no_kk', TRUE);
 
             $data = array(
                 'kepala_keluarga' => $this->input->post('kepala_keluarga', TRUE),
-                'no_kk' => $this->input->post('no_kk', TRUE),
+                'no_kk' => $no_kk,
                 'alamat' => $this->input->post('alamat', TRUE),
                 'rt' => $this->input->post('rt', TRUE),
                 'rw' => $this->input->post('rw', TRUE),
@@ -180,28 +181,76 @@ class List_kk extends CI_Controller
             );
 
             $anggotakeluarga = $this->input->post('anggotakeluarga', TRUE);
-
+            // echo '<pre>';
             $anggotakeluarga = json_decode($anggotakeluarga, TRUE);
+
+            $personal_id_available = [];
+
             foreach ($anggotakeluarga as $key => $value) {
 
+                
                 $personal_id = $value['id_data_anggota'];
+                
+                // push personal_id to array as element without key
+                $personal_id_available[] = $personal_id;
 
-                $data_anggota = array(
-                    'personal_id' => $personal_id,
-                    'nik' => $value['no_ktp_anggota_kk'],
-                    'nama_lengkap' => $value['nama_anggota_kk'],
-                    'jenis_kelamin' => $value['jeniskelamin_anggota_kk'],
-                    'tempat_lahir' => $value['tempatlahir_anggota_kk'],
-                    'tgl_lahir' => $value['tanggallahir_anggota_kk'],
-                    'agama' => $value['agama_anggota_kk'],
-                    'pendidikan_id' => $value['pendidikan_anggota_kk'],
-                    'pekerjaan_id' => $value['pekerjaan_anggota_kk'],
-                    'golongan_darah' => $value['golongandarah_anggota_kk'],
-                    'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
-                );
 
-                $this->Anggotakk_model->update_by_personalidandkkid($kk_id, $personal_id, $data_anggota);
+                $cek = detectanggotakk($kk_id, $personal_id);
+
+                if($cek == true) {
+
+                    $data_anggota = array(
+                        'personal_id' => $personal_id,
+                        'nik' => $value['no_ktp_anggota_kk'],
+                        'nama_lengkap' => $value['nama_anggota_kk'],
+                        'jenis_kelamin' => $value['jeniskelamin_anggota_kk'],
+                        'tempat_lahir' => $value['tempatlahir_anggota_kk'],
+                        'tgl_lahir' => $value['tanggallahir_anggota_kk'],
+                        'agama' => $value['agama_anggota_kk'],
+                        'pendidikan_id' => $value['pendidikan_anggota_kk'],
+                        'pekerjaan_id' => $value['pekerjaan_anggota_kk'],
+                        'golongan_darah' => $value['golongandarah_anggota_kk'],
+                        'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
+                    );
+                    $this->Anggotakk_model->update_by_personalidandkkid($kk_id, $personal_id, $data_anggota);
+                }
+                
+                if($cek == false){
+                    
+                    $data_anggota = array(
+                        'personal_id' => $personal_id,
+                        'kk_id' => $kk_id,
+                        'nik' => $value['no_ktp_anggota_kk'],
+                        'nama_lengkap' => $value['nama_anggota_kk'],
+                        'jenis_kelamin' => $value['jeniskelamin_anggota_kk'],
+                        'tempat_lahir' => $value['tempatlahir_anggota_kk'],
+                        'tgl_lahir' => $value['tanggallahir_anggota_kk'],
+                        'agama' => $value['agama_anggota_kk'],
+                        'pendidikan_id' => $value['pendidikan_anggota_kk'],
+                        'pekerjaan_id' => $value['pekerjaan_anggota_kk'],
+                        'golongan_darah' => $value['golongandarah_anggota_kk'],
+                        'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
+                    );
+                    $this->Anggotakk_model->insert($data_anggota);
+                }
+
+                // print_r($data_anggota);
             }
+            
+
+            $cekpersonalidisnotinpersonalidavailable = $this->Anggotakk_model->detectanggotakknotin($kk_id, $personal_id_available);
+
+            if($cekpersonalidisnotinpersonalidavailable == true){
+
+                foreach ($cekpersonalidisnotinpersonalidavailable as $key => $value) {
+                    $this->Anggotakk_model->delete($value['anggota_kk_id']);
+                }
+
+            }
+
+            // print_r($data);
+
+            // echo '</pre>';
 
             $this->List_kk_model->update($kk_id, $data);
 
