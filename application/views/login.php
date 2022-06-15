@@ -10,24 +10,24 @@
 
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-	<link href="<?= base_url() ?>temp/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/animate.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/style.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/style-responsive.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+	<link href="<?= base_url() ?>assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/animate.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/style.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/style-responsive.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/theme/default.css" rel="stylesheet" id="theme" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 
 	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/plugins/pace/pace.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/pace/pace.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
 
 <body class="pace-top">
 
 	<div class="login-cover">
-		<div class="login-cover-image"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
+		<div class="login-cover-image"><img src="<?= base_url() ?>assets/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
 		<div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -69,28 +69,28 @@
 		<!-- end login -->
 
 		<ul class="login-bg-list clearfix">
-			<li class="active"><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-1.jpg" alt="" /></a></li>
-			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-2.jpg" alt="" /></a></li>
-			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-3.jpg" alt="" /></a></li>
-			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-4.jpg" alt="" /></a></li>
-			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-5.jpg" alt="" /></a></li>
-			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>temp/assets/img/login-bg/bg-6.jpg" alt="" /></a></li>
+			<li class="active"><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-1.jpg" alt="" /></a></li>
+			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-2.jpg" alt="" /></a></li>
+			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-3.jpg" alt="" /></a></li>
+			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-4.jpg" alt="" /></a></li>
+			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-5.jpg" alt="" /></a></li>
+			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-6.jpg" alt="" /></a></li>
 		</ul>
 	</div>
 	<!-- end page container -->
 
 	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery-cookie/jquery.cookie.js"></script>
 	<!-- ================== END BASE JS ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/js/login-v2.demo.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/js/apps.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/login-v2.demo.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script>
 		$(document).ready(function() {

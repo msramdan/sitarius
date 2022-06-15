@@ -13,22 +13,25 @@
 
 	<!-- ================== BEGIN BASE CSS STYLE ================== -->
 	<link href="http://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
-	<link href="<?= base_url() ?>temp/assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/animate.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/style.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/style-responsive.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/css/theme/default.css" rel="stylesheet" id="theme" />
+	<link href="<?= base_url() ?>assets/plugins/jquery-ui/themes/base/minified/jquery-ui.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/animate.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/style.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/style-responsive.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/css/theme/default.css" rel="stylesheet" id="theme" />
 	<!-- ================== END BASE CSS STYLE ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL STYLE ================== -->
-	<link href="<?= base_url() ?>temp/assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
-	<link href="<?= base_url() ?>temp/assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/DataTables/media/css/dataTables.bootstrap.min.css" rel="stylesheet" />
+	<link href="<?= base_url() ?>assets/plugins/DataTables/extensions/Responsive/css/responsive.bootstrap.min.css" rel="stylesheet" />
 	<!-- ================== END PAGE LEVEL STYLE ================== -->
 
 	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/plugins/pace/pace.min.js"></script>
+	
+	<script src="<?= base_url() ?>assets/plugins/pace/pace.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-1.9.1.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
 </head>
 
@@ -86,7 +89,7 @@
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown navbar-user">
 						<a href="javascript:;" class="dropdown-toggle" data-toggle="dropdown">
-							<img src="<?= base_url() ?>temp/assets/img/user/admin.png" alt="" />
+							<img src="<?= base_url() ?>assets/img/user/admin.png" alt="" />
 							<span class="hidden-xs"><?= ucfirst($this->fungsi->user_login()->username) ?></span> <b class="caret"></b>
 						</a>
 						<ul class="dropdown-menu animated fadeInLeft">
@@ -114,7 +117,7 @@
 				<ul class="nav">
 					<li class="nav-profile">
 						<div class="image">
-							<a href="javascript:;"><img src="<?= base_url() ?>temp/assets/img/user/admin.png" alt="" /></a>
+							<a href="javascript:;"><img src="<?= base_url() ?>assets/img/user/admin.png" alt="" /></a>
 						</div>
 						<div class="info">
 							<?= ucfirst($this->fungsi->user_login()->username) ?>
@@ -127,7 +130,7 @@
 				<ul class="nav">
 					<li class="nav-header">Main Menu</li>
 					<li><a href="<?= base_url() ?>dashboard"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-					<li><a href="<?= base_url() ?>dashboard"><i class="fa fa-book"></i> <span>Data KK</span></a></li>
+					<li><a href="<?= base_url() ?>list_kk"><i class="fa fa-book"></i> <span>Data KK</span></a></li>
 					<li class="has-sub">
 						<a href="javascript:;">
 							<b class="caret pull-right"></b>
@@ -182,24 +185,22 @@
 	<!-- end page container -->
 
 	<!-- ================== BEGIN BASE JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery/jquery-1.9.1.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/bootstrap/js/bootstrap.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/jquery-cookie/jquery.cookie.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>temp/assets/js/sweetalert.min.js"></script>
-	<script type="text/javascript" src="<?php echo base_url(); ?>temp/assets/js/sweetalert.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery-ui/ui/minified/jquery-ui.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/bootstrap/js/bootstrap.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/jquery-cookie/jquery.cookie.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sweetalert.min.js"></script>
+	<script type="text/javascript" src="<?php echo base_url(); ?>assets/js/sweetalert.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sweetalert2@9"></script>
-	<script src="<?= base_url(); ?>temp/assets/js/dataflash.js"></script>
+	<script src="<?= base_url(); ?>assets/js/dataflash.js"></script>
 	<!-- ================== END BASE JS ================== -->
 
 	<!-- ================== BEGIN PAGE LEVEL JS ================== -->
-	<script src="<?= base_url() ?>temp/assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/js/table-manage-default.demo.min.js"></script>
-	<script src="<?= base_url() ?>temp/assets/js/apps.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/DataTables/media/js/jquery.dataTables.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/DataTables/media/js/dataTables.bootstrap.min.js"></script>
+	<script src="<?= base_url() ?>assets/plugins/DataTables/extensions/Responsive/js/dataTables.responsive.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/table-manage-default.demo.min.js"></script>
+	<script src="<?= base_url() ?>assets/js/apps.min.js"></script>
 	<!-- ================== END PAGE LEVEL JS ================== -->
 	<script>
 		$(document).ready(function() {
