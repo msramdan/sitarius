@@ -78,7 +78,7 @@
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 					</div>
-					<h4 class="panel-title">Analytics</h4>
+					<h4 class="panel-title">Total Penduduk</h4>
 				</div>
 				<div class="panel-body">
 					<div id="container"></div>
@@ -94,7 +94,7 @@
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 					</div>
-					<h4 class="panel-title">Analytics</h4>
+					<h4 class="panel-title">Total Penduduk</h4>
 				</div>
 				<div class="panel-body">
 				<div id="container2"></div>
@@ -170,85 +170,66 @@
 
 <script>
 	// Create the chart
-	Highcharts.chart('container', {
-		chart: {
-			type: 'column'
-		},
-		title: {
-			align: 'left',
-			text: 'Berdasarkan Pekerjaan'
-		},
-		accessibility: {
-			announceNewData: {
-				enabled: true
-			}
-		},
-		xAxis: {
-			type: 'category'
-		},
-		yAxis: {
+
+	function chartTotalPendudukbyJob(response) {
+		Highcharts.chart('container', {
+			chart: {
+				type: 'column'
+			},
 			title: {
-				text: 'Jumlah Penduduk'
-			}
-
-		},
-		legend: {
-			enabled: false
-		},
-		plotOptions: {
-			series: {
-				borderWidth: 0,
-				dataLabels: {
-					enabled: true,
-					format: '{point.y:.0f}'
+				align: 'left',
+				text: 'Berdasarkan Pekerjaan'
+			},
+			accessibility: {
+				announceNewData: {
+					enabled: true
 				}
-			}
-		},
-
-		tooltip: {
-			headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
-			pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>'
-		},
-
-		series: [{
-			name: "Jumlah Penduduk",
-			colorByPoint: true,
-			data: [{
-					name: "IRT",
-					y: 62,
-					drilldown: null
-				},
-				{
-					name: "Pekerja Swasta",
-					y: 10,
-					drilldown: null
-				},
-				{
-					name: "Pelajar",
-					y: 39,
-					drilldown: null
-				},
-				{
-					name: "PNS",
-					y: 29,
-					drilldown: null
-				},
-				{
-					name: "Petani",
-					y: 12,
-					drilldown: null
-				},
-				{
-					name: "Buruh Harian Lepas",
-					y: 18,
-					drilldown: null
-				},
-				{
-					name: "Ojek Online",
-					y: 7,
-					drilldown: null
+			},
+			xAxis: {
+				type: 'category'
+			},
+			yAxis: {
+				title: {
+					text: 'Jumlah Penduduk'
 				}
-			]
-		}],
-	});
+
+			},
+			legend: {
+				enabled: false
+			},
+			plotOptions: {
+				series: {
+					borderWidth: 0,
+					dataLabels: {
+						enabled: true,
+						format: '{point.y:.0f}'
+					}
+				}
+			},
+
+			tooltip: {
+				headerFormat: '<span style="font-size:11px">{series.name}</span><br>',
+				pointFormat: '<span style="color:{point.color}">{point.name}</span>: <b>{point.y:.0f}</b> of total<br/>'
+			},
+			series: [{
+				name: 'Jumlah Penduduk',
+				colorByPoint: true,
+				data: response
+			}],
+		});
+	}
+
+	function addSeriesChartPendudukbyJob() {
+		$.ajax({
+			url: '<?= base_url('dashboard/get_total_pekerjaan') ?>',
+			type: 'GET',
+			success: function(data) {
+				// parse
+				var response = JSON.parse(data);
+				chartTotalPendudukbyJob(response);
+			}
+		})
+	}
+
+	addSeriesChartPendudukbyJob();
 </script>
