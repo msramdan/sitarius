@@ -124,52 +124,55 @@
 	});
 
 	// Build the chart
-	Highcharts.chart('container2', {
-		chart: {
-			plotBackgroundColor: null,
-			plotBorderWidth: null,
-			plotShadow: false,
-			type: 'pie'
-		},
-		title: {
-			text: 'Berdasarkan Jenis Kelamin'
-		},
-		tooltip: {
-			pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
-		},
-		accessibility: {
-			point: {
-				valueSuffix: '%'
-			}
-		},
-		plotOptions: {
-			pie: {
-				allowPointSelect: true,
-				cursor: 'pointer',
-				dataLabels: {
-					enabled: true,
-					format: '<b>{point.name}</b>: {point.percentage:.1f} %',
-					connectorColor: 'silver'
-				}
-			}
-		},
-		series: [{
-			name: 'Share',
-			data: [{
-					name: 'Laki-laki',
-					y: 60
-				},
-				{
-					name: 'Perempuan',
-					y: 40
-				}
-			]
-		}]
-	});
-</script>
 
-<script>
-	// Create the chart
+	function pieChartGender(response) {
+		Highcharts.chart('container2', {
+			chart: {
+				plotBackgroundColor: null,
+				plotBorderWidth: null,
+				plotShadow: false,
+				type: 'pie'
+			},
+			title: {
+				text: 'Berdasarkan Jenis Kelamin'
+			},
+			tooltip: {
+				pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+			},
+			accessibility: {
+				point: {
+					valueSuffix: '%'
+				}
+			},
+			plotOptions: {
+				pie: {
+					allowPointSelect: true,
+					cursor: 'pointer',
+					dataLabels: {
+						enabled: true,
+						format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+						connectorColor: 'silver'
+					}
+				}
+			},
+			series: [{
+				name: 'Share',
+				data: response
+			}]
+		});
+	}
+
+	function addSeriesChartGenderbyPenduduk() {
+		$.ajax({
+			url: '<?= base_url('dashboard/get_total_gender') ?>',
+			type: 'GET',
+			success: function(data) {
+				// parse
+				var response = JSON.parse(data);
+				pieChartGender(response);
+			}
+		})
+	}
 
 	function chartTotalPendudukbyJob(response) {
 		Highcharts.chart('container', {
@@ -232,4 +235,5 @@
 	}
 
 	addSeriesChartPendudukbyJob();
+	addSeriesChartGenderbyPenduduk()
 </script>

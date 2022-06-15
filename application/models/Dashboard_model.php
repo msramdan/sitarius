@@ -26,4 +26,10 @@ class Dashboard_model extends CI_Model
         return $this->db->count_all_results();
     }
 
+    function countbygender($gendernya){
+        $this->db->where('jenis_kelamin', $gendernya);
+        $this->db->from('anggota_kk');
+        return $this->db->count_all_results();
+    }
+
 }

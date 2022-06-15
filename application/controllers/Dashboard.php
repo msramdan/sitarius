@@ -8,6 +8,7 @@ class Dashboard extends CI_Controller {
     {
         parent::__construct();
         is_login();
+		$this->load->model('Dashboard_model');
 		// check_admin();
     }
 
@@ -19,19 +20,33 @@ class Dashboard extends CI_Controller {
 
 	function get_total_pekerjaan()
 	{
-		$this->load->model('Dashboard_model');
-
 		$pekerjaans = $this->Dashboard_model->get_all_pekerjaan();
 
 		$datanya = [];
 
-		foreach ($pekerjaans as $key => $value) {
+		foreach ($pekerjaans as $value) {
 			# code...
 			$data = $this->Dashboard_model->countpendudukbypekerjaan($value->pekerjaan_id);
 			$datanya[] = [
 				'name' => $value->nama_pekerjaan,
 				'y' => $data,
 				'drilldown' => null
+			];
+		}
+
+		echo json_encode($datanya);
+	}
+
+	function get_total_gender() {
+		$genders = ['Perempuan', 'Laki-laki'];
+
+		$datanya = [];
+
+		foreach ($genders as $value) {
+			$total = $this->Dashboard_model->countbygender($value);
+			$datanya[] = [
+				'name' => $value,
+				'y' => $total
 			];
 		}
 
