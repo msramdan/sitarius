@@ -19,7 +19,7 @@ class Pendidikan extends CI_Controller
         $data = array(
             'pendidikan_data' => $pendidikan,
         );
-        $this->template->load('template','pendidikan/pendidikan_list', $data);
+        $this->template->load('template','admin/pendidikan/pendidikan_list', $data);
     }
 
     public function read($id) 
@@ -30,7 +30,7 @@ class Pendidikan extends CI_Controller
 		'pendidikan_id' => $row->pendidikan_id,
 		'nama_pendidikan' => $row->nama_pendidikan,
 	    );
-            $this->template->load('template','pendidikan/pendidikan_read', $data);
+            $this->template->load('template','admin/pendidikan/pendidikan_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('pendidikan'));
@@ -45,7 +45,7 @@ class Pendidikan extends CI_Controller
 	    'pendidikan_id' => set_value('pendidikan_id'),
 	    'nama_pendidikan' => set_value('nama_pendidikan'),
 	);
-        $this->template->load('template','pendidikan/pendidikan_form', $data);
+        $this->template->load('template','admin/pendidikan/pendidikan_form', $data);
     }
     
     public function create_action() 
@@ -76,7 +76,7 @@ class Pendidikan extends CI_Controller
 		'pendidikan_id' => set_value('pendidikan_id', $row->pendidikan_id),
 		'nama_pendidikan' => set_value('nama_pendidikan', $row->nama_pendidikan),
 	    );
-            $this->template->load('template','pendidikan/pendidikan_form', $data);
+            $this->template->load('template','admin/pendidikan/pendidikan_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('pendidikan'));

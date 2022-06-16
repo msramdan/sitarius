@@ -12,7 +12,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 		public function index()
 		{	
-			$this->template->load('template','backup/view');
+			$this->template->load('template','admin/backup/view');
 		}
 
 		public function file()
