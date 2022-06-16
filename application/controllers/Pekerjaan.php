@@ -19,7 +19,7 @@ class Pekerjaan extends CI_Controller
         $data = array(
             'pekerjaan_data' => $pekerjaan,
         );
-        $this->template->load('template','admin/pekerjaan/pekerjaan_list', $data);
+        $this->template->load('template_admin','admin/pekerjaan/pekerjaan_list', $data);
     }
 
     public function read($id) 
@@ -30,7 +30,7 @@ class Pekerjaan extends CI_Controller
 		'pekerjaan_id' => $row->pekerjaan_id,
 		'nama_pekerjaan' => $row->nama_pekerjaan,
 	    );
-            $this->template->load('template','admin/pekerjaan/pekerjaan_read', $data);
+            $this->template->load('template_admin','admin/pekerjaan/pekerjaan_read', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('pekerjaan'));
@@ -45,7 +45,7 @@ class Pekerjaan extends CI_Controller
 	    'pekerjaan_id' => set_value('pekerjaan_id'),
 	    'nama_pekerjaan' => set_value('nama_pekerjaan'),
 	);
-        $this->template->load('template','admin/pekerjaan/pekerjaan_form', $data);
+        $this->template->load('template_admin','admin/pekerjaan/pekerjaan_form', $data);
     }
     
     public function create_action() 
@@ -76,7 +76,7 @@ class Pekerjaan extends CI_Controller
 		'pekerjaan_id' => set_value('pekerjaan_id', $row->pekerjaan_id),
 		'nama_pekerjaan' => set_value('nama_pekerjaan', $row->nama_pekerjaan),
 	    );
-            $this->template->load('template','admin/pekerjaan/pekerjaan_form', $data);
+            $this->template->load('template_admin','admin/pekerjaan/pekerjaan_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('pekerjaan'));

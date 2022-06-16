@@ -22,7 +22,7 @@ class List_kk extends CI_Controller
         $data = array(
             'list_kk_data' => $list_kk,
         );
-        $this->template->load('template', 'admin/list_kk/data_kk_list', $data);
+        $this->template->load('template_admin', 'admin/list_kk/data_kk_list', $data);
     }
 
     public function create()
@@ -46,7 +46,7 @@ class List_kk extends CI_Controller
             'pekerjaanlist' => $this->Pekerjaan_model->get_all(),
             'anggotakeluarga' => set_value('anggotakeluarga'),
         );
-        $this->template->load('template', 'admin/list_kk/data_kk_form', $data);
+        $this->template->load('template_admin', 'admin/list_kk/data_kk_form', $data);
     }
 
     public function create_action()
@@ -148,7 +148,7 @@ class List_kk extends CI_Controller
                 'pekerjaanlist' => $this->Pekerjaan_model->get_all(),
             );
             // print_r($data);
-            $this->template->load('template', 'admin/list_kk/data_kk_form', $data);
+            $this->template->load('template_admin', 'admin/list_kk/data_kk_form', $data);
         } else {
             $this->session->set_flashdata('message', 'Record Not Found');
             redirect(site_url('list_kk'));

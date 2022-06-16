@@ -19,7 +19,7 @@ class History_login extends CI_Controller
         $data = array(
             'history_login_data' => $history_login,
         );
-        $this->template->load('template','admin/history_login/history_login_list', $data);
+        $this->template->load('template_admin','admin/history_login/history_login_list', $data);
     }
 
 }

@@ -15,7 +15,7 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data['thisnyak'] = $this;
-		$this->template->load('template','admin/dashboard', $data);
+		$this->template->load('template_admin','admin/dashboard', $data);
 	}
 
 	function get_total_pekerjaan()

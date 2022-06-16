@@ -19,7 +19,7 @@ class User extends CI_Controller
 		$data = array(
 			'user_data' => $user,
 		);
-		$this->template->load('template', 'admin/user/user_list', $data);
+		$this->template->load('template_admin', 'admin/user/user_list', $data);
 	}
 
 	public function read($id)
@@ -32,7 +32,7 @@ class User extends CI_Controller
 				'password' => $row->password,
 				'level_id' => $row->level_id,
 			);
-			$this->template->load('template', 'admin/user/user_read', $data);
+			$this->template->load('template_admin', 'admin/user/user_read', $data);
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
 			redirect(site_url('user'));
@@ -49,7 +49,7 @@ class User extends CI_Controller
 			'password' => set_value('password'),
 			'level_id' => set_value('level_id'),
 		);
-		$this->template->load('template', 'admin/user/user_form', $data);
+		$this->template->load('template_admin', 'admin/user/user_form', $data);
 	}
 
 	public function create_action()
@@ -84,7 +84,7 @@ class User extends CI_Controller
 				'password' => set_value('password', $row->password),
 				'level_id' => set_value('level_id', $row->level_id),
 			);
-			$this->template->load('template', 'admin/user/user_form', $data);
+			$this->template->load('template_admin', 'admin/user/user_form', $data);
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
 			redirect(site_url('user'));

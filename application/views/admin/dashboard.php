@@ -1,3 +1,11 @@
+<script src="https://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+<script src="https://code.highcharts.com/modules/export-data.js"></script>
+<script src="https://code.highcharts.com/modules/accessibility.js"></script>
+
+<script src="https://code.highcharts.com/modules/data.js"></script>
+<script src="https://code.highcharts.com/modules/drilldown.js"></script>
+
 <div id="content" class="content">
 	<!-- begin row -->
 	<div class="row">
@@ -56,19 +64,8 @@
 				</div>
 			</div>
 		</div>
-
-		<script src="https://code.highcharts.com/highcharts.js"></script>
-		<script src="https://code.highcharts.com/modules/exporting.js"></script>
-		<script src="https://code.highcharts.com/modules/export-data.js"></script>
-		<script src="https://code.highcharts.com/modules/accessibility.js"></script>
-		
-		<script src="https://code.highcharts.com/modules/data.js"></script>
-		<script src="https://code.highcharts.com/modules/drilldown.js"></script>
-		
-		
-		
-
-
+	</div>
+	<div class="row">
 		<div class="col-md-6 ui-sortable">
 			<div class="panel panel-inverse" data-sortable-id="index-1">
 				<div class="panel-heading">
@@ -86,7 +83,7 @@
 			</div>
 		</div>
 		<div class="col-md-6 ui-sortable">
-			<div class="panel panel-inverse" data-sortable-id="index-1">
+			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
 					<div class="panel-heading-btn">
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-default" data-click="panel-expand"><i class="fa fa-expand"></i></a>
@@ -97,11 +94,10 @@
 					<h4 class="panel-title">Total Penduduk</h4>
 				</div>
 				<div class="panel-body">
-				<div id="container2"></div>
+					<div id="container2"></div>
 				</div>
 			</div>
 		</div>
-
 		<!-- end col-3 -->
 	</div>
 </div>
