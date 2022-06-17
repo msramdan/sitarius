@@ -305,6 +305,58 @@ table.scroll {
 	</div>
 </div>
 
+<div class="modal fade" id="modal_detailakun" role="dialog">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close close_modal_form" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+				<h3 class="modal-title">Account Detail</h3>
+			</div>
+			<div class="modal-body form">
+				
+				<?php
+				if($button == 'Create') {
+					?>
+						<div class="alert alert-warning">
+							<strong>Warning!</strong> Username dan Password akan dibuat setelah KK terbentuk, kembali ke laman ini saat anda sudah membuat data Kartu KeluargaAS
+						</div>
+						<!-- create dismiss modal button -->
+						<button type="button" class="btn btn-primary" data-dismiss="modal" aria-label="Close">Kembali</button>
+					<?php
+				}
+
+				if($button == 'Update') {
+					?>
+					<form id="form_akun" class="form-horizontal"> 
+						<input type="text" value="" name="id_usernya" id="id_usernya" />
+						<div class="form-body">
+							<div class="form-group">
+								<label class="control-label col-md-3">Username</label>
+								<div class="col-md-9">
+									<!-- combobox jenis kelamin -->
+									<input type="text" name="username_anggota" id="username_anggota" class="form-control" readonly>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="control-label col-md-3">Password</label>
+								<div class="col-md-9">
+									<input type="text" name="password_anggota" id="password_anggota" class="form-control" readonly>
+								</div>
+							</div>
+							<button type="button" class="btn btn-danger btn-reset-password" id="btn-reset-password">Reset Password</button>
+							</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-danger" data-dismiss="modal">Batal</button>
+						</div>
+					</form>
+					<?php
+				}
+				?>
+			</div>
+		</div>
+	</div>
+</div>
+
 <script>
 	$(document).on('ready', function() {
 
@@ -541,7 +593,9 @@ table.scroll {
 				<td>${data.no_ktp_anggota_kk}</td>
 				<td>${data.nama_anggota_kk}</td>
 				<td style="text-align: center;">
-					<input type="hidden" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button><button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+					<input type="hidden" class="detailny" value='${s}'/><button class="btn-edit editAnggota"><i class="fa fa-edit"></i></button>
+					<button class="btn-delete deleteAnggota"><i class="fa fa-trash-o" aria-hidden="true"></i></button>
+					<button class="accountManage" data-kk-id="<?= encrypt_url($kk_id) ?>" data-personal-id="${data.id_data_anggota}"><i class="fa fa-user" aria-hidden="true"></i></button>
 				</td>
 			</tr>`
 
@@ -719,6 +773,76 @@ table.scroll {
 			$('#modal_form_anggotakk').find('#btnSave').attr('data-action', 'edit').text('Update');
 
 		})
+
+		function showAccountDetail(a, b) {
+			<?php
+			if($button == 'Update') {
+				?>
+				$.ajax({
+					url: '<?= base_url('user/get_detail_akun') ?>',
+					type: 'POST',
+					data: {
+						kk_id: a,
+						personal_id: b
+					},
+					success: function(data) {
+						
+						var dt = JSON.parse(data)
+
+						$('#form_akun').find('#username_anggota').val(dt.username)
+						$('#form_akun').find('#password_anggota').val(dt.password)
+						$('#form_akun').find('#btn-reset-password').attr('data-id-user', dt.user_id)
+					}
+				})
+				<?php
+			} else {
+				?>
+				
+				<?php
+			}
+			?>
+		}
+
+		$(document).on('click', '.accountManage', function(e) {
+			e.preventDefault()
+			
+			// show modal #modal_detailakun
+			$('#modal_detailakun').modal({
+				backdrop: 'static',
+				keyboard: false,
+				show: true
+			})
+
+			showAccountDetail($(this).attr('data-kk-id'), $(this).attr('data-personal-id'))
+		})
+
+		<?php
+		if($button == 'Update') {
+			?>
+
+			$(document).on('click', '.btn-reset-password', function(e) {
+				e.preventDefault()
+				var id = $(this).attr('data-id-user')
+
+				$.ajax({
+					url: '<?= base_url('user/reset_password') ?>',
+					type: 'POST',
+					data: {
+						id: id
+					},
+					success: function(data) {
+						var dt = JSON.parse(data)
+
+						alert('Password berhasil di reset dan ditampilkan pada kolom password, instruksikan user untuk segera mengubah passwordnya.')
+						$('#form_akun').find('#password_anggota').val(dt.password)
+					}
+				})
+
+			})
+
+			<?php
+		}
+		?>
 
 		$(document).on('submit', '#formdataanggotakk', function(e) {
 			// serialize data

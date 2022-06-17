@@ -106,5 +106,10 @@ class User_model extends CI_Model
         $this->db->delete('user');
     }
 
-
+    function getakunanggotakk($anggota_kk_id) {
+        $this->db->where('anggota_kk_id', $anggota_kk_id);
+        $this->db->where('level_id', 2);
+        $query = $this->db->get('user');
+        return $query->row();
+    }
 }

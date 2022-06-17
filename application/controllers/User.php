@@ -149,6 +149,43 @@ class User extends CI_Controller
         window.location='".site_url('auth')."'</script>";
 
 	}
+
+	function get_detail_akun()
+	{
+		check_admin();
+		$id_kk = decrypt_url($this->input->post('kk_id'));
+
+		$personal_id = $this->input->post('personal_id');
+
+		$this->load->model('Anggotakk_model');
+
+		$getanggotakk = $this->Anggotakk_model->get_by_personalidandidkk($personal_id, $id_kk);
+
+		$id_anggota_kk = $getanggotakk->anggota_kk_id;
+
+		// get data user by id_anggota_kk
+		$getdatauser = $this->User_model->getakunanggotakk($id_anggota_kk);
+		$data = array(
+			'user_id' => encrypt_url($getdatauser->user_id),
+			'username' => $getdatauser->username,
+			'password' => $getdatauser->password,
+		);
+
+		echo json_encode($data);
+	}
+
+	function reset_password() {
+		$id = decrypt_url($this->input->post('id'));
+		$this->load->helper('string');
+
+		$password = random_string('alnum', 6);
+		$data = array(
+			'password' => $password,
+		);
+		$this->User_model->update($id, $data);
+		
+		echo json_encode($data);
+	}
 }
 
 /* End of file User.php */
