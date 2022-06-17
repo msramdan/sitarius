@@ -85,5 +85,11 @@ class User_model extends CI_Model
         return $this->db->insert('history_login', array('user_id' => $user_id, 'info' => $info,'user_agent' =>$user_agent));
     }
 
+    function deleteAkunanggotakk($id) {
+        $this->db->where('anggota_kk_id', sha1($id));
+        $this->db->where('level_id', 2);
+        $this->db->delete('user');
+    }
+
 
 }

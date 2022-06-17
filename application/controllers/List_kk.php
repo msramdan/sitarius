@@ -14,6 +14,7 @@ class List_kk extends CI_Controller
         $this->load->library('form_validation');
         $this->load->model('Pendidikan_model');
         $this->load->model('Pekerjaan_model');
+        $this->load->model('User_model');
     }
 
     public function index()
@@ -95,6 +96,19 @@ class List_kk extends CI_Controller
                 );
 
                 $this->Anggotakk_model->insert($data_anggota);
+                $anggotakkid = $this->db->insert_id();
+
+                // get 4 last string of nik
+                $last4id = substr($value['no_ktp_anggota_kk'], -4);
+                $password = sha1(rand(100000, 999999));
+
+                $akun = array(  
+                    'username' => 'user'.$last4id.$id_kk,
+                    'password' => $password,
+                    'level_id' => 2,
+                    'anggota_kk_id' => sha1($anggotakkid),
+                );
+                $this->User_model->insert($akun);
             }
 
             $this->session->set_flashdata('message', 'Create Record Success');
@@ -232,6 +246,20 @@ class List_kk extends CI_Controller
                         'hubungan_keluarga' => $value['hubungankeluarga_anggota_kk'],
                     );
                     $this->Anggotakk_model->insert($data_anggota);
+
+                    $anggotakkid = $this->db->insert_id();
+
+                    // get 4 last string of nik
+                    $last4id = substr($value['no_ktp_anggota_kk'], -4);
+                    $password = sha1(rand(100000, 999999));
+
+                    $akun = array(  
+                        'username' => 'user'.$last4id.$kk_id,
+                        'password' => $password,
+                        'level_id' => 2,
+                        'anggota_kk_id' => sha1($anggotakkid),
+                    );
+                    $this->User_model->insert($akun);
                 }
 
                 // print_r($data_anggota);
@@ -243,6 +271,7 @@ class List_kk extends CI_Controller
             if($cekpersonalidisnotinpersonalidavailable == true){
 
                 foreach ($cekpersonalidisnotinpersonalidavailable as $key => $value) {
+                    $this->User_model->deleteAkunanggotakk($value['anggota_kk_id']);
                     $this->Anggotakk_model->delete($value['anggota_kk_id']);
                 }
 
@@ -264,8 +293,16 @@ class List_kk extends CI_Controller
         $row = $this->List_kk_model->get_by_id(decrypt_url($id));
 
         if ($row) {
-            $this->List_kk_model->delete(decrypt_url($id));
+
+            // get each anggota_kk
+            $anggotakk = $this->Anggotakk_model->get_by_kk_id(decrypt_url($id));
+
+            foreach ($anggotakk as $key => $value) {
+                $this->User_model->deleteAkunanggotakk($value['anggota_kk_id']);
+            }
+
             $this->Anggotakk_model->delete_by_kkid(decrypt_url($id));
+            $this->List_kk_model->delete(decrypt_url($id));
             $this->session->set_flashdata('message', 'Delete Record Success');
             redirect(site_url('list_kk'));
         } else {
