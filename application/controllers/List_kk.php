@@ -12,6 +12,7 @@ class List_kk extends CI_Controller
         $this->load->model('List_kk_model');
         $this->load->model('Anggotakk_model');
         $this->load->library('form_validation');
+        $this->load->helper('string');
         $this->load->model('Pendidikan_model');
         $this->load->model('Pekerjaan_model');
         $this->load->model('User_model');
@@ -100,7 +101,7 @@ class List_kk extends CI_Controller
 
                 // get 4 last string of nik
                 $last4id = substr($value['no_ktp_anggota_kk'], -4);
-                $password = sha1(rand(100000, 999999));
+                $password = random_string('alnum', 6);
 
                 $akun = array(  
                     'username' => 'user'.$last4id.$id_kk,
@@ -251,13 +252,14 @@ class List_kk extends CI_Controller
 
                     // get 4 last string of nik
                     $last4id = substr($value['no_ktp_anggota_kk'], -4);
-                    $password = sha1(rand(100000, 999999));
+                    // random password with length 6
+                    $password = random_string('alnum', 6);
 
                     $akun = array(  
                         'username' => 'user'.$last4id.$kk_id,
                         'password' => $password,
                         'level_id' => 2,
-                        'anggota_kk_id' => sha1($anggotakkid),
+                        'anggota_kk_id' => $password,
                     );
                     $this->User_model->insert($akun);
                 }

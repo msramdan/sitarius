@@ -67,7 +67,22 @@ class User_model extends CI_Model
         $this->db->where('username',$post['username']);
         $this->db->where('password',sha1($post['password']));
         $query=$this->db->get();
-        return $query;
+
+        if($query->num_rows()>0){
+            return $query;
+        }else{
+            $this->db->select('*');
+            $this->db->from('user');
+            $this->db->where('username',$post['username']);
+            $this->db->where('password',$post['password']);
+            $query = $this->db->get();
+
+            if($query->num_rows()>0){
+                return $query;
+            }else{
+                return false;
+            }
+        }
     }
 
 	public function get($id = null)

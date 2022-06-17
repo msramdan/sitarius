@@ -15,7 +15,18 @@ class Dashboard extends CI_Controller {
 	public function index()
 	{
 		$data['thisnyak'] = $this;
-		$this->template->load('template_admin','admin/dashboard', $data);
+
+		// check session user
+		$levelid = $this->session->userdata('level_id');
+
+		if($levelid == 1) {
+			$this->template->load('template_admin','admin/dashboard', $data);
+		}
+
+		if($levelid == 2) {
+			$this->template->load('template_user','user/dashboard', $data);
+		}
+
 	}
 
 	function get_total_pekerjaan()

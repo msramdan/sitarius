@@ -26,14 +26,16 @@ class Auth extends CI_Controller
 			$query = $this->User_model->login($post);
 			if ($query->num_rows() > 0) {
 				$row = $query->row();
+
 				$params = array(
 					'userid' => $row->user_id,
 					'level_id' => $row->level_id
 				);
+
 				$this->session->set_userdata($params);
 				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username.' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);
-				
 				echo "<script>window.location='" . site_url('dashboard') . "'</script>";
+				
 			} else {
 				$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');
 				redirect(site_url('auth'));
