@@ -9,6 +9,8 @@ class Pekerjaan extends CI_Controller
     {
         parent::__construct();
         // is_login();
+        check_admin();
+		
         $this->load->model('Pekerjaan_model');
         $this->load->library('form_validation');
     }

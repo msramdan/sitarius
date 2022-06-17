@@ -8,6 +8,7 @@ date_default_timezone_set('Asia/Jakarta');
 		{
 			parent::__construct();
 			is_login();
+			check_admin();
 		}
 
 		public function index()

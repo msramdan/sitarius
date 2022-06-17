@@ -27,10 +27,25 @@ class Auth extends CI_Controller
 			if ($query->num_rows() > 0) {
 				$row = $query->row();
 
-				$params = array(
-					'userid' => $row->user_id,
-					'level_id' => $row->level_id
-				);
+				$levelid = $row->level_id;
+
+				$params = '';
+
+				if($levelid == 1) {
+					$params = array(
+						'userid' => $row->user_id,
+						'level_id' => $row->level_id
+					);
+				}
+
+				if($levelid == 2) {
+					$params = array(
+						'userid' => $row->user_id,
+						'level_id' => $row->level_id,
+						'anggotakkid' => $row->anggota_kk_id
+					);
+				}
+
 
 				$this->session->set_userdata($params);
 				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username.' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);

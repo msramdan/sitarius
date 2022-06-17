@@ -24,8 +24,21 @@ function check_admin()
 	$ci = &get_instance();
 	$ci->load->library('fungsi');
 	if ($ci->fungsi->user_login()->level_id != 1) {
-		redirect('dashboard_user');
+		// redirect('dashboard_user');
+		$ci->session->set_flashdata('warning', 'Anda tidak memiliki akses');
+		redirect('dashboard');
 	}
+}
+
+function check_admin_state()
+{
+	$ci = &get_instance();
+	$ci->load->library('fungsi');
+	if ($ci->fungsi->user_login()->level_id != 1) {
+		// redirect('dashboard_user');
+		return 0;
+	}
+	return 1;
 }
 
 function getnamaanggotakk($kk_id, $personalid)

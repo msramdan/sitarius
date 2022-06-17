@@ -9,6 +9,8 @@ class Pendidikan extends CI_Controller
     {
         parent::__construct();
         // is_login();
+        check_admin();
+		
         $this->load->model('Pendidikan_model');
         $this->load->library('form_validation');
     }
