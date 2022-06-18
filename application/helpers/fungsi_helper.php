@@ -24,16 +24,41 @@ function check_admin()
 	$ci = &get_instance();
 	$ci->load->library('fungsi');
 	if ($ci->fungsi->user_login()->level_id != 1) {
-		redirect('dashboard_user');
+		// redirect('dashboard_user');
+		$ci->session->set_flashdata('warning', 'Anda tidak memiliki akses');
+		redirect('dashboard');
 	}
 }
 
-function getnamaanggotakk($no_kk, $personalid)
+function check_admin_state()
+{
+	$ci = &get_instance();
+	$ci->load->library('fungsi');
+	if ($ci->fungsi->user_login()->level_id != 1) {
+		// redirect('dashboard_user');
+		return 0;
+	}
+	return 1;
+}
+
+function getnamaanggotakk($kk_id, $personalid)
 {
 	$ci = &get_instance();
 	$ci->load->model('Anggotakk_model');
-	$anggotakk = $ci->Anggotakk_model->get_by_personalidandnokk($personalid, $no_kk);
+	$anggotakk = $ci->Anggotakk_model->get_by_personalidandidkk($personalid, $kk_id);
 	return $anggotakk->nama_lengkap;
+}
+
+function detectanggotakk($kk_id, $personalid)
+{
+	$ci = &get_instance();
+	$ci->load->model('Anggotakk_model');
+	$anggotakk = $ci->Anggotakk_model->get_by_personalidandidkk($personalid, $kk_id);
+	if ($anggotakk) {
+		return true;
+	} else {
+		return false;
+	}
 }
 
 

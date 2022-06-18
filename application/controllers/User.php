@@ -19,7 +19,7 @@ class User extends CI_Controller
 		$data = array(
 			'user_data' => $user,
 		);
-		$this->template->load('template', 'user/user_list', $data);
+		$this->template->load('template_admin', 'admin/user/user_list', $data);
 	}
 
 	public function read($id)
@@ -32,7 +32,7 @@ class User extends CI_Controller
 				'password' => $row->password,
 				'level_id' => $row->level_id,
 			);
-			$this->template->load('template', 'user/user_read', $data);
+			$this->template->load('template_admin', 'admin/user/user_read', $data);
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
 			redirect(site_url('user'));
@@ -49,7 +49,7 @@ class User extends CI_Controller
 			'password' => set_value('password'),
 			'level_id' => set_value('level_id'),
 		);
-		$this->template->load('template', 'user/user_form', $data);
+		$this->template->load('template_admin', 'admin/user/user_form', $data);
 	}
 
 	public function create_action()
@@ -84,7 +84,7 @@ class User extends CI_Controller
 				'password' => set_value('password', $row->password),
 				'level_id' => set_value('level_id', $row->level_id),
 			);
-			$this->template->load('template', 'user/user_form', $data);
+			$this->template->load('template_admin', 'admin/user/user_form', $data);
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
 			redirect(site_url('user'));
@@ -148,6 +148,43 @@ class User extends CI_Controller
         alert('Update password berhasil, Silahkan login kembali !');
         window.location='".site_url('auth')."'</script>";
 
+	}
+
+	function get_detail_akun()
+	{
+		check_admin();
+		$id_kk = decrypt_url($this->input->post('kk_id'));
+
+		$personal_id = $this->input->post('personal_id');
+
+		$this->load->model('Anggotakk_model');
+
+		$getanggotakk = $this->Anggotakk_model->get_by_personalidandidkk($personal_id, $id_kk);
+
+		$id_anggota_kk = $getanggotakk->anggota_kk_id;
+
+		// get data user by id_anggota_kk
+		$getdatauser = $this->User_model->getakunanggotakk($id_anggota_kk);
+		$data = array(
+			'user_id' => encrypt_url($getdatauser->user_id),
+			'username' => $getdatauser->username,
+			'password' => $getdatauser->password,
+		);
+
+		echo json_encode($data);
+	}
+
+	function reset_password() {
+		$id = decrypt_url($this->input->post('id'));
+		$this->load->helper('string');
+
+		$password = random_string('alnum', 6);
+		$data = array(
+			'password' => $password,
+		);
+		$this->User_model->update($id, $data);
+		
+		echo json_encode($data);
 	}
 }
 

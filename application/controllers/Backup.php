@@ -8,11 +8,12 @@ date_default_timezone_set('Asia/Jakarta');
 		{
 			parent::__construct();
 			is_login();
+			check_admin();
 		}
 
 		public function index()
 		{	
-			$this->template->load('template','backup/view');
+			$this->template->load('template_admin','admin/backup/view');
 		}
 
 		public function file()

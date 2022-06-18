@@ -32,18 +32,18 @@ class List_kk_model extends CI_Model
     // get total rows
     function total_rows($q = NULL) {
         $this->db->like('kk_id', $q);
-	$this->db->or_like('kepala_keluarga', $q);
-	$this->db->or_like('no_kk', $q);
-	$this->db->or_like('alamat', $q);
-	$this->db->or_like('rt', $q);
-	$this->db->or_like('rw', $q);
-	$this->db->or_like('kode_pos', $q);
-	$this->db->or_like('desa_kelurahan', $q);
-	$this->db->or_like('kecamatan', $q);
-	$this->db->or_like('kabupaten_kota', $q);
-	$this->db->or_like('provinsi', $q);
-	$this->db->or_like('tgl_dikeluarkan', $q);
-	$this->db->from($this->table);
+        $this->db->or_like('kepala_keluarga', $q);
+        $this->db->or_like('no_kk', $q);
+        $this->db->or_like('alamat', $q);
+        $this->db->or_like('rt', $q);
+        $this->db->or_like('rw', $q);
+        $this->db->or_like('kode_pos', $q);
+        $this->db->or_like('desa_kelurahan', $q);
+        $this->db->or_like('kecamatan', $q);
+        $this->db->or_like('kabupaten_kota', $q);
+        $this->db->or_like('provinsi', $q);
+        $this->db->or_like('tgl_dikeluarkan', $q);
+        $this->db->from($this->table);
         return $this->db->count_all_results();
     }
 
@@ -68,4 +68,9 @@ class List_kk_model extends CI_Model
         $this->db->delete($this->table);
     }
 
+    function getonelistkk($id)
+    {
+        $this->db->where('kk_id', $id);
+        return $this->db->get($this->table)->result();
+    }
 }

@@ -68,10 +68,10 @@ class Anggotakk_model extends CI_Model
         $this->db->update($this->table, $data);
     }
 
-    function get_by_personalidandnokk($personalid, $no_kk)
+    function get_by_personalidandidkk($personalid, $kk_id)
     {
         $this->db->where('personal_id', $personalid);
-        $this->db->where('kk_id', $no_kk);
+        $this->db->where('kk_id', $kk_id);
         return $this->db->get($this->table)->row();
     }
 
@@ -79,6 +79,13 @@ class Anggotakk_model extends CI_Model
     {
         $this->db->where('kk_id', $kk_id);
         $this->db->delete($this->table);
+    }
+
+    function detectanggotakknotin($kk_id, $list_anggotakk)
+    {
+        $this->db->where('kk_id', $kk_id);
+        $this->db->where_not_in('personal_id', $list_anggotakk);
+        return $this->db->get($this->table)->result_array();
     }
 
 }
