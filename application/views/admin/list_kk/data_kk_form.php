@@ -174,7 +174,7 @@ table.scroll {
 			</div>
 			<div class="modal-body form">
 				<form id="formdataanggotakk" class="form-horizontal"> 
-					<input type="text" value="" name="id_data_anggota" id="id_data_anggota" />
+					<input type="hidden" value="" name="id_data_anggota" id="id_data_anggota" />
 					<div class="form-body">
 						<div class="form-group">
 							<label class="control-label col-md-3">No KTP</label>
@@ -328,7 +328,7 @@ table.scroll {
 				if($button == 'Update') {
 					?>
 					<form id="form_akun" class="form-horizontal"> 
-						<input type="text" value="" name="id_usernya" id="id_usernya" />
+						<input type="hidden" value="" name="id_usernya" id="id_usernya" />
 						<div class="form-body">
 							<div class="form-group">
 								<label class="control-label col-md-3">Username</label>
