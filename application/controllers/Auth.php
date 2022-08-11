@@ -16,7 +16,7 @@ class Auth extends CI_Controller
 
 	public function profile()
 	{
-		$this->template->load('admin/template_admin', 'profile');
+		$this->template->load('admin/template', 'profile');
 	}
 
 	public function process()

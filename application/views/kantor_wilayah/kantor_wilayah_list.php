@@ -1,7 +1,7 @@
 <div id="content" class="content">
 	<ol class="breadcrumb pull-right">
-		<li><a href="<?= base_url() ?>dashboard">Dashboard</a></li>
-		<li class="active">User</li>
+		<li><a href="javascript:;">Dashboard</a></li>
+		<li class="active">Kantor_wilayah</li>
 	</ol>
 	<div class="row">
 		<div class="col-md-12">
@@ -13,7 +13,7 @@
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-warning" data-click="panel-collapse"><i class="fa fa-minus"></i></a>
 						<a href="javascript:;" class="btn btn-xs btn-icon btn-circle btn-danger" data-click="panel-remove"><i class="fa fa-times"></i></a>
 					</div>
-					<h4 class="panel-title">Data User</h4>
+					<h4 class="panel-title">Data Kantor_wilayah</h4>
 				</div>
 				<div class="panel-body">
 					<div class="row">
@@ -23,7 +23,7 @@
 									<div class='row'>
 										<div class='col-md-9'>
 											<div style="padding-bottom: 10px;">
-												<?php echo anchor(site_url('user/create'), '<i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
+												<?php echo anchor(site_url('kantor_wilayah/create'), '<i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
 											</div>
 										</div>
 									</div>
@@ -32,23 +32,22 @@
 											<thead>
 												<tr>
 													<th>No</th>
-													<th>Username</th>
-													<th>Level</th>
+													<th>Nama Kantor Wilayah</th>
 													<th>Action</th>
 												</tr>
 											</thead>
 											<tbody><?php $no = 1;
-													foreach ($user_data as $user) {
+													foreach ($kantor_wilayah_data as $kantor_wilayah) {
 													?>
 													<tr>
 														<td><?= $no++ ?></td>
-														<td><?php echo $user->username ?></td>
-														<td>Admin Aplikasi</td>
-														<td>
+														<td><?php echo $kantor_wilayah->nama_kantor_wilayah ?></td>
+														<td style="text-align:center" width="200px">
 															<?php
-															echo anchor(site_url('user/update/' . encrypt_url($user->user_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
+
+															echo anchor(site_url('kantor_wilayah/update/' . encrypt_url($kantor_wilayah->kantor_wilayah_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 															echo '  ';
-															echo anchor(site_url('user/delete/' . encrypt_url($user->user_id)), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+															echo anchor(site_url('kantor_wilayah/delete/' . encrypt_url($kantor_wilayah->kantor_wilayah_id)), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
 															?>
 														</td>
 													</tr>

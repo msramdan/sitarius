@@ -10,26 +10,6 @@ class Dashboard_model extends CI_Model
         parent::__construct();
     }
 
-    function get_all_pekerjaan()
-    {
-        $this->db->select('*');
-        $this->db->from('pekerjaan');
-        $this->db->order_by('pekerjaan_id', 'ASC');
-        $query = $this->db->get();
-        return $query->result();
-    }
 
-    function countpendudukbypekerjaan($pekerjaan)
-    {
-        $this->db->where('pekerjaan_id', $pekerjaan);
-        $this->db->from('anggota_kk');
-        return $this->db->count_all_results();
-    }
-
-    function countbygender($gendernya){
-        $this->db->where('jenis_kelamin', $gendernya);
-        $this->db->from('anggota_kk');
-        return $this->db->count_all_results();
-    }
 
 }

@@ -24,14 +24,20 @@
 									<td>Username <?php echo form_error('username') ?></td>
 									<td><input type="text" class="form-control" name="username" id="username" placeholder="Username" value="<?php echo $username; ?>" /></td>
 								</tr>
-								<tr>
-									<td>Password <?php echo form_error('password') ?></td>
-									<td><input type="text" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>" /></td>
-								</tr>
-								<tr>
-									<td>Level Id <?php echo form_error('level_id') ?></td>
-									<td><input type="text" class="form-control" name="level_id" id="level_id" placeholder="Level Id" value="<?php echo $level_id; ?>" /></td>
-								</tr>
+								<?php if ($this->uri->segment(2) == "create" || $this->uri->segment(2) == "create_action") { ?>
+									<tr>
+										<td>Password <?php echo form_error('password') ?></td>
+										<td><input type="password" class="form-control" name="password" id="password" placeholder="Password" value="<?php echo $password; ?>" /></td>
+									</tr>
+								<?php } else { ?>
+									<tr>
+										<td>Password <?php echo form_error('password') ?></td>
+										<td><input type="password" class="form-control" name="password" id="password" placeholder="Password" value="" />
+											<small style="color: red">(Biarkan kosong jika tidak diganti)</small>
+										</td>
+									</tr>
+								<?php } ?>
+								<input type="hidden" class="form-control" name="level_id" id="level_id" placeholder="Level Id" value="1" /></td>
 								<tr>
 									<td></td>
 									<td><input type="hidden" name="user_id" value="<?php echo $user_id; ?>" />

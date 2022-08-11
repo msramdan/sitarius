@@ -13,7 +13,7 @@ date_default_timezone_set('Asia/Jakarta');
 
 		public function index()
 		{	
-			$this->template->load('template_admin','admin/backup/view');
+			$this->template->load('template','admin/backup/view');
 		}
 
 		public function file()
@@ -23,7 +23,7 @@ date_default_timezone_set('Asia/Jakarta');
 			$this->load->dbutil();
 			// Backup your entire database and assign it to a variable
 			$prefs = array(
-		        'tables'        => array('user','history_login'),   // Array of tables to backup.
+		        'tables'        => array('user','history_login','bank','kantor_wilayah','pangkat','pelatihan','peserta','peserta_pelatihan'),   // Array of tables to backup.
 		        'ignore'        => array(),                     // List of tables to omit from the backup
 		        'format'        => 'txt',                       // gzip, zip, txt
 		        'filename'      => date('Ymd-h.i').'.sql',              // File name - NEEDED ONLY WITH ZIP FILES

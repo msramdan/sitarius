@@ -20,7 +20,7 @@ class Dashboard extends CI_Controller {
 		$levelid = $this->session->userdata('level_id');
 
 		if($levelid == 1) {
-			$this->template->load('template_admin','admin/dashboard', $data);
+			$this->template->load('template','admin/dashboard', $data);
 		}
 
 		if($levelid == 2) {
