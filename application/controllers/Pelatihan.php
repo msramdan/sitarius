@@ -147,6 +147,17 @@ class Pelatihan extends CI_Controller
 		}
 	}
 
+	public function berkas($id, $pelatihan_id){
+		$pelatihan = $this->Pelatihan_model->get_all();
+		$id_en =  encrypt_url($pelatihan_id);
+		$data = array(
+			'pelatihan_data' => $pelatihan,
+			'id' => $id_en,
+			'peserta_pelatihan_id' => $id
+		);
+		$this->template->load('template', 'pelatihan/berkas', $data);	
+	}
+
 	public function delete($id)
 	{
 		$row = $this->Pelatihan_model->get_by_id(decrypt_url($id));

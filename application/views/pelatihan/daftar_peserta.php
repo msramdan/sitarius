@@ -1,4 +1,4 @@
-<?php $nama_pelatihan = $this->db->query("SELECT nama_pelatihan,jumlah_peserta from pelatihan where pelatihan_id='$pelatihan_id'")->row();
+<?php $nama_pelatihan = $this->db->query("SELECT nama_pelatihan,jumlah_peserta,metode from pelatihan where pelatihan_id='$pelatihan_id'")->row();
 $kuota = $nama_pelatihan->jumlah_peserta;
 
 
@@ -85,7 +85,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
 
-					<h4 class="panel-title">List Peserta Pelatihan <b>"<?= $nama_pelatihan->nama_pelatihan ?> "</b> </h4>
+					<h4 class="panel-title">List Peserta Pelatihan <b>"<?= $nama_pelatihan->nama_pelatihan ?> "</b> -  Motede : <?= $nama_pelatihan->metode ?> </h4>
 				</div>
 				<div class="panel-body">
 
@@ -97,7 +97,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 								<th>Photo</th>
 								<th>Nip</th>
 								<th>Nama Lengkap</th>
-								<th>Email</th>
+								
 								<th>Sertifikat</th>
 								<!-- <th>Tempat Lahir</th>
 								<th>Tanggal Lahir</th>
@@ -109,6 +109,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 								<th>Bank</th>
 								<th>Norek</th> -->
 								<th>Upload</th>
+								<th>Berkas</th>
 								<th>Hapus dari list</th>
 							</tr>
 						</thead>
@@ -129,7 +130,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 									</td>
 									<td><?php echo $peserta->nip ?></td>
 									<td><?php echo $peserta->nama_lengkap ?></td>
-									<td><?php echo $peserta->email ?></td>
+									
 									<?php if ($peserta->sertifikat == '' || $peserta->sertifikat == null) { ?>
 										<td style="color: red;"><i class="fa fa-times" aria-hidden="true"></i> Certificate Not Available</td>
 									<?php } else { ?>
@@ -138,6 +139,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 									<td>
 										<a href="#modal-dialog-sertifikat" class="btn btn-info btn-sm" id="view_sertifikat" data-id="<?= $peserta->peserta_pelatihan_id ?>" data-nama_lenglap="<?= $peserta->nama_lengkap ?>" data-gambar_sert="<?= $peserta->sertifikat ?>" data-toggle="modal"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
 									</td>
+									<td> <a href="<?= base_url() ?>pelatihan/berkas/<?= $peserta->peserta_pelatihan_id ?>/<?= $peserta->pelatihan_id ?>" class="btn btn-success btn-sm"> <i class="fa fa-eye"></i> View  </a> </td>
 									<td>
 										<?php
 										echo anchor(site_url('pelatihan/deletePeserta/' . $peserta->peserta_pelatihan_id . '/' . $pelatihan_id), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');

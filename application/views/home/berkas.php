@@ -104,7 +104,11 @@
 
 									</tr>
 
-									<?php if ($data->metode == "PJJ") { ?>
+									<?php
+
+								
+									
+									if ($data->metode == "Klasikal") { ?>
 										<tr>
 											<td>Tiket Datang <br>
 												<?php if ($data->tiket_datang) { ?>
