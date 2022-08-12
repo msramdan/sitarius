@@ -8,9 +8,8 @@ class Peserta extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		// is_login();
+		is_login();
 		$this->load->model('Peserta_model');
-		$this->load->model('Bank_model');
 		$this->load->model('Kantor_wilayah_model');
 		$this->load->model('Pangkat_model');
 		$this->load->model('Bank_model');

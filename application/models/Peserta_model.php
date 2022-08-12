@@ -31,6 +31,16 @@ class Peserta_model extends CI_Model
         $this->db->where($this->id, $id);
         return $this->db->get($this->table)->row();
     }
+
+	public function login ($post)
+    {
+        $this->db->select('*');
+        $this->db->from('peserta');
+        $this->db->where('nip',$post['nip']);
+        $this->db->where('password',sha1($post['password']));
+        $query=$this->db->get();
+        return $query;
+    }
     
     // get total rows
     function total_rows($q = NULL) {
@@ -66,6 +76,12 @@ class Peserta_model extends CI_Model
     {
         $this->db->where($this->id, $id);
         $this->db->update($this->table, $data);
+    }
+
+	function updateBerkas($id, $data)
+    {
+        $this->db->where('peserta_pelatihan_id', $id);
+        $this->db->update('peserta_pelatihan', $data);
     }
 
     // delete data
