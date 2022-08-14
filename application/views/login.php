@@ -27,7 +27,7 @@
 <body class="pace-top">
 
 	<div class="login-cover">
-		<div class="login-cover-image"><img src="<?= base_url() ?>assets/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
+		<div class="login-cover-image"><img style="opacity: 0.9;" src="<?= base_url() ?>assets/img/login-bg/bg-1.jpg" data-id="login-cover-image" alt="" /></div>
 		<div class="login-cover-bg"></div>
 	</div>
 	<!-- begin #page-container -->
@@ -68,14 +68,14 @@
 		</div>
 		<!-- end login -->
 
-		<ul class="login-bg-list clearfix">
+		<!-- <ul class="login-bg-list clearfix">
 			<li class="active"><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-1.jpg" alt="" /></a></li>
 			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-2.jpg" alt="" /></a></li>
 			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-3.jpg" alt="" /></a></li>
 			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-4.jpg" alt="" /></a></li>
 			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-5.jpg" alt="" /></a></li>
 			<li><a href="#" data-click="change-bg"><img src="<?= base_url() ?>assets/img/login-bg/bg-6.jpg" alt="" /></a></li>
-		</ul>
+		</ul> -->
 	</div>
 	<!-- end page container -->
 

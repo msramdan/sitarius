@@ -42,7 +42,7 @@
 								</tr>
 
 								<tr>
-									<td>Jenis Kelamin <?php echo form_error('metode') ?></td>
+									<td>Jenis Pelatihan <?php echo form_error('metode') ?></td>
 									<td><select name="metode" class="form-control theSelect" value="<?= $metode ?>">
 											<option value="">-- Pilih --</option>
 											<option value="Klasikal" <?php echo $metode == 'Klasikal' ? 'selected' : 'null' ?>>Klasikal</option>

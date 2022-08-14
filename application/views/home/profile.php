@@ -63,54 +63,54 @@
 
 				</div>
 				<form action="" method="POST" enctype="multipart/form-data">
-				<div class="modal-body">
-					<div class="form-group">
-						<label for="">Lembar Konfirmasi <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Lembar Konfirmasi</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
+					<div class="modal-body">
+						<div class="form-group">
+							<label for="">Lembar Konfirmasi <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Lembar Konfirmasi</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">Surat Tugas <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Surat Tugas</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">Pas Photo <small style="color: red">Format : Jpg/Png</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Pas Photo</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">Surat Keterangan Dokter <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download SKD</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">NPWP dan BPJS <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download NPWP & BPJS</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">Tiket Datang <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Tiket Datang</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
+						<div class="form-group">
+							<label for="">Tiket Pulang <small style="color: red">Format : Pdf</small></label>
+							<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Tiket Pulang</a>
+							<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
+
+						</div>
 					</div>
-					<div class="form-group">
-						<label for="">Surat Tugas <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Surat Tugas</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
+					<div class="modal-footer">
+						<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+						<button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan</button>
 					</div>
-					<div class="form-group">
-						<label for="">Pas Photo <small style="color: red">Format : Jpg/Png</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Pas Photo</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
-					</div>
-					<div class="form-group">
-						<label for="">Surat Keterangan Dokter <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download SKD</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
-					</div>
-					<div class="form-group">
-						<label for="">NPWP dan BPJS <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download NPWP & BPJS</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
-					</div>
-					<div class="form-group">
-						<label for="">Tiket Datang <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Tiket Datang</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
-					</div>
-					<div class="form-group">
-						<label for="">Tiket Pulang <small style="color: red">Format : Pdf</small></label>
-						<a class="btn btn-primary btn-sm" id="download" href=""><i class="ace-icon fa fa-download"></i> Download Tiket Pulang</a>
-						<input type="file" class="form-control " id="lembar_konfirmasi" name="lembar_konfirmasi" value="" required>
-						
-					</div>
-				</div>
-				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
-					<button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan</button>
-				</div>
 				</form>
 
 			</div>
@@ -152,19 +152,25 @@
 						<div class="row">
 							<div class="col-sx-12 col-sm-4 col-md-4">
 								<div class="doctor-thumb">
-									<?php if ($user->photo == '' || $user->photo == null) { ?>
-										<img src="<?= base_url() ?>assets/img/peserta/default.png" width="100%" />
-									<?php } else { ?>
-										<img src="<?= base_url() ?>assets/img/peserta/<?php echo $user->photo ?>" width="100%" />
-									<?php } ?>
-
+									<center>
+										<?php if ($user->photo == '' || $user->photo == null) { ?>
+											<img src="<?= base_url() ?>assets/img/peserta/default.png" width="80%" style="border-radius: 50%;" />
+										<?php } else { ?>
+											<img src="<?= base_url() ?>assets/img/peserta/<?php echo $user->photo ?>" width="80%" style="border-radius: 50%;" />
+										<?php } ?>
+										<hr>
+									</center>
 								</div>
-								<div class="info p-20 bg-black-333">
-									<h4 class="text-uppercase text-white"><?= $user->nama_lengkap ?></h4>
-									<ul class="list angle-double-right m-0">
-										<li class="mt-0 text-gray-silver"><strong class="text-gray-lighter">Email</strong><br> <?= $user->email ?></li>
-										<li class="text-gray-silver"><strong class="text-gray-lighter">No Hp</strong><br> <?= $user->no_hp ?></li>
-									</ul>
+								<div>
+									<center>
+										<?php if ($user->qr_code == '' || $user->qr_code == null) { ?>
+											<img src="<?= base_url() ?>assets/img/qr/default.png" width="80%" />
+										<?php } else { ?>
+											<img src="<?= base_url() ?>assets/img/qr/<?php echo $user->qr_code ?>" width="80%" />
+										<?php } ?>
+										<img src="<?= base_url() ?>assets/img/qr/scan.png" width="40%" />
+										<hr>
+									</center>
 								</div>
 							</div>
 							<div class="col-xs-12 col-sm-8 col-md-8">
@@ -182,7 +188,7 @@
 														<input name="form_name" class="form-control" type="file">
 														<small style="color: red">(Note :Pilih photo Jika Ingin Merubah photo)</small>
 														<input type="hidden" name="photo_lama" value="<?= $user->photo ?>">
-														<?php echo form_error('nama_lengkap') ?>
+														<?php echo form_error('photo') ?>
 													</div>
 													<div class="form-group col-md-6">
 														<label>NIP</label>
@@ -319,6 +325,7 @@
 														<tr>
 															<th>No</th>
 															<th>Nama Pelatihan</th>
+															<th>Status</th>
 															<th>Tgl Mulai</th>
 															<th>Tgl Selesai</th>
 															<th>Detail</th>
@@ -335,10 +342,19 @@
 
 													<tbody>
 														<?php $no = 1;
+														$dateNow = date("Y-m-d");
+
 														foreach ($query as $pelatihan) { ?>
 															<tr>
 																<td><?= $no++ ?></td>
 																<td><?php echo $pelatihan->nama_pelatihan ?></td>
+																<?php if ($dateNow < $pelatihan->tanggal_mulai) { ?>
+																	<td style="color: grey;">Akan Datang</td>
+																<?php } else if ($dateNow >= $pelatihan->tanggal_mulai && $dateNow <= $pelatihan->tanggal_selesai) { ?>
+																	<td style="color: green;"> Berlangsung</td>
+																<?php } else if ($dateNow > $pelatihan->tanggal_selesai) { ?>
+																	<td style="color: red;">Selesai</td>
+																<?php } ?>
 																<td><?php echo $pelatihan->tanggal_mulai ?></td>
 																<td><?php echo $pelatihan->tanggal_selesai ?></td>
 																<td><a id="view_sertifikat" class="btn btn-success btn-sm" data-nama_pelatihan="<?= $pelatihan->nama_pelatihan ?>" data-tanggal_mulai="<?= $pelatihan->tanggal_mulai ?>" data-tanggal_selesai="<?= $pelatihan->tanggal_selesai ?>" data-angkatan="<?= $pelatihan->angkatan ?>" data-jumlah_peserta="<?= $pelatihan->jumlah_peserta ?>" data-metode="<?= $pelatihan->metode ?>" data-jumlah_jp="<?= $pelatihan->jumlah_jp ?>" data-penanggung_jawab="<?= $pelatihan->penanggung_jawab ?>" data-tempat="<?= $pelatihan->tempat ?>" data-jumlah_peserta="<?= $pelatihan->jumlah_peserta ?>" data-toggle="modal" data-target="#myModalDetail" href="#"><i class="fa fa-eye" aria-hidden="true"></i> View Detail</a></td>
@@ -395,7 +411,7 @@
 <script type="text/javascript">
 	$(document).on('click', '#view_upload', function() {
 		var lembar_konfirmasi = $(this).data('lembar_konfirmasi');
-		$('#modal-dialog #download').attr("href", "karyawan/download/"+photo);
+		$('#modal-dialog #download').attr("href", "karyawan/download/" + photo);
 
 	})
 </script>

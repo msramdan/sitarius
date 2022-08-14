@@ -6,7 +6,7 @@
 
 <head>
 	<meta charset="utf-8" />
-	<title>Aplikasi Sitarsius</title>
+	<title>Aplikasi Sitarsius | Balai Diklat Kementerian Hukum & HAM Sulawesi Utara</title>
 	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" name="viewport" />
 	<meta content="" name="description" />
 	<meta content="" name="author" />
@@ -147,7 +147,7 @@
 							<li><a href="<?= base_url() ?>bank">Data Bank</a></li>
 						</ul>
 					</li>
-					<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Peserta</span></a></li>
+					<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Pegawai</span></a></li>
 					<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>
 					<li class="has-sub">
 						<a href="javascript:;">

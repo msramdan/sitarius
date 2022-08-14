@@ -119,7 +119,7 @@
 		<div class="container pt-30 pb-0">
 			<div class="row">
 				<div class="col-md-5">
-					<img src="<?= base_url() ?>assets/front/img/logos.png" alt="" style="width: 90%;">
+					<img src="<?= base_url() ?>assets/front/img/MASKOT 2.png" alt="" style="width: 90%;">
 				</div>
 				<div class="col-md-7 pt-20">
 					<div class="row mtli-row-clearfix">

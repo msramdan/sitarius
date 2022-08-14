@@ -199,6 +199,34 @@ class Web extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$this->profile();
 		} else {
+
+			// hapus qr code
+			$row = $this->Peserta_model->get_by_id($id);
+			if ($row->qr_code == null || $row->qr_code == '') {
+			} else {
+				$target_file = './assets/img/qr/' . $row->qr_code;
+				unlink($target_file);
+			}
+
+			// buat qr code baru
+			$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+			$config['cacheable']    = true; //boolean, the default is true
+			$config['cachedir']     = './assets/'; //string, the default is application/cache/
+			$config['errorlog']     = './assets/'; //string, the default is application/logs/
+			$config['imagedir']     = './assets/img/qr/'; //direktori penyimpanan qr code
+			$config['quality']      = true; //boolean, the default is true
+			$config['size']         = '1024'; //interger, the default is 1024
+			$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+			$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+			$this->ciqrcode->initialize($config);
+			$image_name = $this->input->post('nip') . '_' . $this->input->post('nama_lengkap') . '.png'; //buat name dari qr code sesuai dengan nim
+			$params['data'] = $this->input->post('nip');
+
+			$params['level'] = 'H'; //H=High
+			$params['size'] = 10;
+			$params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+			$this->ciqrcode->generate($params);
+
 			$config['upload_path']      = './assets/img/peserta';
 			$config['allowed_types']    = 'jpg|png|jpeg';
 			$config['max_size']         = 10048;
@@ -223,6 +251,7 @@ class Web extends CI_Controller
 			if ($this->input->post('password') == '' || $this->input->post('password') == null) {
 				$data = array(
 					'photo' => $photo,
+					'qr_code' => $image_name,
 					'nip' => $this->input->post('nip', TRUE),
 					'nama_lengkap' => $this->input->post('nama_lengkap', TRUE),
 					'email' => $this->input->post('email', TRUE),
@@ -240,6 +269,7 @@ class Web extends CI_Controller
 			} else {
 				$data = array(
 					'photo' => $photo,
+					'qr_code' => $image_name,
 					'nip' => $this->input->post('nip', TRUE),
 					'nama_lengkap' => $this->input->post('nama_lengkap', TRUE),
 					'email' => $this->input->post('email', TRUE),
@@ -256,6 +286,7 @@ class Web extends CI_Controller
 					'password' => sha1($this->input->post('password', TRUE)),
 				);
 			}
+
 
 			$this->Peserta_model->update($id, $data);
 			$this->session->set_flashdata('message', 'Update Record Success');

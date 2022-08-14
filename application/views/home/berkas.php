@@ -28,6 +28,21 @@
 								<div class="form-group">
 									<input type="hidden" readonly value="<?= $data->peserta_pelatihan_id ?>" name="peserta_pelatihan_id" id="peserta_pelatihan_id">
 									<tr>
+										<td>Pas Photo <br>
+											<?php if ($data->pas_photo) { ?>
+												<a href="<?= base_url() ?>web/download_berkas/<?= $data->pas_photo ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
+											<?php } else { ?>
+												<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
+											<?php } ?>
+
+										</td>
+										<td>
+											<input type="file" class="form-control" name="pas_photo" id="pas_photo" placeholder="" value="" />
+											<small style="color: red">Pilih pas photo Jika Ingin Merubah Nya (Format File : jpg/png)</small>
+										</td>
+
+									</tr>
+									<tr>
 										<td>Lembar Konfirmasi <br>
 
 											<?php if ($data->lembar_konfirmasi) { ?>
@@ -39,7 +54,7 @@
 										</td>
 										<td>
 											<input type="file" class="form-control" name="lembar_konfirmasi" id="lembar_konfirmasi" placeholder="" value="" />
-											<small style="color: red">Pilih lembar konfirmasi Jika Ingin Merubah Nya</small>
+											<small style="color: red">Pilih lembar konfirmasi Jika Ingin Merubah Nya (Format File : pdf)</small>
 										</td>
 
 									</tr>
@@ -54,25 +69,11 @@
 										</td>
 										<td>
 											<input type="file" class="form-control" name="surat_tugas" id="surat_tugas" placeholder="" value="" />
-											<small style="color: red">Pilih surat tugas Jika Ingin Merubah Nya</small>
+											<small style="color: red">Pilih surat tugas Jika Ingin Merubah Nya (Format File : pdf)</small>
 										</td>
 
 									</tr>
-									<tr>
-										<td>Pas Photo <br>
-											<?php if ($data->pas_photo) { ?>
-												<a href="<?= base_url() ?>web/download_berkas/<?= $data->pas_photo ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
-											<?php } else { ?>
-												<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
-											<?php } ?>
-
-										</td>
-										<td>
-											<input type="file" class="form-control" name="pas_photo" id="pas_photo" placeholder="" value="" />
-											<small style="color: red">Pilih pas photo Jika Ingin Merubah Nya</small>
-										</td>
-
-									</tr>
+									
 									<tr>
 										<td>Surat Keterangan Dokter <br>
 											<?php if ($data->surat_keterangan_dokter) { ?>
@@ -84,7 +85,7 @@
 										</td>
 										<td>
 											<input type="file" class="form-control" name="surat_keterangan_dokter" id="surat_keterangan_dokter" placeholder="" value="" />
-											<small style="color: red">Pilih SKD Jika Ingin Merubah Nya</small>
+											<small style="color: red">Pilih SKD Jika Ingin Merubah Nya (Format File : pdf)</small>
 										</td>
 
 									</tr>
@@ -99,7 +100,7 @@
 										</td>
 										<td>
 											<input type="file" class="form-control" name="npwp_bpjs" id="npwp_bpjs" placeholder="" value="" />
-											<small style="color: red">Pilih npwp bpjs Jika Ingin Merubah Nya</small>
+											<small style="color: red">Pilih npwp bpjs Jika Ingin Merubah Nya (Format File : pdf)</small>
 										</td>
 
 									</tr>
@@ -120,7 +121,7 @@
 											</td>
 											<td>
 												<input type="file" class="form-control" name="tiket_datang" id="tiket_datang" placeholder="" value="" />
-												<small style="color: red">Pilih tiket datang Jika Ingin Merubah Nya</small>
+												<small style="color: red">Pilih tiket datang Jika Ingin Merubah Nya (Format File : pdf)</small>
 											</td>
 
 										</tr>
@@ -135,7 +136,7 @@
 											</td>
 											<td>
 												<input type="file" class="form-control" name="tiket_pulang" id="tiket_pulang" placeholder="" value="" />
-												<small style="color: red">Pilih tiket pulamg Jika Ingin Merubah Nya</small>
+												<small style="color: red">Pilih tiket pulamg Jika Ingin Merubah Nya (Format File : pdf)</small>
 											</td>
 
 										</tr>

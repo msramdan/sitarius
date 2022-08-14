@@ -34,6 +34,7 @@
 													<th>No</th>
 													<th>Nama Pelatihan</th>
 													<th>Angkatan</th>
+													<th>Status</th>
 													<th>Tanggal Mulai</th>
 													<th>Tanggal Selesai</th>
 													<th>Jumlah Peserta</th>
@@ -46,12 +47,21 @@
 												</tr>
 											</thead>
 											<tbody><?php $no = 1;
+													$dateNow = date("Y-m-d");
 													foreach ($pelatihan_data as $pelatihan) {
 													?>
 													<tr>
 														<td><?= $no++ ?></td>
 														<td><?php echo $pelatihan->nama_pelatihan ?></td>
 														<td><?php echo $pelatihan->angkatan ?></td>
+														<?php if ($dateNow < $pelatihan->tanggal_mulai) { ?>
+															<td style="color: grey;">Akan Datang</td>
+														<?php } else if ($dateNow >= $pelatihan->tanggal_mulai && $dateNow <= $pelatihan->tanggal_selesai) { ?>
+															<td style="color: green;"> Berlangsung</td>
+														<?php } else if ($dateNow > $pelatihan->tanggal_selesai) { ?>
+															<td style="color: red;">Selesai</td>
+														<?php } ?>
+
 														<td><?php echo $pelatihan->tanggal_mulai ?></td>
 														<td><?php echo $pelatihan->tanggal_selesai ?></td>
 														<td><?php echo $pelatihan->jumlah_peserta ?></td>

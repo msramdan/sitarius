@@ -91,6 +91,27 @@ class Peserta extends CI_Controller
 			$this->create();
 		} else {
 
+			$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+
+				$config['cacheable']    = true; //boolean, the default is true
+				$config['cachedir']     = './assets/'; //string, the default is application/cache/
+				$config['errorlog']     = './assets/'; //string, the default is application/logs/
+				$config['imagedir']     = './assets/img/qr/'; //direktori penyimpanan qr code
+				$config['quality']      = true; //boolean, the default is true
+				$config['size']         = '1024'; //interger, the default is 1024
+				$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+				$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+				$this->ciqrcode->initialize($config);
+
+				$image_name = $this->input->post('nip') . '_' . $this->input->post('nama_lengkap') . '.png'; //buat name dari qr code sesuai dengan nim
+
+				$params['data'] = $this->input->post('nip'); //data yang akan di jadikan QR CODE
+				$params['level'] = 'H'; //H=High
+				$params['size'] = 10;
+				$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+				$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+
+
 			$config['upload_path']      = './assets/img/peserta';
 			$config['allowed_types']    = 'jpg|png|jpeg';
 			$config['max_size']         = 10048;
@@ -117,6 +138,7 @@ class Peserta extends CI_Controller
 				'bank_id' => $this->input->post('bank_id', TRUE),
 				'norek' => $this->input->post('norek', TRUE),
 				'password' => sha1($this->input->post('password', TRUE)),
+				'qr_code' => $image_name,
 			);
 
 			$this->Peserta_model->insert($data);
@@ -167,6 +189,39 @@ class Peserta extends CI_Controller
 		if ($this->form_validation->run() == FALSE) {
 			$this->update(encrypt_url($this->input->post('peserta_id')));
 		} else {
+
+
+			// hapus qr code
+			$id = $this->input->post('peserta_id');
+			$row = $this->Peserta_model->get_by_id($id);
+
+			if ($row->qr_code == null || $row->qr_code == '') {
+			} else {
+				$target_file = './assets/img/qr/' . $row->qr_code;
+				unlink($target_file);
+			}
+
+			// buat qr code baru
+			$this->load->library('ciqrcode'); //pemanggilan library QR CODE
+			$config['cacheable']    = true; //boolean, the default is true
+			$config['cachedir']     = './assets/'; //string, the default is application/cache/
+			$config['errorlog']     = './assets/'; //string, the default is application/logs/
+			$config['imagedir']     = './assets/img/qr/'; //direktori penyimpanan qr code
+			$config['quality']      = true; //boolean, the default is true
+			$config['size']         = '1024'; //interger, the default is 1024
+			$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+			$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+			$this->ciqrcode->initialize($config);
+			$image_name = $this->input->post('nip') . '_' . $this->input->post('nama_lengkap') . '.png'; //buat name dari qr code sesuai dengan nim
+			$params['data'] = $this->input->post('nip');
+
+			$params['level'] = 'H'; //H=High
+			$params['size'] = 10;
+			$params['savename'] = FCPATH . $config['imagedir'] . $image_name;
+			$this->ciqrcode->generate($params);
+
+
+
 			$config['upload_path']      = './assets/img/peserta';
 			$config['allowed_types']    = 'jpg|png|jpeg';
 			$config['max_size']         = 10048;
@@ -174,7 +229,6 @@ class Peserta extends CI_Controller
 			$this->load->library('upload', $config);
 			$this->upload->initialize($config);
 			if ($this->upload->do_upload("photo")) {
-				$id = $this->input->post('peserta_id');
 				$row = $this->Peserta_model->get_by_id($id);
 				$data = $this->upload->data();
 				$photo = $data['file_name'];
@@ -191,6 +245,7 @@ class Peserta extends CI_Controller
 			if ($this->input->post('password') == '' || $this->input->post('password') == null) {
 				$data = array(
 					'photo' => $photo,
+					'qr_code' => $image_name,
 					'nip' => $this->input->post('nip', TRUE),
 					'nama_lengkap' => $this->input->post('nama_lengkap', TRUE),
 					'email' => $this->input->post('email', TRUE),
@@ -208,6 +263,7 @@ class Peserta extends CI_Controller
 			} else {
 				$data = array(
 					'photo' => $photo,
+					'qr_code' => $image_name,
 					'nip' => $this->input->post('nip', TRUE),
 					'nama_lengkap' => $this->input->post('nama_lengkap', TRUE),
 					'email' => $this->input->post('email', TRUE),
@@ -241,6 +297,14 @@ class Peserta extends CI_Controller
 				$target_file = './assets/img/peserta/' . $row->photo;
 				unlink($target_file);
 			}
+
+			if ($row->qr_code == null || $row->qr_code == '') {
+			} else {
+				$target_file = './assets/img/qr/' . $row->qr_code;
+				unlink($target_file);
+			}
+
+
 			$this->Peserta_model->delete(decrypt_url($id));
 			$data = $this->db->query("SELECT * from peserta_pelatihan where peserta_id='$peserta_id'")->result();
 			foreach ($data as $value) {

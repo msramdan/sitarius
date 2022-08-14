@@ -24,46 +24,25 @@ class Auth extends CI_Controller
 		$post = $this->input->post(null, TRUE);
 		if (isset($post['login'])) {
 			$query = $this->User_model->login($post);
-
-			if($query){
-
-				if ($query->num_rows() > 0) {
-					$row = $query->row();
-	
-					$levelid = $row->level_id;
-	
-					$params = '';
-	
-					if($levelid == 1) {
-						$params = array(
-							'userid' => $row->user_id,
-							'level_id' => $row->level_id
-						);
-					}
-	
-					if($levelid == 2) {
-						$params = array(
-							'userid' => $row->user_id,
-							'level_id' => $row->level_id,
-							'anggotakkid' => $row->anggota_kk_id
-						);
-					}
-	
-	
-					$this->session->set_userdata($params);
-					$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username.' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);
-					echo "<script>window.location='" . site_url('dashboard') . "'</script>";
-					
-				} else {
-					$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');
-					redirect(site_url('auth'));
+		
+			if ($query->num_rows() > 0) {
+				$row = $query->row();
+				$levelid = $row->level_id;
+				$params = '';
+				if ($levelid == 1) {
+					$params = array(
+						'userid' => $row->user_id,
+						'level_id' => $row->level_id
+					);
 				}
+				$this->session->set_userdata($params);
+				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username . ' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);
+				echo "<script>window.location='" . site_url('dashboard') . "'</script>";
+			} else {
+				$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');
+				redirect(site_url('auth'));
 			}
-		} else {
-			$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');
-			redirect(site_url('auth'));
 		}
-
 	}
 
 	public function logout()

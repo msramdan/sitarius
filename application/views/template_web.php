@@ -8,7 +8,7 @@
 	<meta name="description" content="aplikasi daiklat" />
 	<meta name="keywords" content="badiklat sulut" />
 	<meta name="author" content="Muhamad Saeful ramdan - 083874731480" />
-	<title>Web Sitarius</title>
+	<title>Aplikasi Sitarsius | Balai Diklat Kementerian Hukum & HAM Sulawesi Utara</title>
 	<link href="<?= base_url() ?>assets/front/img/baner.png" rel="shortcut icon" type="image/png">
 	<link href="<?= base_url() ?>assets/front/css/bootstrap.min.css" rel="stylesheet" type="text/css">
 	<link href="<?= base_url() ?>assets/front/css/jquery-ui.min.css" rel="stylesheet" type="text/css">
@@ -108,10 +108,10 @@
 					<div class="col-sm-6 col-md-3">
 						<div class="widget dark">
 							<img class="mt-5 mb-20" alt="" src="<?= base_url() ?>assets/front/img/logo-badiklat-sulut-white.png">
-							<p>Jl. Diponegoro No. 87, Mahakeret Timur, Kec. Wenang, Kota Manado, 95112</p>
+							<p>Jl. H. Tumundo, Pinokalan, Kec. Ranowulu, Kota Bitung, Sulawesi Utara</p>
 							<ul class="list-inline mt-5">
-								<li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">(0431) 870359</a> </li>
-								<li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">kanwilsulut@kemenkumham.go.id</a> </li>
+								<li class="m-0 pl-10 pr-10"> <i class="fa fa-phone text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">0852-4000-2163</a> </li>
+								<li class="m-0 pl-10 pr-10"> <i class="fa fa-envelope-o text-theme-colored2 mr-5"></i> <a class="text-gray" href="#">info@sitarius.com</a> </li>
 							</ul>
 						</div>
 					</div>
@@ -119,9 +119,9 @@
 						<div class="widget dark">
 							<h4 class="widget-title line-bottom-theme-colored-2">Link Terkait</h4>
 							<ul class="angle-double-right list-border">
-								<li><a href="#home">Home</a></li>
-								<li><a href="#about">Register</a></li>
-								<li><a href="#courses">Login</a></li>
+								<li><a href="https://sulut.kemenkumham.go.id/" target="_blank">Website Kanwil Sulut</a></li>
+								<li><a href="https://kemenkumham.go.id/" target="_blank">Website Kumenkumham RI</a></li>
+								<li><a href="https://badiklat-sulut.kemenkumham.go.id/" target="_blank">Website Badiklat Sulut</a></li>
 							</ul>
 						</div>
 					</div>
@@ -129,21 +129,18 @@
 						<div class="widget dark">
 							<h4 class="widget-title line-bottom-theme-colored-2">Pelatihan</h4>
 							<div class="latest-posts">
-								<article class="post media-post clearfix pb-0 mb-10">
-									<div class="post-right">
-										<h5 class="post-title mt-0 mb-5"><a href="#">Jadwal Pendaftaran dan Tahapan Seleksi Anggota Polri 2021-2022</a></h5>
-										<p class="post-date mb-0 font-12">2021-03-18</p>
-										<p class="post-date mb-0 font-12">By Muhammad Saeful Ramdan</p>
-									</div>
-								</article>
+								<?php $query = $this->db->query("SELECT * from pelatihan  order by pelatihan_id desc limit 2")->result() ?>
 
-								<article class="post media-post clearfix pb-0 mb-10">
-									<div class="post-right">
-										<h5 class="post-title mt-0 mb-5"><a href="#">Siap-siap Penerimaan Polri 2021: dari Tamtama, Bintara hingga Akpol</a></h5>
-										<p class="post-date mb-0 font-12">2021-03-17</p>
-										<p class="post-date mb-0 font-12">By Muhammad Saeful Ramdan</p>
-									</div>
-								</article>
+								<?php foreach ($query as $value) { ?>
+									<article class="post media-post clearfix pb-0 mb-10">
+										<div class="post-right">
+											<h5 class="post-title mt-0 mb-5"><a href="#"><?= $value->nama_pelatihan ?></a></h5>
+											<p class="post-date mb-0 font-12">Tanggal : <?= $value->tanggal_mulai ?> s.d <?= $value->tanggal_selesai ?> </p>
+											<p class="post-date mb-0 font-12">Lokasi : <?= $value->tempat ?> </p>
+										</div>
+									</article>
+								<?php } ?>
+
 
 							</div>
 						</div>
@@ -154,9 +151,9 @@
 							<h4 class="widget-title line-bottom-theme-colored-2">Sosial Media</h4>
 							<div class="opening-hours">
 								<ul class="styled-icons icon-sm icon-bordered icon-circled clearfix mt-10">
-									<li><a href=""><i class="fa fa-facebook"></i></a></li>
-									<li><a href=""><i class="fa fa-youtube"></i></a></li>
-									<li><a href=""><i class="fa fa-instagram"></i></a></li>
+									<li><a href="https://www.facebook.com/KemenkumhamRIofficial" target="_blank"><i class="fa fa-facebook"></i></a></li>
+									<li><a href="https://www.youtube.com/c/KemenkumhamRI" target="_blank"><i class="fa fa-youtube"></i></a></li>
+									<li><a href="https://www.instagram.com/kemenkumhamri/" target="_blank"><i class="fa fa-instagram"></i></a></li>
 								</ul>
 							</div>
 						</div>
