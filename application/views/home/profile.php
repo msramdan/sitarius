@@ -193,6 +193,7 @@
 													<div class="form-group col-md-6">
 														<label>NIP</label>
 														<input class="form-control" type="text" name="nip" value="<?= $user->nip ?>">
+														<input type="hidden" class="form-control" name="nip_lama" id="nip_lama" placeholder="Nip" value="<?= $user->nip ?>" />
 														<?php echo form_error('nip') ?>
 													</div>
 												</div>
@@ -331,6 +332,7 @@
 															<th>Detail</th>
 															<th>Upload Berkas</th>
 															<th>Sertifikat</th>
+															<th>Bukti Trf</th>
 														</tr>
 													</thead>
 													<?php
@@ -364,6 +366,14 @@
 																		<p>No File</p>
 																	<?php } else { ?>
 																		<a class="btn btn-warning btn-sm" href="<?php echo base_url() . 'web/sertifikat/' . $pelatihan->sertifikat ?>"><i class="ace-icon fa fa-download"></i> Download
+																		<?php } ?></a>
+																</td>
+
+																<td>
+																	<?php if ($pelatihan->trf == null || $pelatihan->trf == '') { ?>
+																		<p>No File</p>
+																	<?php } else { ?>
+																		<a class="btn btn-warning btn-sm" href="<?php echo base_url() . 'web/trf/' . $pelatihan->trf ?>"><i class="ace-icon fa fa-download"></i> Download
 																		<?php } ?></a>
 																</td>
 

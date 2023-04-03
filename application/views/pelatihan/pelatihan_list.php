@@ -32,7 +32,7 @@
 											<thead>
 												<tr>
 													<th>No</th>
-													<th>Nama Pelatihan</th>
+													<th>Pelatihan</th>
 													<th>Angkatan</th>
 													<th>Status</th>
 													<th>Tanggal Mulai</th>
@@ -42,7 +42,7 @@
 													<th>Tempat</th>
 													<th>JP</th>
 													<th>Penanggung Jawab</th>
-													<!-- <th>Sertifikat</th> -->
+													<th>Budget</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -69,10 +69,15 @@
 														<td><?php echo $pelatihan->tempat ?></td>
 														<td><?php echo $pelatihan->jumlah_jp ?></td>
 														<td><?php echo $pelatihan->penanggung_jawab ?></td>
-														<!-- <td> <a href="" class="btn btn-info btn-sm"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a> </td> -->
+														<?php $budget = $this->db->query("SELECT SUM(budget) AS budget FROM pelatihan_budget where pelatihan_id='$pelatihan->pelatihan_id'")->row();
+														$totalBudget = $budget->budget;
+														?>
+														<td><?= rupiah($totalBudget) ?></td>
 														<td style="text-align:center" width="200px">
 															<?php
-															echo anchor(site_url('pelatihan/daftar_peserta/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-users" aria-hidden="true"></i> List Peserta', 'class="btn btn-success btn-sm read_data"');
+															echo anchor(site_url('pelatihan/budget/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-money" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
+															echo '  ';
+															echo anchor(site_url('pelatihan/daftar_peserta/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-users" aria-hidden="true"></i>', 'class="btn btn-warning btn-sm read_data"');
 															echo '  ';
 															echo anchor(site_url('pelatihan/update/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
 															echo '  ';

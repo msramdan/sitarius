@@ -33,7 +33,7 @@
 												<tr>
 													<th>No</th>
 													<th>Username</th>
-													<th>Level</th>
+													<th>Level User</th>
 													<th>Action</th>
 												</tr>
 											</thead>
@@ -43,7 +43,12 @@
 													<tr>
 														<td><?= $no++ ?></td>
 														<td><?php echo $user->username ?></td>
-														<td>Admin Aplikasi</td>
+														<?php if ($user->level_id == 1) { ?>
+															<td>Admin Aplikasi</td>
+														<?php } else { ?>
+															<td>Keuangan</td>
+														<?php } ?>
+
 														<td>
 															<?php
 															echo anchor(site_url('user/update/' . encrypt_url($user->user_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');

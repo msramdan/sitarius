@@ -1,16 +1,16 @@
 <?php
-defined('BASEPATH') OR exit('No direct script access allowed');
+defined('BASEPATH') or exit('No direct script access allowed');
 
 
-class Dashboard extends CI_Controller {
+class Dashboard extends CI_Controller
+{
 
 	function __construct()
-    {
-        parent::__construct();
-        is_login();
+	{
+		parent::__construct();
+		is_login();
 		$this->load->model('Dashboard_model');
-		// check_admin();
-    }
+	}
 
 	public function index()
 	{
@@ -19,14 +19,8 @@ class Dashboard extends CI_Controller {
 		// check session user
 		$levelid = $this->session->userdata('level_id');
 
-		if($levelid == 1) {
-			$this->template->load('template','admin/dashboard', $data);
-		}
-
-		if($levelid == 2) {
-			$this->template->load('template_user','user/dashboard', $data);
-		}
-
+		// if ($levelid == 1 || $levelid == 2) {
+		$this->template->load('template', 'admin/dashboard', $data);
 	}
 
 	function get_total_pekerjaan()
@@ -48,7 +42,8 @@ class Dashboard extends CI_Controller {
 		echo json_encode($datanya);
 	}
 
-	function get_total_gender() {
+	function get_total_gender()
+	{
 		$genders = ['Perempuan', 'Laki-laki'];
 
 		$datanya = [];
@@ -64,17 +59,20 @@ class Dashboard extends CI_Controller {
 		echo json_encode($datanya);
 	}
 
-	function countgendermale(){
+	function countgendermale()
+	{
 		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk WHERE jenis_kelamin = 'Laki-laki'")->row();
 		echo $data->total;
 	}
 
-	function countgenderfemale(){
+	function countgenderfemale()
+	{
 		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk WHERE jenis_kelamin = 'Perempuan'")->row();
 		echo $data->total;
 	}
 
-	function countpenduduk(){
+	function countpenduduk()
+	{
 		$data = $this->db->query("SELECT COUNT(*) as total FROM anggota_kk")->row();
 		echo $data->total;
 	}

@@ -37,7 +37,18 @@
 										</td>
 									</tr>
 								<?php } ?>
-								<input type="hidden" class="form-control" name="level_id" id="level_id" placeholder="Level Id" value="1" /></td>
+								<input type="hidden" class="form-control" name="level_id_id" id="level_id_id" placeholder="level_id Id" value="1" /></td>
+
+								<tr>
+									<td>Level User <?php echo form_error('level_id') ?></td>
+									<td><select name="level_id" class="form-control theSelect" value="<?= $level_id ?>">
+											<option value="">-- Pilih --</option>
+											<option value="1" <?php echo $level_id == '1' ? 'selected' : 'null' ?>>Admin Aplikasi</option>
+											<option value="2" <?php echo $level_id == '2' ? 'selected' : 'null' ?>>Keuangan</option>
+										</select>
+									</td>
+								</tr>
+
 								<tr>
 									<td></td>
 									<td><input type="hidden" name="user_id" value="<?php echo $user_id; ?>" />

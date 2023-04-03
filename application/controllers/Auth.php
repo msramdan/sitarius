@@ -10,7 +10,7 @@ class Auth extends CI_Controller
 
 	public function index()
 	{
-		// check_already_login();
+		check_already_login();
 		$this->load->view('login');
 	}
 
@@ -24,17 +24,15 @@ class Auth extends CI_Controller
 		$post = $this->input->post(null, TRUE);
 		if (isset($post['login'])) {
 			$query = $this->User_model->login($post);
-		
+
 			if ($query->num_rows() > 0) {
 				$row = $query->row();
 				$levelid = $row->level_id;
 				$params = '';
-				if ($levelid == 1) {
-					$params = array(
-						'userid' => $row->user_id,
-						'level_id' => $row->level_id
-					);
-				}
+				$params = array(
+					'userid' => $row->user_id,
+					'level_id' => $row->level_id
+				);
 				$this->session->set_userdata($params);
 				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username . ' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);
 				echo "<script>window.location='" . site_url('dashboard') . "'</script>";

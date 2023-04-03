@@ -17,7 +17,7 @@
 				</div>
 				<div class="panel-body">
 
-					<form action="<?php echo $action; ?>" method="post"  enctype="multipart/form-data">
+					<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 						<thead>
 							<table id="data-table-default" class="table  table-bordered table-hover table-td-valign-middle">
 								<?php if ($this->uri->segment(2) == 'create' || $this->uri->segment(2) == 'create_action') { ?>
@@ -44,7 +44,13 @@
 								<?php } ?>
 								<tr>
 									<td>Nip <?php echo form_error('nip') ?></td>
-									<td><input type="text" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" /></td>
+									<td>
+
+										<input type="text" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" />
+										<input type="hidden" class="form-control" name="nip_lama" id="nip" placeholder="Nip" value="<?php echo $nip_lama; ?>" />
+
+
+									</td>
 								</tr>
 								<tr>
 									<td>Nama Lengkap <?php echo form_error('nama_lengkap') ?></td>
@@ -76,20 +82,20 @@
 									</td>
 								</tr>
 								<tr>
-								<td>Pangkat/Golongan<?php echo form_error('pangkat') ?></td>
-								<td>
-									<select name="pangkat" class="form-control theSelect">
-										<option value="">-- Pilih -- </option>
-										<?php foreach ($data_pangkat as $key => $data) { ?>
-											<?php if ($pangkat == $data->pangkat_id) { ?>
-												<option value="<?php echo $data->pangkat_id ?>" selected><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
-											<?php } else { ?>
-												<option value="<?php echo $data->pangkat_id ?>"><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
+									<td>Pangkat/Golongan<?php echo form_error('pangkat') ?></td>
+									<td>
+										<select name="pangkat" class="form-control theSelect">
+											<option value="">-- Pilih -- </option>
+											<?php foreach ($data_pangkat as $key => $data) { ?>
+												<?php if ($pangkat == $data->pangkat_id) { ?>
+													<option value="<?php echo $data->pangkat_id ?>" selected><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
+												<?php } else { ?>
+													<option value="<?php echo $data->pangkat_id ?>"><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
+												<?php } ?>
 											<?php } ?>
-										<?php } ?>
-									</select>
-								</td>
-							</tr>
+										</select>
+									</td>
+								</tr>
 								<tr>
 									<td>Jabatan <?php echo form_error('jabatan') ?></td>
 									<td><input type="text" class="form-control" name="jabatan" id="jabatan" placeholder="Jabatan" value="<?php echo $jabatan; ?>" /></td>

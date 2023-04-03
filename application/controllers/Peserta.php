@@ -63,6 +63,7 @@ class Peserta extends CI_Controller
 			'peserta_id' => set_value('peserta_id'),
 			'photo' => set_value('photo'),
 			'nip' => set_value('nip'),
+			'nip_lama' => set_value('nip'),
 			'bank' => $this->Bank_model->get_all(),
 			'kantor_wilayah_data' => $this->Kantor_wilayah_model->get_all(),
 			'data_pangkat' => $this->Pangkat_model->get_all(),
@@ -85,31 +86,30 @@ class Peserta extends CI_Controller
 
 	public function create_action()
 	{
-		$this->_rules();
-
+		$this->_rules(null, null, null);
 		if ($this->form_validation->run() == FALSE) {
 			$this->create();
 		} else {
 
 			$this->load->library('ciqrcode'); //pemanggilan library QR CODE
 
-				$config['cacheable']    = true; //boolean, the default is true
-				$config['cachedir']     = './assets/'; //string, the default is application/cache/
-				$config['errorlog']     = './assets/'; //string, the default is application/logs/
-				$config['imagedir']     = './assets/img/qr/'; //direktori penyimpanan qr code
-				$config['quality']      = true; //boolean, the default is true
-				$config['size']         = '1024'; //interger, the default is 1024
-				$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
-				$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
-				$this->ciqrcode->initialize($config);
+			$config['cacheable']    = true; //boolean, the default is true
+			$config['cachedir']     = './assets/'; //string, the default is application/cache/
+			$config['errorlog']     = './assets/'; //string, the default is application/logs/
+			$config['imagedir']     = './assets/img/qr/'; //direktori penyimpanan qr code
+			$config['quality']      = true; //boolean, the default is true
+			$config['size']         = '1024'; //interger, the default is 1024
+			$config['black']        = array(224, 255, 255); // array, default is array(255,255,255)
+			$config['white']        = array(70, 130, 180); // array, default is array(0,0,0)
+			$this->ciqrcode->initialize($config);
 
-				$image_name = $this->input->post('nip') . '_' . $this->input->post('nama_lengkap') . '.png'; //buat name dari qr code sesuai dengan nim
+			$image_name = $this->input->post('nip') . '_' . $this->input->post('nama_lengkap') . '.png'; //buat name dari qr code sesuai dengan nim
 
-				$params['data'] = $this->input->post('nip'); //data yang akan di jadikan QR CODE
-				$params['level'] = 'H'; //H=High
-				$params['size'] = 10;
-				$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
-				$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
+			$params['data'] = $this->input->post('nip'); //data yang akan di jadikan QR CODE
+			$params['level'] = 'H'; //H=High
+			$params['size'] = 10;
+			$params['savename'] = FCPATH . $config['imagedir'] . $image_name; //simpan image QR CODE ke folder assets/images/
+			$this->ciqrcode->generate($params); // fungsi untuk generate QR CODE
 
 
 			$config['upload_path']      = './assets/img/peserta';
@@ -161,6 +161,7 @@ class Peserta extends CI_Controller
 				'peserta_id' => set_value('peserta_id', $row->peserta_id),
 				'photo' => set_value('photo', $row->photo),
 				'nip' => set_value('nip', $row->nip),
+				'nip_lama' => $row->nip,
 				'nama_lengkap' => set_value('nama_lengkap', $row->nama_lengkap),
 				'email' => set_value('email', $row->email),
 				'no_hp' => set_value('no_hp', $row->no_hp),
@@ -184,7 +185,7 @@ class Peserta extends CI_Controller
 
 	public function update_action()
 	{
-		$this->_rules();
+		$this->_rules('update', $this->input->post('nip'), $this->input->post('nip_lama'));
 
 		if ($this->form_validation->run() == FALSE) {
 			$this->update(encrypt_url($this->input->post('peserta_id')));
@@ -325,10 +326,20 @@ class Peserta extends CI_Controller
 		}
 	}
 
-	public function _rules()
+	public function _rules($type, $new, $original_value)
 	{
 		// $this->form_validation->set_rules('photo', 'photo', 'trim|required');
-		$this->form_validation->set_rules('nip', 'nip', 'trim|required');
+		if ($type != null) {
+			if ($new == $original_value) {
+				$is_unique =  '';
+			} else {
+				$is_unique =  '|is_unique[peserta.nip]';
+			}
+		} else {
+			$is_unique =  '|is_unique[peserta.nip]';
+			$this->form_validation->set_rules('password', 'Password', 'trim|required');
+		}
+		$this->form_validation->set_rules('nip', 'nip', 'trim|required' . $is_unique);
 		$this->form_validation->set_rules('nama_lengkap', 'nama lengkap', 'trim|required');
 		$this->form_validation->set_rules('email', 'email', 'trim|required');
 		$this->form_validation->set_rules('no_hp', 'no hp', 'trim|required');
@@ -341,8 +352,6 @@ class Peserta extends CI_Controller
 		$this->form_validation->set_rules('upt', 'upt', 'trim|required');
 		$this->form_validation->set_rules('bank_id', 'bank id', 'trim|required');
 		$this->form_validation->set_rules('norek', 'norek', 'trim|required');
-		$this->form_validation->set_rules('password', 'password', 'trim');
-
 		$this->form_validation->set_rules('peserta_id', 'peserta_id', 'trim');
 		$this->form_validation->set_error_delimiters('<span class="text-danger">', '</span>');
 	}

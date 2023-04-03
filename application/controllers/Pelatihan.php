@@ -50,7 +50,7 @@ class Pelatihan extends CI_Controller
 		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
 	}
 
-	
+
 
 	public function create()
 	{
@@ -147,7 +147,8 @@ class Pelatihan extends CI_Controller
 		}
 	}
 
-	public function berkas($id, $pelatihan_id){
+	public function berkas($id, $pelatihan_id)
+	{
 		$pelatihan = $this->Pelatihan_model->get_all();
 		$id_en =  encrypt_url($pelatihan_id);
 		$data = array(
@@ -155,14 +156,14 @@ class Pelatihan extends CI_Controller
 			'id' => $id_en,
 			'peserta_pelatihan_id' => $id
 		);
-		$this->template->load('template', 'pelatihan/berkas', $data);	
+		$this->template->load('template', 'pelatihan/berkas', $data);
 	}
 
 	public function delete($id)
 	{
 		$row = $this->Pelatihan_model->get_by_id(decrypt_url($id));
 		$pelatihan_id = decrypt_url($id);
-		
+
 
 		if ($row) {
 			$this->Pelatihan_model->delete(decrypt_url($id));
@@ -233,6 +234,41 @@ class Pelatihan extends CI_Controller
 		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
 	}
 
+
+	public function uploadTrf()
+	{
+		$pelatihan_id = encrypt_url($this->input->post('pelatihan_id'));
+
+		$config['upload_path']      = './assets/img/trf';
+		$config['allowed_types']    = 'jpg|png|jpeg';
+		$config['max_size']         = 10048;
+		$config['file_name']        = 'File-' . date('ymd') . '-' . substr(sha1(rand()), 0, 10);
+		$this->load->library('upload', $config);
+		$this->upload->initialize($config);
+		if ($this->upload->do_upload("photo")) {
+			$id = $this->input->post('peserta_pelatihan_id');
+			$row = $this->db->query("SELECT* from peserta_pelatihan where peserta_pelatihan_id='$id'")->row();
+
+			$data = $this->upload->data();
+			$photo = $data['file_name'];
+			if ($row->trf == null || $row->trf == '') {
+			} else {
+				$target_file = './assets/img/trf/' . $row->trf;
+				unlink($target_file);
+			}
+		}
+
+		$data = array(
+			'trf' => $photo,
+		);
+		$this->Pelatihan_model->updateSertifikat($this->input->post('peserta_pelatihan_id', TRUE), $data);
+
+
+		$this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
+		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
+	}
+
+
 	public function deletePeserta($id, $pelatihan_id)
 	{
 		$row = $this->db->query("SELECT* from peserta_pelatihan where peserta_pelatihan_id='$id'")->row();
@@ -243,9 +279,40 @@ class Pelatihan extends CI_Controller
 			unlink($target_file);
 		}
 		$this->Pelatihan_model->deleteDaftarPeserta($id);
-		
+
 		$this->session->set_flashdata('message', 'Peserta berhasil dihapus dari list');
 		redirect(base_url('pelatihan/daftar_peserta/' . encrypt_url($pelatihan_id)));
+	}
+
+	public function budget($id)
+	{
+		$pelatihan_id = decrypt_url($id);
+		$data = array(
+			'pelatihan_id' => $pelatihan_id,
+		);
+		$this->template->load('template', 'pelatihan/budget', $data);
+	}
+
+	public function store_budget()
+	{
+		$keterangan       		= $_POST['keterangan'];
+		$pelatihan_id       	= $_POST['pelatihan_id'];
+		$budget       	  = $_POST['budget'];
+
+		// detele yg lama
+		$this->db->query("DELETE FROM pelatihan_budget where pelatihan_id='$pelatihan_id'");
+
+		if ($keterangan) {
+			$jumlah_data = count($keterangan);
+			for ($i = 0; $i < $jumlah_data; $i++) {
+				$pelatihan_budget['pelatihan_id'] = $pelatihan_id;
+				$pelatihan_budget['keterangan'] = $keterangan[$i];
+				$pelatihan_budget['budget'] = $budget[$i];
+				$this->db->insert('pelatihan_budget', $pelatihan_budget);
+			}
+		}
+		$this->session->set_flashdata('message', 'Budget pelatihan berhasil disimpan');
+		redirect(site_url('pelatihan'));
 	}
 }
 

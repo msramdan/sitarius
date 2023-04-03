@@ -10,6 +10,13 @@ function check_already_login()
 	}
 }
 
+function rupiah($angka)
+{
+
+	$hasil_rupiah = "Rp " . number_format($angka, 2, ',', '.');
+	return $hasil_rupiah;
+}
+
 function is_login()
 {
 	$ci = &get_instance();
@@ -82,7 +89,7 @@ function getprovinsiAPI($id)
 
 function getkabupatenkotaAPI($regencies, $province)
 {
-	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/regencies/'.$province.'.json';
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/regencies/' . $province . '.json';
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $urlAPI);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -99,7 +106,7 @@ function getkabupatenkotaAPI($regencies, $province)
 
 function getkecamatanAPI($district, $regencies)
 {
-	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/districts/'.$regencies.'.json';
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/districts/' . $regencies . '.json';
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $urlAPI);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -116,7 +123,7 @@ function getkecamatanAPI($district, $regencies)
 
 function getkelurahanAPI($villages, $district)
 {
-	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/villages/'.$district.'.json';
+	$urlAPI = 'http://www.emsifa.com/api-wilayah-indonesia/api/villages/' . $district . '.json';
 	$ch = curl_init();
 	curl_setopt($ch, CURLOPT_URL, $urlAPI);
 	curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

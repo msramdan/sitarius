@@ -37,6 +37,34 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 	</div>
 </div>
 
+<!-- TRF -->
+<div class="modal fade" id="modal-dialog-trf">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Bukri Transfer <span id="modal_nama_lengkap_trf"></span> </h4>
+			</div>
+			<form action="<?= base_url() ?>pelatihan/uploadTrf" method="POST" enctype="multipart/form-data">
+				<div class="modal-body">
+					<center>
+						<img src="" id="modalGambarTrf" width="60%" />
+						<p style="color: red">*Silahkan pilih bukti trf jika ingin merubahnya</p>
+					</center>
+					<input type="hidden" id="modal_peserta_pelatihan_id_trf" value="" name="peserta_pelatihan_id">
+					<input type="hidden" id="pelatihan_id" value="<?= $pelatihan_id ?>" name="pelatihan_id">
+					<div class="form-group">
+						<input type="file" class="form-control " id="photo" name="photo" value="" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+					<button type="submit" class="btn btn-success">Simpan</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
 
 <div id="content" class="content">
 	<div class="row">
@@ -85,7 +113,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
 
-					<h4 class="panel-title">List Peserta Pelatihan <b>"<?= $nama_pelatihan->nama_pelatihan ?> "</b> -  Motede : <?= $nama_pelatihan->metode ?> </h4>
+					<h4 class="panel-title">List Peserta Pelatihan <b>"<?= $nama_pelatihan->nama_pelatihan ?> "</b> - Motede : <?= $nama_pelatihan->metode ?> </h4>
 				</div>
 				<div class="panel-body">
 
@@ -97,20 +125,11 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 								<th>Photo</th>
 								<th>Nip</th>
 								<th>Nama Lengkap</th>
-								
 								<th>Sertifikat</th>
-								<!-- <th>Tempat Lahir</th>
-								<th>Tanggal Lahir</th>
-								<th>Jenis Kelamin</th>
-								<th>Pangkat</th>
-								<th>Jabatan</th>
-								<th>Kantor Wilayah</th>
-								<th>Upt</th>
-								<th>Bank</th>
-								<th>Norek</th> -->
 								<th>Upload</th>
 								<th>Berkas</th>
-								<th>Hapus dari list</th>
+								<th>Bukti Trf</th>
+								<th>Hapus</th>
 							</tr>
 						</thead>
 
@@ -130,7 +149,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 									</td>
 									<td><?php echo $peserta->nip ?></td>
 									<td><?php echo $peserta->nama_lengkap ?></td>
-									
+
 									<?php if ($peserta->sertifikat == '' || $peserta->sertifikat == null) { ?>
 										<td style="color: red;"><i class="fa fa-times" aria-hidden="true"></i> Certificate Not Available</td>
 									<?php } else { ?>
@@ -139,7 +158,11 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 									<td>
 										<a href="#modal-dialog-sertifikat" class="btn btn-info btn-sm" id="view_sertifikat" data-id="<?= $peserta->peserta_pelatihan_id ?>" data-nama_lenglap="<?= $peserta->nama_lengkap ?>" data-gambar_sert="<?= $peserta->sertifikat ?>" data-toggle="modal"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
 									</td>
-									<td> <a href="<?= base_url() ?>pelatihan/berkas/<?= $peserta->peserta_pelatihan_id ?>/<?= $peserta->pelatihan_id ?>" class="btn btn-success btn-sm"> <i class="fa fa-eye"></i> View  </a> </td>
+									<td> <a href="<?= base_url() ?>pelatihan/berkas/<?= $peserta->peserta_pelatihan_id ?>/<?= $peserta->pelatihan_id ?>" class="btn btn-success btn-sm"> <i class="fa fa-eye"></i> View </a> </td>
+									<td>
+										<a href="#modal-dialog-trf" class="btn btn-warning btn-sm" id="view_trf" data-id="<?= $peserta->peserta_pelatihan_id ?>" data-nama_lengkap="<?= $peserta->nama_lengkap ?>" data-gambar_trf="<?= $peserta->trf ?>" data-toggle="modal"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
+									</td>
+
 									<td>
 										<?php
 										echo anchor(site_url('pelatihan/deletePeserta/' . $peserta->peserta_pelatihan_id . '/' . $pelatihan_id), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
@@ -176,5 +199,22 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 		$('#modal-dialog-sertifikat #modal_nama_lengkap').text(nama_lengkap);
 		$('#modal-dialog-sertifikat #modal_peserta_pelatihan_id').val(id);
 		$('#modal-dialog-sertifikat #modalGambarSertifikat').attr("src", source);
+	})
+</script>
+
+<script type="text/javascript">
+	$(document).on('click', '#view_trf', function() {
+		var nama_lengkap = $(this).data('nama_lengkap');
+		var id = $(this).data('id');
+		var picTrf = $(this).data('gambar_trf');
+		if (picTrf) {
+			var source = "../../assets/img/trf/" + picTrf;
+		} else {
+			var source = "../../assets/img/trf/default.png";
+		}
+		var photo = $(this).data('photo');
+		$('#modal-dialog-trf #modal_nama_lengkap_trf').text(nama_lengkap);
+		$('#modal-dialog-trf #modal_peserta_pelatihan_id_trf').val(id);
+		$('#modal-dialog-trf #modalGambarTrf').attr("src", source);
 	})
 </script>

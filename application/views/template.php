@@ -149,18 +149,22 @@
 					</li>
 					<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Pegawai</span></a></li>
 					<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>
-					<li class="has-sub">
-						<a href="javascript:;">
-							<b class="caret pull-right"></b>
-							<i class="fa fa-cogs"></i>
-							<span>Setting</span>
-						</a>
-						<ul class="sub-menu">
-							<li><a href="<?= base_url() ?>user">Data User</a></li>
-							<li><a href="<?= base_url() ?>history_login">History Login</a></li>
-							<li><a href="<?= base_url() ?>backup">Backup Database</a></li>
-						</ul>
-					</li>
+					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<li class="has-sub">
+							<a href="javascript:;">
+								<b class="caret pull-right"></b>
+								<i class="fa fa-cogs"></i>
+								<span>Setting</span>
+							</a>
+							<ul class="sub-menu">
+								<li><a href="<?= base_url() ?>user">Data User</a></li>
+								<li><a href="<?= base_url() ?>history_login">History Login</a></li>
+								<li><a href="<?= base_url() ?>backup">Backup Database</a></li>
+							</ul>
+						</li>
+
+					<?php } ?>
+
 
 					<!-- begin sidebar minify button -->
 					<li><a href="javascript:;" class="sidebar-minify-btn" data-click="sidebar-minify"><i class="fa fa-angle-double-left"></i></a></li>
