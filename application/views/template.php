@@ -33,7 +33,7 @@
 	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-1.9.1.min.js"></script>
 	<script src="<?= base_url() ?>assets/plugins/jquery/jquery-migrate-1.1.0.min.js"></script>
 	<!-- ================== END BASE JS ================== -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.13/css/select2.min.css" integrity="sha512-nMNlpuaDPrqlEls3IX/Q56H36qvBASwb3ipuo3MxeWbsQB1881ox0cRv7UPTgBlriqoynt35KjEwgGUeUXIPnw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 </head>
 
@@ -135,21 +135,25 @@
 				<ul class="nav">
 					<li class="nav-header">Main Menu</li>
 					<li><a href="<?= base_url() ?>dashboard"><i class="fa fa-home"></i> <span>Dashboard</span></a></li>
-					<li class="has-sub">
-						<a href="javascript:;">
-							<b class="caret pull-right"></b>
-							<i class="fa fa-list"></i>
-							<span>Master Data</span>
-						</a>
-						<ul class="sub-menu">
-							<li><a href="<?= base_url() ?>pangkat">Data Pangkat</a></li>
-							<li><a href="<?= base_url() ?>kantor_wilayah">Data Kantor Wilayah</a></li>
-							<li><a href="<?= base_url() ?>bank">Data Bank</a></li>
-						</ul>
-					</li>
-					<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Pegawai</span></a></li>
-					<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>
+
 					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<li class="has-sub">
+							<a href="javascript:;">
+								<b class="caret pull-right"></b>
+								<i class="fa fa-list"></i>
+								<span>Master Data</span>
+							</a>
+							<ul class="sub-menu">
+								<li><a href="<?= base_url() ?>pangkat">Data Pangkat</a></li>
+								<li><a href="<?= base_url() ?>kantor_wilayah">Data Kantor Wilayah</a></li>
+								<li><a href="<?= base_url() ?>bank">Data Bank</a></li>
+								<li><a href="<?= base_url() ?>budget">Data Budget</a></li>
+							</ul>
+						</li>
+						<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Pegawai</span></a></li>
+						<li><a href="<?= base_url() ?>pemateri"><i class="fa fa-users"></i> <span>Daftar Pemateri</span></a></li>
+						<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>
+
 						<li class="has-sub">
 							<a href="javascript:;">
 								<b class="caret pull-right"></b>
@@ -162,6 +166,18 @@
 								<li><a href="<?= base_url() ?>backup">Backup Database</a></li>
 							</ul>
 						</li>
+					<?php } else { ?>
+						<li class="has-sub">
+							<a href="javascript:;">
+								<b class="caret pull-right"></b>
+								<i class="fa fa-list"></i>
+								<span>Master Data</span>
+							</a>
+							<ul class="sub-menu">
+								<li><a href="<?= base_url() ?>budget">Data Budget</a></li>
+							</ul>
+						</li>
+						<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>
 
 					<?php } ?>
 
@@ -217,6 +233,14 @@
 		$(document).ready(function() {
 			App.init();
 			TableManageDefault.init();
+		});
+	</script>
+
+	<script>
+		$(document).ready(function() {
+			$('.select2-form').select2({
+				tags: true
+			});
 		});
 	</script>
 </body>

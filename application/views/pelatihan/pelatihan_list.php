@@ -22,9 +22,13 @@
 								<div class="box-body">
 									<div class='row'>
 										<div class='col-md-9'>
-											<div style="padding-bottom: 10px;">
-												<?php echo anchor(site_url('pelatihan/create'), '<i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
-											</div>
+											<?php if ($this->session->userdata('level_id') == 1) { ?>
+												<div style="padding-bottom: 10px;">
+													<?php echo anchor(site_url('pelatihan/create'), '<i class="fa fa-plus-square" aria-hidden="true"></i> Tambah Data', 'class="btn btn-danger btn-sm tambah_data"'); ?>
+												</div>
+											<?php }
+											?>
+
 										</div>
 									</div>
 									<div class="box-body" style="overflow-x: scroll; ">
@@ -35,13 +39,13 @@
 													<th>Pelatihan</th>
 													<th>Angkatan</th>
 													<th>Status</th>
-													<th>Tanggal Mulai</th>
-													<th>Tanggal Selesai</th>
-													<th>Jumlah Peserta</th>
-													<th>Metode</th>
+													<th>Mulai</th>
+													<th>Selesai</th>
+													<th>Peserta</th>
+													<!-- <th>Metode</th>
 													<th>Tempat</th>
 													<th>JP</th>
-													<th>Penanggung Jawab</th>
+													<th>Penanggung Jawab</th> -->
 													<th>Budget</th>
 													<th>Action</th>
 												</tr>
@@ -64,24 +68,28 @@
 
 														<td><?php echo $pelatihan->tanggal_mulai ?></td>
 														<td><?php echo $pelatihan->tanggal_selesai ?></td>
-														<td><?php echo $pelatihan->jumlah_peserta ?></td>
-														<td><?php echo $pelatihan->metode ?></td>
+														<td><?php echo $pelatihan->jumlah_peserta ?> Orang</td>
+														<!-- <td><?php echo $pelatihan->metode ?></td>
 														<td><?php echo $pelatihan->tempat ?></td>
 														<td><?php echo $pelatihan->jumlah_jp ?></td>
-														<td><?php echo $pelatihan->penanggung_jawab ?></td>
+														<td><?php echo $pelatihan->penanggung_jawab ?></td> -->
 														<?php $budget = $this->db->query("SELECT SUM(budget) AS budget FROM pelatihan_budget where pelatihan_id='$pelatihan->pelatihan_id'")->row();
 														$totalBudget = $budget->budget;
 														?>
 														<td><?= rupiah($totalBudget) ?></td>
-														<td style="text-align:center" width="200px">
+														<td style="text-align:center" width="">
 															<?php
-															echo anchor(site_url('pelatihan/budget/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-money" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data"');
+															echo anchor(site_url('pelatihan/update/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-print" aria-hidden="true"></i>', 'class="btn btn-default btn-sm update_data" title="Cetak Pelatihan"');
 															echo '  ';
-															echo anchor(site_url('pelatihan/daftar_peserta/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-users" aria-hidden="true"></i>', 'class="btn btn-warning btn-sm read_data"');
+															echo anchor(site_url('pelatihan/budget/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-money" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data" title="Budgeting"');
 															echo '  ';
-															echo anchor(site_url('pelatihan/update/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data"');
-															echo '  ';
-															echo anchor(site_url('pelatihan/delete/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+															echo anchor(site_url('pelatihan/daftar_peserta/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-users" aria-hidden="true"></i>', 'class="btn btn-warning btn-sm read_data" title="List Peserta"');
+															if ($this->session->userdata('level_id') == 1) {
+																echo '  ';
+																echo anchor(site_url('pelatihan/update/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-pencil" aria-hidden="true"></i>', 'class="btn btn-primary btn-sm update_data" title="Update Pelatihan"');
+																echo '  ';
+																echo anchor(site_url('pelatihan/delete/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-trash" aria-hidden="true"></i>', 'onclick="return confirm(\'Yakin ingin hapus data ?\');" class="btn btn-danger btn-sm delete_data" title="Delete Pelatihan"');
+															}
 															?>
 														</td>
 													</tr>

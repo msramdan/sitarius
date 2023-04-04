@@ -8,7 +8,7 @@ class Bank extends CI_Controller
 	function __construct()
 	{
 		parent::__construct();
-		// is_login();
+		is_login();
 		$this->load->model('Bank_model');
 		$this->load->library('form_validation');
 	}
@@ -109,7 +109,7 @@ class Bank extends CI_Controller
 			$error = $this->db->error();
 			if ($error['code'] != 0) {
 				$this->session->set_flashdata('error', 'Data tidak bisa di delete, sudah berelasi');
-			}else{
+			} else {
 				$this->session->set_flashdata('message', 'Delete Record Success');
 			}
 

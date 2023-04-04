@@ -1,8 +1,41 @@
 <?php $nama_pelatihan = $this->db->query("SELECT nama_pelatihan,jumlah_peserta,metode from pelatihan where pelatihan_id='$pelatihan_id'")->row(); ?>
 
+
+
+<!-- #modal-dialog -->
+<div class="modal fade" id="modal-dialog-bukti_honor">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title">Bukti Transfer Honor <span id="modal_nama_lengkap"></span> </h4>
+			</div>
+			<form action="<?= base_url() ?>pelatihan/uploadbukti_honor" method="POST" enctype="multipart/form-data">
+				<div class="modal-body">
+					<center>
+						<img src="" id="modalGambarbukti_honor" width="60%" />
+						<p style="color: red">*Silahkan pilih Bukti Transfer Honor jika ingin merubahnya</p>
+					</center>
+					<input type="hidden" id="modal_pelatihan_pemateri_id" value="" name="pelatihan_pemateri_id">
+					<input type="hidden" id="pelatihan_id" value="<?= $pelatihan_id ?>" name="pelatihan_id">
+					<div class="form-group">
+						<input type="file" class="form-control " id="photo" name="photo" value="" required>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
+					<?php if ($this->session->userdata('level_id') == 2) { ?>
+						<button type="submit" class="btn btn-success">Simpan</button>
+					<?php } ?>
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
 <div id="content" class="content">
 	<div class="row">
-		<div class="col-md-8 ui-sortable">
+		<div class="col-md-6 ui-sortable">
 			<div class="panel panel-inverse" data-sortable-id="index-2">
 				<div class="panel-heading">
 
@@ -43,14 +76,53 @@
 							</tbody>
 						</table>
 						<?php if ($this->session->userdata('level_id') == 2) { ?>
+							<a href="<?php echo site_url('pelatihan') ?>" class="btn btn-info"><i class="fa fa-undo"></i> Back</a>
 							<button type="submit" class="btn btn-danger"><i class="fa fa-save"></i> Simpan</button>
 						<?php } ?>
-
-						<a href="<?php echo site_url('pelatihan') ?>" class="btn btn-info"><i class="fa fa-undo"></i> Back</a>
 					</form>
 				</div>
 			</div>
 		</div>
+
+		<!-- ===== -->
+		<div class="col-md-6 ui-sortable">
+			<div class="panel panel-inverse" data-sortable-id="index-2">
+				<div class="panel-heading">
+
+					<h4 class="panel-title">List Daftar Pemateri <b>"<?= $nama_pelatihan->nama_pelatihan ?> "</b> </h4>
+				</div>
+				<div class="panel-body">
+					<table class="table table-bordered " id="dynamic_field">
+						<thead>
+							<tr>
+								<th>Nama Pemateri </th>
+								<th>Kontak Hp</th>
+								<th>Status Trf</th>
+								<th>Bukti Honor</th>
+							</tr>
+						</thead>
+						<tbody>
+							<?php foreach ($pemateri as $key => $datas) { ?>
+								<tr>
+									<td><?= $datas->nama_pemateri ?></td>
+									<td><?= $datas->no_hp ?></td>
+									<?php if ($datas->bukti_honor == null ||  $datas->bukti_honor == '') { ?>
+										<td> <span class="btn btn-danger btn-sm">Belum Transfer</span> </td>
+									<?php } else { ?>
+										<td> <span class="btn btn-success btn-sm">Sudah Transfer</span> </td>
+									<?php } ?>
+									<td>
+										<a href="#modal-dialog-bukti_honor" class="btn btn-info btn-sm" id="view_bukti_honor" data-id="<?= $datas->pelatihan_pemateri_id ?>" data-nama_pemateri="<?= $datas->nama_pemateri ?>" data-bukti_honor="<?= $datas->bukti_honor ?>" data-toggle="modal"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
+									</td>
+								</tr>
+							<?php } ?>
+						</tbody>
+					</table>
+
+				</div>
+			</div>
+		</div>
+
 	</div>
 </div>
 
@@ -81,4 +153,21 @@
 		});
 
 	});
+</script>
+
+<script type="text/javascript">
+	$(document).on('click', '#view_bukti_honor', function() {
+		var nama_lengkap = $(this).data('nama_pemateri');
+		var id = $(this).data('id');
+		var gambarbukti_honor = $(this).data('bukti_honor');
+		if (gambarbukti_honor) {
+			var source = "../../assets/img/bukti_honor/" + gambarbukti_honor;
+		} else {
+			var source = "../../assets/img/bukti_honor/default.png";
+		}
+		var photo = $(this).data('photo');
+		$('#modal-dialog-bukti_honor #modal_nama_lengkap').text(nama_lengkap);
+		$('#modal-dialog-bukti_honor #modal_pelatihan_pemateri_id').val(id);
+		$('#modal-dialog-bukti_honor #modalGambarbukti_honor').attr("src", source);
+	})
 </script>

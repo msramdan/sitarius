@@ -22,28 +22,28 @@
 							<table id="data-table-default" class="table  table-bordered table-hover table-td-valign-middle">
 								<tr>
 									<td>Nama Pelatihan <?php echo form_error('nama_pelatihan') ?></td>
-									<td><input type="text" class="form-control" name="nama_pelatihan" id="nama_pelatihan" placeholder="Nama Pelatihan" value="<?php echo $nama_pelatihan; ?>" /></td>
+									<td><input required type="text" class="form-control" name="nama_pelatihan" id="nama_pelatihan" placeholder="Nama Pelatihan" value="<?php echo $nama_pelatihan; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Angkatan <?php echo form_error('angkatan') ?></td>
-									<td><input type="text" class="form-control" name="angkatan" id="angkatan" placeholder="Angkatan" value="<?php echo $angkatan; ?>" /></td>
+									<td><input required type="text" class="form-control" name="angkatan" id="angkatan" placeholder="Angkatan" value="<?php echo $angkatan; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Tanggal Mulai <?php echo form_error('tanggal_mulai') ?></td>
-									<td><input type="date" class="form-control" name="tanggal_mulai" id="tanggal_mulai" placeholder="Tanggal Mulai" value="<?php echo $tanggal_mulai; ?>" /></td>
+									<td><input required type="date" class="form-control" name="tanggal_mulai" id="tanggal_mulai" placeholder="Tanggal Mulai" value="<?php echo $tanggal_mulai; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Tanggal Selesai <?php echo form_error('tanggal_selesai') ?></td>
-									<td><input type="date" class="form-control" name="tanggal_selesai" id="tanggal_selesai" placeholder="Tanggal Selesai" value="<?php echo $tanggal_selesai; ?>" /></td>
+									<td><input required type="date" class="form-control" name="tanggal_selesai" id="tanggal_selesai" placeholder="Tanggal Selesai" value="<?php echo $tanggal_selesai; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Jumlah Peserta <?php echo form_error('jumlah_peserta') ?></td>
-									<td><input type="number" class="form-control" name="jumlah_peserta" id="jumlah_peserta" placeholder="Jumlah Peserta" value="<?php echo $jumlah_peserta; ?>" /></td>
+									<td><input required type="number" class="form-control" name="jumlah_peserta" id="jumlah_peserta" placeholder="Jumlah Peserta" value="<?php echo $jumlah_peserta; ?>" /></td>
 								</tr>
 
 								<tr>
 									<td>Jenis Pelatihan <?php echo form_error('metode') ?></td>
-									<td><select name="metode" class="form-control theSelect" value="<?= $metode ?>">
+									<td><select required name="metode" class="form-control theSelect" value="<?= $metode ?>">
 											<option value="">-- Pilih --</option>
 											<option value="Klasikal" <?php echo $metode == 'Klasikal' ? 'selected' : 'null' ?>>Klasikal</option>
 											<option value="PJJ" <?php echo $metode == 'PJJ' ? 'selected' : 'null' ?>>PJJ</option>
@@ -52,15 +52,26 @@
 								</tr>
 								<tr>
 									<td>Tempat <?php echo form_error('tempat') ?></td>
-									<td><input type="text" class="form-control" name="tempat" id="tempat" placeholder="Tempat" value="<?php echo $tempat; ?>" /></td>
+									<td><input required type="text" class="form-control" name="tempat" id="tempat" placeholder="Tempat" value="<?php echo $tempat; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Jumlah Jp <?php echo form_error('jumlah_jp') ?></td>
-									<td><input type="number" class="form-control" name="jumlah_jp" id="jumlah_jp" placeholder="Jumlah Jp" value="<?php echo $jumlah_jp; ?>" /></td>
+									<td><input required type="number" class="form-control" name="jumlah_jp" id="jumlah_jp" placeholder="Jumlah Jp" value="<?php echo $jumlah_jp; ?>" /></td>
 								</tr>
 								<tr>
 									<td>Penanggung Jawab <?php echo form_error('penanggung_jawab') ?></td>
-									<td><input type="text" class="form-control" name="penanggung_jawab" id="penanggung_jawab" placeholder="Penanggung Jawab" value="<?php echo $penanggung_jawab; ?>" /></td>
+									<td><input required type="text" class="form-control" name="penanggung_jawab" id="penanggung_jawab" placeholder="Penanggung Jawab" value="<?php echo $penanggung_jawab; ?>" /></td>
+								</tr>
+								<tr>
+									<td>Pemateri<?php echo form_error('pemateri_id') ?></td>
+									<td>
+										<select required name="pemateri_id[]" class="form-control select2-form" multiple="multiple" style="width: 100%;">
+											<option value="" disabled>-- Pilih -- </option>
+											<?php foreach ($pemateri as $key => $data) { ?>
+												<option <?= in_array($data->pemateri_id, $array) ? 'selected' : ''  ?> value="<?php echo $data->pemateri_id ?>"><?php echo $data->nama_pemateri ?></option>
+											<?php } ?>
+										</select>
+									</td>
 								</tr>
 								<tr>
 									<td></td>

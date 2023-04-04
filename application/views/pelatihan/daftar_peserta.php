@@ -30,7 +30,10 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 				</div>
 				<div class="modal-footer">
 					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-					<button type="submit" class="btn btn-success">Simpan</button>
+
+					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<button type="submit" class="btn btn-success">Simpan</button>
+					<?php } ?>
 				</div>
 			</form>
 		</div>
@@ -58,7 +61,11 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 				</div>
 				<div class="modal-footer">
 					<a href="javascript:;" class="btn btn-white" data-dismiss="modal">Close</a>
-					<button type="submit" class="btn btn-success">Simpan</button>
+
+
+					<?php if ($this->session->userdata('level_id') == 2) { ?>
+						<button type="submit" class="btn btn-success">Simpan</button>
+					<?php } ?>
 				</div>
 			</form>
 		</div>
@@ -87,13 +94,18 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 										<option value="<?= $row->peserta_id ?>"><?= $row->nip ?> - <?= $row->nama_lengkap ?></option>
 									<?php } ?>
 								</select>
-								<div class="input-group-btn">
-									<button class="btn btn-primary" type="submit" <?php if ($kuota <= $kuotaSaatIni) {
-																						echo "Disabled";
-																					} ?>>
-										<i class="fa fa-plus"></i> Add
-									</button>
-								</div>
+
+								<?php if ($this->session->userdata('level_id') == 1) { ?>
+									<div class="input-group-btn">
+										<button class="btn btn-primary" type="submit" <?php if ($kuota <= $kuotaSaatIni) {
+																							echo "Disabled";
+																						} ?>>
+											<i class="fa fa-plus"></i> Add
+										</button>
+									</div>
+								<?php } ?>
+
+
 							</div>
 							<?php if ($kuota <= $kuotaSaatIni) { ?>
 								<span style="color: red;"> <i> * Pelatihan sudah penuh</i> </span>
@@ -125,11 +137,13 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 								<th>Photo</th>
 								<th>Nip</th>
 								<th>Nama Lengkap</th>
+								<th>Status</th>
 								<th>Sertifikat</th>
-								<th>Upload</th>
 								<th>Berkas</th>
 								<th>Bukti Trf</th>
-								<th>Hapus</th>
+								<?php if ($this->session->userdata('level_id') == 1) { ?>
+									<th>Hapus</th>
+								<?php } ?>
 							</tr>
 						</thead>
 
@@ -163,11 +177,15 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
 										<a href="#modal-dialog-trf" class="btn btn-warning btn-sm" id="view_trf" data-id="<?= $peserta->peserta_pelatihan_id ?>" data-nama_lengkap="<?= $peserta->nama_lengkap ?>" data-gambar_trf="<?= $peserta->trf ?>" data-toggle="modal"><i class="fa fa-upload" aria-hidden="true"></i> Upload</a>
 									</td>
 
-									<td>
-										<?php
-										echo anchor(site_url('pelatihan/deletePeserta/' . $peserta->peserta_pelatihan_id . '/' . $pelatihan_id), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
-										?>
-									</td>
+									<?php if ($this->session->userdata('level_id') == 1) { ?>
+										<td>
+											<?php
+											echo anchor(site_url('pelatihan/deletePeserta/' . $peserta->peserta_pelatihan_id . '/' . $pelatihan_id), '<i class="fa fa-trash" aria-hidden="true"></i>', 'class="btn btn-danger btn-sm delete_data" Delete', 'onclick="javasciprt: return confirm(\'Are You Sure ?\')"');
+											?>
+										</td>
+									<?php } ?>
+
+
 								</tr>
 							<?php } ?>
 						</tbody>
