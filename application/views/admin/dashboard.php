@@ -105,7 +105,13 @@
 					<p><?= $peserta ?> Data</p>
 				</div>
 				<div class="stats-link">
-					<a href="<?= base_url() ?>peserta">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+
+					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<a href="<?= base_url() ?>peserta">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } else { ?>
+						<a href="#">Access For Admin <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } ?>
+
 				</div>
 			</div>
 		</div>
@@ -120,7 +126,12 @@
 					<p><?= $kantor_wilayah ?> Data</p>
 				</div>
 				<div class="stats-link">
-					<a href="<?= base_url() ?>kantor_wilayah">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+
+					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<a href="<?= base_url() ?>kantor_wilayah">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } else { ?>
+						<a href="#">Access For Admin <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
@@ -128,14 +139,18 @@
 			<div class="widget widget-stats bg-red">
 				<div class="stats-icon"><i class="fa fa-user"></i></div>
 				<div class="stats-info">
-					<h4>USER ADMIN</h4>
+					<h4>USER APLIKASI</h4>
 					<?php
 					$users = $this->db->get('user')->num_rows();
 					?>
 					<p><?= $users ?> Data</p>
 				</div>
 				<div class="stats-link">
-					<a href="<?= base_url() ?>user">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php if ($this->session->userdata('level_id') == 1) { ?>
+						<a href="<?= base_url() ?>user">View Detail <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } else { ?>
+						<a href="#">Access For Admin <i class="fa fa-arrow-circle-o-right"></i></a>
+					<?php } ?>
 				</div>
 			</div>
 		</div>
