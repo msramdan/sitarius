@@ -148,6 +148,7 @@
 								<li><a href="<?= base_url() ?>kantor_wilayah">Data Kantor Wilayah</a></li>
 								<li><a href="<?= base_url() ?>bank">Data Bank</a></li>
 								<li><a href="<?= base_url() ?>budget">Data Budget</a></li>
+								<li><a href="<?= base_url() ?>budget_kategori">Budget Kategori</a></li>
 							</ul>
 						</li>
 						<li><a href="<?= base_url() ?>peserta"><i class="fa fa-users"></i> <span>Daftar Pegawai</span></a></li>
@@ -175,6 +176,7 @@
 							</a>
 							<ul class="sub-menu">
 								<li><a href="<?= base_url() ?>budget">Data Budget</a></li>
+								<li><a href="<?= base_url() ?>budget_kategori">Budget Kategori</a></li>
 							</ul>
 						</li>
 						<li><a href="<?= base_url() ?>pelatihan"><i class="fa fa-graduation-cap" aria-hidden="true"></i> <span>Daftar Pelatihan</span></a></li>

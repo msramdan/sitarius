@@ -133,8 +133,9 @@
 		<table style="border: 1px solid black;border-collapse: collapse;font-size: 11px" width="100%">
 			<tr style="margin: 5px">
 				<th style="border: 1px solid black;width:5%">No</th>
-				<th style="border: 1px solid black;width:55%">Nama Budget</th>
-				<th style="border: 1px solid black;width:40%">Nominal</th>
+				<th style="border: 1px solid black;width:35%">Nama Budget</th>
+				<th style="border: 1px solid black;width:30%">Kategori</th>
+				<th style="border: 1px solid black;width:30%">Nominal</th>
 
 			</tr>
 			<?php $z = 1;
@@ -142,16 +143,17 @@
 				<tr>
 					<td style="border: 1px solid black;"> <?= $z++ ?></td>
 					<td style="border: 1px solid black;"> <?= $datas->nama_budget ?></td>
-					<td style="border: 1px solid black;">  <?= rupiah($datas->budget)  ?></td>
+					<td style="border: 1px solid black;"> <?= $datas->nama_kategori ?></td>
+					<td style="border: 1px solid black;"> <?= rupiah($datas->budget)  ?></td>
 				</tr>
 			<?php } ?>
 			<?php $budget = $this->db->query("SELECT SUM(budget) AS budget FROM pelatihan_budget where pelatihan_id='$id'")->row();
-				$totalBudget = $budget->budget;
+			$totalBudget = $budget->budget;
 			?>
 
 			<tr>
-				<td colspan="2" style="border: 1px solid black;"> <b>Total</b></td>
-				<td style="border: 1px solid black;">  <?= rupiah($totalBudget) ?></td>
+				<td colspan="3" style="border: 1px solid black;"> <b>Total</b></td>
+				<td style="border: 1px solid black;"> <?= rupiah($totalBudget) ?></td>
 			</tr>
 
 

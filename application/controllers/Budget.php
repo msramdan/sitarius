@@ -9,6 +9,7 @@ class Budget extends CI_Controller
 	{
 		parent::__construct();
 		is_login();
+		$this->load->model('Budget_kategori_model');
 		$this->load->model('Budget_model');
 		$this->load->library('form_validation');
 	}
@@ -28,6 +29,7 @@ class Budget extends CI_Controller
 		if ($row) {
 			$data = array(
 				'budget_id' => $row->budget_id,
+				'budget_kategori_id' => $row->budget_kategori_id,
 				'nama_budget' => $row->nama_budget,
 				'nominal_budget' => $row->nominal_budget,
 			);
@@ -43,7 +45,9 @@ class Budget extends CI_Controller
 		$data = array(
 			'button' => 'Create',
 			'action' => site_url('budget/create_action'),
+			'kategori' => $this->Budget_kategori_model->get_all(),
 			'budget_id' => set_value('budget_id'),
+			'budget_kategori_id' => set_value('budget_kategori_id'),
 			'nama_budget' => set_value('nama_budget'),
 			'nominal_budget' => set_value('nominal_budget'),
 		);
@@ -58,6 +62,7 @@ class Budget extends CI_Controller
 			$this->create();
 		} else {
 			$data = array(
+				'budget_kategori_id' => $this->input->post('budget_kategori_id', TRUE),
 				'nama_budget' => $this->input->post('nama_budget', TRUE),
 				'nominal_budget' => $this->input->post('nominal_budget', TRUE),
 			);
@@ -75,8 +80,10 @@ class Budget extends CI_Controller
 		if ($row) {
 			$data = array(
 				'button' => 'Update',
+				'kategori' => $this->Budget_kategori_model->get_all(),
 				'action' => site_url('budget/update_action'),
 				'budget_id' => set_value('budget_id', $row->budget_id),
+				'budget_kategori_id' => set_value('budget_kategori_id', $row->budget_kategori_id),
 				'nama_budget' => set_value('nama_budget', $row->nama_budget),
 				'nominal_budget' => set_value('nominal_budget', $row->nominal_budget),
 			);
@@ -95,6 +102,7 @@ class Budget extends CI_Controller
 			$this->update($this->input->post('budget_id', TRUE));
 		} else {
 			$data = array(
+				'budget_kategori_id' => $this->input->post('budget_kategori_id', TRUE),
 				'nama_budget' => $this->input->post('nama_budget', TRUE),
 				'nominal_budget' => $this->input->post('nominal_budget', TRUE),
 			);
@@ -111,13 +119,7 @@ class Budget extends CI_Controller
 
 		if ($row) {
 			$this->Budget_model->delete(decrypt_url($id));
-
-			$error = $this->db->error();
-			if ($error['code'] != 0) {
-				$this->session->set_flashdata('error', 'Data tidak dapat dihapus (Sudah Berelasi)');
-			} else {
-				$this->session->set_flashdata('message', 'Delete Record Success');
-			}
+			$this->session->set_flashdata('message', 'Delete Record Success');
 			redirect(site_url('budget'));
 		} else {
 			$this->session->set_flashdata('message', 'Record Not Found');
@@ -127,6 +129,7 @@ class Budget extends CI_Controller
 
 	public function _rules()
 	{
+		$this->form_validation->set_rules('budget_kategori_id', 'budget kategori id', 'trim|required');
 		$this->form_validation->set_rules('nama_budget', 'nama budget', 'trim|required');
 		$this->form_validation->set_rules('nominal_budget', 'nominal budget', 'trim|required');
 

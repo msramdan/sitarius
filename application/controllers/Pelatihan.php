@@ -433,7 +433,10 @@ class Pelatihan extends CI_Controller
 			'id' => $pelatihan_id,
 			'pemateri' => $this->db->query("SELECT pelatihan_pemateri.*, pemateri.nama_pemateri,pemateri.no_hp FROM pelatihan_pemateri join pemateri on pemateri.pemateri_id = pelatihan_pemateri.pemateri_id where pelatihan_pemateri.pelatihan_id='$pelatihan_id'")->result(),
 			'daftarPeserta' => $daftarPeserta,
-			'list_budget' => $this->db->query("SELECT pelatihan_budget.*,budget.nama_budget from pelatihan_budget join budget on budget.budget_id = pelatihan_budget.budget_id  where pelatihan_id='$pelatihan_id'")->result(),
+			'list_budget' => $this->db->query("SELECT pelatihan_budget.*,budget.nama_budget, budget_kategori.nama_kategori from pelatihan_budget
+			join budget on budget.budget_id = pelatihan_budget.budget_id 
+			join budget_kategori on budget_kategori.budget_kategori_id = budget.budget_kategori_id 
+			where pelatihan_id='$pelatihan_id'")->result(),
 		];
 		$pdf = $this->load->view("pelatihan/pdf", $data, true);
 
@@ -449,10 +452,13 @@ class Pelatihan extends CI_Controller
 		$dompdf->stream('my.pdf', array('Attachment' => 0));
 	}
 
-	public function getBudget(){
+	public function getBudget()
+	{
 		$budget_id = $_GET['value'];
-		$data = $this->db->query("SELECT * FROM budget where budget_id='$budget_id'")->row();
-		echo $data->nominal_budget;
+		$data = $this->db->query("SELECT budget.*,budget_kategori.nama_kategori FROM budget join budget_kategori on budget_kategori.budget_kategori_id = budget.budget_kategori_id
+		where budget_id='$budget_id'")->row();
+		header('Content-Type: application/json');
+		echo json_encode($data);
 	}
 }
 

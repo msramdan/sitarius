@@ -32,6 +32,7 @@
 											<thead>
 												<tr>
 													<th>No</th>
+													<th>Budget Kategori</th>
 													<th>Nama Budget</th>
 													<th>Nominal Budget</th>
 													<th>Action</th>
@@ -42,6 +43,7 @@
 													?>
 													<tr>
 														<td><?= $no++ ?></td>
+														<td><?php echo $budget->nama_kategori ?></td>
 														<td><?php echo $budget->nama_budget ?></td>
 														<td><?php echo $budget->nominal_budget ?></td>
 														<td style="text-align:center" width="200px">
