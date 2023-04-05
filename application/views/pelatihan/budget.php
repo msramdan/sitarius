@@ -61,11 +61,12 @@
 
 								</tr>
 							</thead>
-							<?php $budget = $this->db->query("SELECT * from pelatihan_budget where pelatihan_id='$pelatihan_id'")->result(); ?>
+							<?php $budget = $this->db->query("SELECT pelatihan_budget.*,budget.nama_budget from pelatihan_budget join budget on budget.budget_id = pelatihan_budget.budget_id  where pelatihan_id='$pelatihan_id'")->result(); ?>
 							<tbody>
 								<?php foreach ($budget as $value) { ?>
 									<tr id="detail_file<?= $value->pelatihan_budget_id ?>">
-										<td><input required type="text" name="keterangan[]" placeholder="" class="form-control " value="<?= $value->keterangan ?>" /> </td>
+										<td><input  required type="text" name="nama_budget[]" placeholder="" class="form-control " value="<?= $value->nama_budget ?>" readonly />
+										<input  required type="hidden" name="budget_id[]" placeholder="" class="form-control" value="<?= $value->budget_id ?>"></td>
 										<td><input required step="any" type="number" name="budget[]" placeholder="" value="<?= $value->budget ?>" class="form-control " /></td>
 										<?php if ($this->session->userdata('level_id') == 2) { ?>
 											<td><button type=" button" name="" id="" class="btn btn-danger btn-sm btn_remove_data"><i class="fa fa-trash" aria-hidden="true"></i></button></td>
@@ -125,7 +126,6 @@
 
 	</div>
 </div>
-
 <script>
 	$(document).ready(function() {
 		$('.select2').select2();
@@ -138,7 +138,7 @@
 		$('#add_berkas').click(function() {
 			i++;
 			$('#dynamic_field').append('<tr id="row' + i +
-				'"><td><input required type="text" name="keterangan[]" placeholder="" class="form-control " /></td><td><input required step="any" type="number" name="budget[]" placeholder="" class="form-control " /></td><td><button type="button" name="remove" id="' +
+				'"><td style="width: 45%;"><select required  name="budget_id[]" id="select-' + i +'" class="form-control" style="width: 100%;"><option value="" style="color:black">-- Pilih --</option><?php foreach ($budget_list as $rows) { ?><option style="color: black;" value="<?php echo $rows->budget_id ?>"> <?php echo $rows->nama_budget ?></option><?php } ?></select></td><td><input required id="angka-' + i +'" step="any" type="number" name="budget[]" placeholder="" class="form-control " /></td><td><button type="button" name="remove" id="' +
 				i + '" class="btn btn-danger btn_remove"><i class="fa fa-trash" aria-hidden="true"></i></button></td></tr>');
 		});
 
@@ -170,4 +170,22 @@
 		$('#modal-dialog-bukti_honor #modal_pelatihan_pemateri_id').val(id);
 		$('#modal-dialog-bukti_honor #modalGambarbukti_honor').attr("src", source);
 	})
+</script>
+<script>
+	$('select').live('change', function(){
+		 var id = $(this).attr('id');
+		 var result = id.replace("select-", "");
+		 var value = this.value
+		$.ajax({
+			type: 'GET',
+			data: {value:value},
+			url: '<?php echo base_url(); ?>/pelatihan/getBudget',
+			cache: false,
+			success: function(data) {
+				$("#angka-" + result).val(data);
+			}
+		});
+	});
+
+    
 </script>

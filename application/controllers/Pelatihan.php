@@ -3,12 +3,19 @@
 if (!defined('BASEPATH'))
 	exit('No direct script access allowed');
 
+
+require FCPATH . '/vendor/autoload.php';
+
+use Dompdf\Dompdf;
+
+
 class Pelatihan extends CI_Controller
 {
 	function __construct()
 	{
 		parent::__construct();
 		is_login();
+		$this->load->model('Budget_model');
 		$this->load->model('Pelatihan_model');
 		$this->load->model('Pemateri_model');
 		$this->load->library('form_validation');
@@ -381,8 +388,12 @@ class Pelatihan extends CI_Controller
 	public function budget($id)
 	{
 		$pelatihan_id = decrypt_url($id);
+		$budget = $this->db->query("SELECT * FROM budget")->result();
+		// var_dump($budget);
+		// die();
 		$data = array(
 			'pelatihan_id' => $pelatihan_id,
+			'budget_list' => $budget,
 			'pemateri' => $this->db->query("SELECT pelatihan_pemateri.*, pemateri.nama_pemateri,pemateri.no_hp FROM pelatihan_pemateri join pemateri on pemateri.pemateri_id = pelatihan_pemateri.pemateri_id where pelatihan_pemateri.pelatihan_id='$pelatihan_id'")->result(),
 		);
 		$this->template->load('template', 'pelatihan/budget', $data);
@@ -390,23 +401,58 @@ class Pelatihan extends CI_Controller
 
 	public function store_budget()
 	{
-		$keterangan       		= $_POST['keterangan'];
+		$budget_id       		= $_POST['budget_id'];
 		$pelatihan_id       	= $_POST['pelatihan_id'];
 		$budget       	  = $_POST['budget'];
 
 		// detele yg lama
 		$this->db->query("DELETE FROM pelatihan_budget where pelatihan_id='$pelatihan_id'");
-		if ($keterangan) {
-			$jumlah_data = count($keterangan);
+		if ($budget_id) {
+			$jumlah_data = count($budget_id);
 			for ($i = 0; $i < $jumlah_data; $i++) {
 				$pelatihan_budget['pelatihan_id'] = $pelatihan_id;
-				$pelatihan_budget['keterangan'] = $keterangan[$i];
+				$pelatihan_budget['budget_id'] = $budget_id[$i];
 				$pelatihan_budget['budget'] = $budget[$i];
 				$this->db->insert('pelatihan_budget', $pelatihan_budget);
 			}
 		}
 		$this->session->set_flashdata('message', 'Budget pelatihan berhasil disimpan');
 		redirect(site_url('pelatihan'));
+	}
+
+	public function pdf($id)
+	{
+		$pelatihan_id = decrypt_url($id);
+		$row = $this->Pelatihan_model->get_by_id(decrypt_url($id));
+		$daftarPesertaPelatihan = $this->db->query("SELECT * from peserta_pelatihan join peserta on peserta.peserta_id = peserta_pelatihan.peserta_id where pelatihan_id='$pelatihan_id'");
+		$daftarPeserta = $daftarPesertaPelatihan->result();
+
+
+		$data = [
+			'row' => $row,
+			'id' => $pelatihan_id,
+			'pemateri' => $this->db->query("SELECT pelatihan_pemateri.*, pemateri.nama_pemateri,pemateri.no_hp FROM pelatihan_pemateri join pemateri on pemateri.pemateri_id = pelatihan_pemateri.pemateri_id where pelatihan_pemateri.pelatihan_id='$pelatihan_id'")->result(),
+			'daftarPeserta' => $daftarPeserta,
+			'list_budget' => $this->db->query("SELECT pelatihan_budget.*,budget.nama_budget from pelatihan_budget join budget on budget.budget_id = pelatihan_budget.budget_id  where pelatihan_id='$pelatihan_id'")->result(),
+		];
+		$pdf = $this->load->view("pelatihan/pdf", $data, true);
+
+		$dompdf = new Dompdf();
+		$dompdf->set_option('isRemoteEnabled', TRUE);
+		$dompdf->loadHtml($pdf);
+		// (Optional) Setup the paper size and orientation
+		$dompdf->setPaper('A4', 'portrait');
+		// Render the HTML as PDF
+		$dompdf->render();
+		// Output the generated PDF to Browser
+		//$dompdf->stream();
+		$dompdf->stream('my.pdf', array('Attachment' => 0));
+	}
+
+	public function getBudget(){
+		$budget_id = $_GET['value'];
+		$data = $this->db->query("SELECT * FROM budget where budget_id='$budget_id'")->row();
+		echo $data->nominal_budget;
 	}
 }
 

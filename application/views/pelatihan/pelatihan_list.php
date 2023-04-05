@@ -79,7 +79,7 @@
 														<td><?= rupiah($totalBudget) ?></td>
 														<td style="text-align:center" width="">
 															<?php
-															echo anchor(site_url('pelatihan/update/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-print" aria-hidden="true"></i>', 'class="btn btn-default btn-sm update_data" title="Cetak Pelatihan"');
+															echo anchor(site_url('pelatihan/pdf/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-print" aria-hidden="true"></i>', 'class="btn btn-default btn-sm update_data" title="Cetak Pelatihan"');
 															echo '  ';
 															echo anchor(site_url('pelatihan/budget/' . encrypt_url($pelatihan->pelatihan_id)), '<i class="fa fa-money" aria-hidden="true"></i>', 'class="btn btn-success btn-sm read_data" title="Budgeting"');
 															echo '  ';
