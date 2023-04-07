@@ -165,6 +165,7 @@
 								<li><a href="<?= base_url() ?>user">Data User</a></li>
 								<li><a href="<?= base_url() ?>history_login">History Login</a></li>
 								<li><a href="<?= base_url() ?>backup">Backup Database</a></li>
+								<li><a href="<?= base_url() ?>backup/restoredb">Restore Database</a></li>
 							</ul>
 						</li>
 					<?php } else { ?>

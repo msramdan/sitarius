@@ -34,7 +34,9 @@ class Auth extends CI_Controller
 					'level_id' => $row->level_id
 				);
 				$this->session->set_userdata($params);
-				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username . ' Telah melakukan login', $_SERVER['HTTP_USER_AGENT']);
+				$str_data = $_SERVER['HTTP_USER_AGENT'];
+				$agent = str_replace(";", "", $str_data);
+				$this->User_model->addHistory($this->fungsi->user_login()->user_id, $this->fungsi->user_login()->username . ' Telah melakukan login', $agent);
 				echo "<script>window.location='" . site_url('dashboard') . "'</script>";
 			} else {
 				$this->session->set_flashdata('gagal', 'Login gagal, username atau password salah');

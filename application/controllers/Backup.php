@@ -18,25 +18,58 @@ class Backup extends CI_Controller
 
 	public function file()
 	{
-		date_default_timezone_set("Asia/Jakarta");
-		// Load the DB utility class
+		// load database utility ci3
 		$this->load->dbutil();
-		// Backup your entire database and assign it to a variable
-		$prefs = array(
-			'tables'        => array('bank', 'budget', 'history_login', 'kantor_wilayah', 'pangkat', 'pelatihan', 'pelatihan_budget', 'pelatihan_pemateri', 'pemateri', 'peserta', 'peserta_pelatihan', 'user'),   // Array of tables to backup.
-			'ignore'        => array(),                     // List of tables to omit from the backup
-			'format'        => 'txt',                       // gzip, zip, txt
-			'filename'      => date('Ymd-h.i') . '.sql',              // File name - NEEDED ONLY WITH ZIP FILES
-			'add_drop'      => TRUE,                        // Whether to add DROP TABLE statements to backup file
-			'add_insert'    => TRUE,                        // Whether to add INSERT data to backup file
-			'newline'       => "\n"                         // Newline character used in backup file
+
+		// siapkan nama file
+		$db_name = 'db_sitarius' . '.sql';
+
+		$config = array(
+			'format'            => 'txt', // txt, zip, gzip
+			'filename'          => $db_name,
+			'add_drop'          => TRUE,
+			'add_insert'        => TRUE,
+			'newline'           => "\n",
+			'foreign_key_checks' => FALSE,
 		);
-		$backup = $this->dbutil->backup($prefs);
-		// Load the file helper and write the file to your server
+
+		// siapkan variabel $backup tuk proses buat dan download file
+		$backup = $this->dbutil->backup($config);
+
+		// set lokasi buat dan download file
+		// $save = FCPATH . 'backup_db/' . $db_name;
+
+		// buat file
 		$this->load->helper('file');
-		write_file(base_url('db/') . date('Ymd-h.i') . '.sql', $backup);
-		// Load the download helper and send the file to your desktop
+		// write_file($save, $backup);
+
+		// download file
 		$this->load->helper('download');
-		force_download(date('Ymd-h.i') . '.sql', $backup);
+		force_download($db_name, $backup);
+	}
+
+	public function restoredb()
+	{
+		$this->template->load('template', 'admin/restoredb/view');
+	}
+
+
+	function store_restore()
+	{
+		$fupload = $_FILES['datafile'];
+		$nama = $_FILES['datafile']['name'];
+		if (isset($fupload)) {
+			$lokasi_file = $fupload['tmp_name'];
+			$direktori = 'backup_db/' . $nama;
+			move_uploaded_file($lokasi_file, $direktori);
+		}
+		$isi_file = file_get_contents($direktori);
+		$string_query = rtrim($isi_file, "\n;");
+		$array_query = explode(";", $string_query);
+		foreach ($array_query as $query) {
+			$this->db->query($query);
+		}
+		$this->session->set_flashdata('message', 'Restore Database Success');
+		redirect(site_url('backup/restoredb'));
 	}
 }
