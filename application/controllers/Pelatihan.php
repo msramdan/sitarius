@@ -317,9 +317,12 @@ class Pelatihan extends CI_Controller
         $config['file_name']        = 'File-' . date('ymd') . '-' . substr(sha1(rand()), 0, 10);
         $this->load->library('upload', $config);
         $this->upload->initialize($config);
+
+
         if ($this->upload->do_upload("photo")) {
             $id = $this->input->post('peserta_pelatihan_id');
             $row = $this->db->query("SELECT* from peserta_pelatihan where peserta_pelatihan_id='$id'")->row();
+            $rowPeserta = $this->Peserta_model->get_by_id($row->peserta_id);
 
             $data = $this->upload->data();
             $photo = $data['file_name'];
@@ -328,16 +331,20 @@ class Pelatihan extends CI_Controller
                 $target_file = './assets/img/trf/' . $row->trf;
                 unlink($target_file);
             }
-        }
 
-        $data = array(
-            'trf' => $photo,
-        );
-        $this->Pelatihan_model->updateBuktiTrf($this->input->post('peserta_pelatihan_id', TRUE), $data);
-        // add notif ramdan
-        sendWa('6283874731480', 'uploadTrf');
-        $this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
-        redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
+            $data = array(
+                'trf' => $photo,
+            );
+            $this->Pelatihan_model->updateBuktiTrf($this->input->post('peserta_pelatihan_id', TRUE), $data);
+
+            sendWa($rowPeserta->no_hp, 'uploadTrf');
+
+            $this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
+            redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
+        } else {
+            echo 'file photo error/failed';
+            exit();
+        }
     }
 
 
