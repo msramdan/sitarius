@@ -367,6 +367,8 @@ class Pelatihan extends CI_Controller
             $id = $this->input->post('pelatihan_pemateri_id');
             $row = $this->db->query("SELECT* from pelatihan_pemateri where pelatihan_pemateri_id='$id'")->row();
 
+            $rowPemateri = $this->Pemateri_model->get_by_id($row->pemateri_id);
+
             $data = $this->upload->data();
             $photo = $data['file_name'];
             if ($row->bukti_honor == null || $row->bukti_honor == '') {
@@ -374,16 +376,20 @@ class Pelatihan extends CI_Controller
                 $target_file = './assets/img/bukti_honor/' . $row->bukti_honor;
                 unlink($target_file);
             }
-        }
 
-        $data = array(
-            'bukti_honor' => $photo,
-        );
-        $this->Pelatihan_model->updateBuktiHonor($this->input->post('pelatihan_pemateri_id', TRUE), $data);
-        // add notif ramdan
-        sendWa('6283874731480', 'uploadbukti_honor');
-        $this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
-        redirect(base_url('pelatihan/budget/' . $pelatihan_id));
+            $data = array(
+                'bukti_honor' => $photo,
+            );
+            $this->Pelatihan_model->updateBuktiHonor($this->input->post('pelatihan_pemateri_id', TRUE), $data);
+
+            sendWa($rowPemateri->no_hp, 'uploadbukti_honor');
+
+            $this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
+            redirect(base_url('pelatihan/budget/' . $pelatihan_id));
+        } else {
+            echo 'file upload failed';
+            exit();
+        }
     }
 
 
