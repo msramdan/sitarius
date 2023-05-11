@@ -18,6 +18,7 @@ class Pelatihan extends CI_Controller
         $this->load->model('Budget_model');
         $this->load->model('Pelatihan_model');
         $this->load->model('Pemateri_model');
+        $this->load->model('Peserta_model');
         $this->load->library('form_validation');
     }
 
@@ -52,9 +53,11 @@ class Pelatihan extends CI_Controller
                 'pelatihan_id' => $no_pelatihan_id,
                 'peserta_id' => $peserta_id,
             );
+
             $this->db->insert('peserta_pelatihan', $data);
-            // add notif ramdan
-            sendWa('6283874731480', 'add_peserta');
+
+            $rowPeserta = $this->Peserta_model->get_by_id($peserta_id);
+            sendWa($rowPeserta->no_hp, 'add_peserta');
 
             $this->session->set_flashdata('message', 'Peserta berhasil ditambahkan');
         }
