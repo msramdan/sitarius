@@ -137,3 +137,46 @@ function getkelurahanAPI($villages, $district)
 		}
 	}
 }
+
+function sendWa($noW, $type)
+{
+
+	if ($type == 'add_peserta') {
+		$message = 'Yth. Pelanggan ' . "\n\n";
+		$message .= "Anda telah ditambahkan sebagai peserta pelatihan \n\n";
+	} else if ($type == 'add_pemateri') {
+		$message = 'Yth. Pelanggan ' . "\n\n";
+		$message .= "Anda telah ditambahkan sebagai pemateri pelatihan : \n\n";
+	} else if ($type == 'uploadSertifikat') {
+		$message = 'Yth. Pelanggan ' . "\n\n";
+		$message .= "Sertifiat pelatihan telah diupload oleh admin: \n\n";
+	} else if ($type == 'uploadTrf') {
+		$message = 'Yth. Pelanggan ' . "\n\n";
+		$message .= "Upload: \n\n";
+	} else if ($type == 'uploadbukti_honor') {
+		$message = 'Yth. Pelanggan ' . "\n\n";
+		$message .= "Upload: \n\n";
+	}
+	$data = array(
+		'receiver'      => $noW,
+		'message' 		=> [
+			'text'      => $message,
+		],
+	);
+	$data_string = json_encode($data);
+	$curl = curl_init('http://103.176.79.206:40000/chats/send?id=aplikasi_dbms');
+	curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt(
+		$curl,
+		CURLOPT_HTTPHEADER,
+		array(
+			'Content-Type: application/json',
+			'Content-Length: ' . strlen($data_string)
+		)
+	);
+
+	curl_setopt($curl, CURLOPT_RETURNTRANSFER, true);  // Make it so the data coming back is put into a string
+	curl_setopt($curl, CURLOPT_POSTFIELDS, $data_string);  // Insert the data
+	$result = curl_exec($curl);
+	curl_close($curl);
+}

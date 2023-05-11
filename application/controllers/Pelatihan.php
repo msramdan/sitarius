@@ -53,6 +53,9 @@ class Pelatihan extends CI_Controller
 				'peserta_id' => $peserta_id,
 			);
 			$this->db->insert('peserta_pelatihan', $data);
+			// add notif ramdan
+			sendWa('6283874731480', 'add_peserta');
+
 			$this->session->set_flashdata('message', 'Peserta berhasil ditambahkan');
 		}
 		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
@@ -109,6 +112,8 @@ class Pelatihan extends CI_Controller
 					'pemateri_id' => $value,
 				);
 				$this->db->insert('pelatihan_pemateri', $dataPemateri);
+				// add notif ramdan
+				sendWa('6283874731480', 'add_pemateri');
 			}
 			$this->session->set_flashdata('message', 'Create Record Success');
 			redirect(site_url('pelatihan'));
@@ -288,8 +293,8 @@ class Pelatihan extends CI_Controller
 			'sertifikat' => $photo,
 		);
 		$this->Pelatihan_model->updateSertifikat($this->input->post('peserta_pelatihan_id', TRUE), $data);
-
-
+		// add notif ramdan
+		sendWa('6283874731480', 'uploadSertifikat');
 		$this->session->set_flashdata('message', 'Upload Sertifikat Success');
 		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
 	}
@@ -322,8 +327,8 @@ class Pelatihan extends CI_Controller
 			'trf' => $photo,
 		);
 		$this->Pelatihan_model->updateBuktiTrf($this->input->post('peserta_pelatihan_id', TRUE), $data);
-
-
+		// add notif ramdan
+		sendWa('6283874731480', 'uploadTrf');
 		$this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
 		redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
 	}
@@ -356,8 +361,8 @@ class Pelatihan extends CI_Controller
 			'bukti_honor' => $photo,
 		);
 		$this->Pelatihan_model->updateBuktiHonor($this->input->post('pelatihan_pemateri_id', TRUE), $data);
-
-
+		// add notif ramdan
+		sendWa('6283874731480', 'uploadbukti_honor');
 		$this->session->set_flashdata('message', 'Upload Bukti Transfer Success');
 		redirect(base_url('pelatihan/budget/' . $pelatihan_id));
 	}
