@@ -287,6 +287,8 @@ class Pelatihan extends CI_Controller
             $id = $this->input->post('peserta_pelatihan_id');
             $row = $this->db->query("SELECT* from peserta_pelatihan where peserta_pelatihan_id='$id'")->row();
 
+            $rowPeserta = $this->Peserta_model->get_by_id($row->peserta_id);
+
             $data = $this->upload->data();
             $photo = $data['file_name'];
             if ($row->sertifikat == null || $row->sertifikat == '') {
@@ -294,16 +296,19 @@ class Pelatihan extends CI_Controller
                 $target_file = './assets/img/sertifikat/' . $row->sertifikat;
                 unlink($target_file);
             }
-        }
 
-        $data = array(
-            'sertifikat' => $photo,
-        );
-        $this->Pelatihan_model->updateSertifikat($this->input->post('peserta_pelatihan_id', TRUE), $data);
-        // add notif ramdan
-        sendWa('6283874731480', 'uploadSertifikat');
-        $this->session->set_flashdata('message', 'Upload Sertifikat Success');
-        redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
+            $data = array(
+                'sertifikat' => $photo,
+            );
+            $this->Pelatihan_model->updateSertifikat($this->input->post('peserta_pelatihan_id', TRUE), $data);
+            // add notif ramdan
+            sendWa($rowPeserta->no_hp, 'uploadSertifikat');
+            $this->session->set_flashdata('message', 'Upload Sertifikat Success');
+            redirect(base_url('pelatihan/daftar_peserta/' . $pelatihan_id));
+        } else {
+            echo 'file photo is failed';
+            exit();
+        }
     }
 
 

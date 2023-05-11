@@ -25,7 +25,7 @@ $kuotaSaatIni = $daftarPesertaPelatihan->num_rows();
                     <input type="hidden" id="modal_peserta_pelatihan_id" value="" name="peserta_pelatihan_id">
                     <input type="hidden" id="pelatihan_id" value="<?= $pelatihan_id ?>" name="pelatihan_id">
                     <div class="form-group">
-                        <input type="file" class="form-control " id="photo" name="photo" value="" required>
+                        <input type="file" class="form-control " id="photo" name="photo" value="" required accept=".jpg,.jpeg,.png">
                     </div>
                 </div>
                 <div class="modal-footer">
