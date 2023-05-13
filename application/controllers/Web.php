@@ -45,6 +45,7 @@ class Web extends CI_Controller
 		$this->load->library('upload', $config);
 		$this->upload->initialize($config);
 		$row = $this->db->query("SELECT * from peserta_pelatihan where peserta_pelatihan_id='$id'")->row();
+
 		if ($this->upload->do_upload("lembar_konfirmasi")) {
 
 			$data = $this->upload->data();
@@ -107,7 +108,6 @@ class Web extends CI_Controller
 			$data = array(
 				'surat_keterangan_dokter' => $surat_keterangan_dokter,
 			);
-
 			$this->Peserta_model->updateBerkas($id, $data);
 		}
 
@@ -127,38 +127,38 @@ class Web extends CI_Controller
 			$this->Peserta_model->updateBerkas($id, $data);
 		}
 
-		if ($this->upload->do_upload("tiket_datang")) {
-			$data = $this->upload->data();
-			$tiket_datang = $data['file_name'];
-			if ($row->tiket_datang == null || $row->tiket_datang == '') {
-			} else {
-				$target_file = './assets/img/berkas/' . $row->tiket_datang;
-				unlink($target_file);
-			}
-
+		if ($this->input->post('is_transfortasi', TRUE) == '1') {
 			$data = array(
-				'tiket_datang' => $tiket_datang,
+				'is_transfortasi' => $this->input->post('is_transfortasi', TRUE),
+				'type_transfortasi' => $this->input->post('type_transfortasi', TRUE),
 			);
+			$this->Peserta_model->updateBerkas($id, $data);
 
+			if ($this->upload->do_upload("tiket_transfortasi")) {
+				$data = $this->upload->data();
+				$tiket_transfortasi = $data['file_name'];
+				if ($row->tiket_transfortasi == null || $row->tiket_transfortasi == '') {
+				} else {
+					$target_file = './assets/img/berkas/' . $row->tiket_transfortasi;
+					unlink($target_file);
+				}
+
+				$data = array(
+					'tiket_transfortasi' => $tiket_transfortasi,
+				);
+
+				$this->Peserta_model->updateBerkas($id, $data);
+			}
+		} else {
+			$target_file = './assets/img/berkas/' . $row->tiket_transfortasi;
+			unlink($target_file);
+			$data = array(
+				'is_transfortasi' => '',
+				'type_transfortasi' => '',
+				'tiket_transfortasi' => '',
+			);
 			$this->Peserta_model->updateBerkas($id, $data);
 		}
-
-		if ($this->upload->do_upload("tiket_pulang")) {
-			$data = $this->upload->data();
-			$tiket_pulang = $data['file_name'];
-			if ($row->tiket_pulang == null || $row->tiket_pulang == '') {
-			} else {
-				$target_file = './assets/img/berkas/' . $row->tiket_pulang;
-				unlink($target_file);
-			}
-			$data = array(
-				'tiket_pulang' => $tiket_pulang,
-			);
-
-			$this->Peserta_model->updateBerkas($id, $data);
-		}
-
-
 		$this->session->set_flashdata('message', 'Upload Berkas Berhasil');
 		redirect($_SERVER['HTTP_REFERER']);
 	}

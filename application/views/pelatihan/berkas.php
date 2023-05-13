@@ -85,27 +85,21 @@
 													</td>
 												</tr>
 
-												<?php if($data->metode=="Klasikal"){ ?>
-													<tr>
-													<td>Tiket Datang</td>
-													<td><?php if ($data->tiket_datang) { ?>
-															<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_datang ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
-														<?php } else { ?>
-															<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
-														<?php } ?>
-													</td>
-												</tr>
-												<tr>
-													<td>Tiket Pulang</td>
-													<td><?php if ($data->tiket_pulang) { ?>
-															<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_datang ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
-														<?php } else { ?>
-															<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
-														<?php } ?>
-													</td>
-												</tr>
-												<?php } ?>
-												
+												<?php if ($data->metode == "Klasikal") { ?>
+													<?php if ($data->is_transfortasi == "1") { ?>
+														<tr>
+															<td>Tiket Transfortasi <b><?= $data->type_transfortasi ?></b>
+															</td>
+															<td><?php if ($data->tiket_transfortasi) { ?>
+																	<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_transfortasi ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
+																<?php } else { ?>
+																	<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
+																<?php } ?>
+															</td>
+														</tr>
+													<?php  } ?>
+												<?php  } ?>
+
 
 											</tbody>
 										</table>

@@ -73,7 +73,7 @@
 										</td>
 
 									</tr>
-									
+
 									<tr>
 										<td>Surat Keterangan Dokter <br>
 											<?php if ($data->surat_keterangan_dokter) { ?>
@@ -106,37 +106,31 @@
 									</tr>
 
 									<?php
-
-								
-									
 									if ($data->metode == "Klasikal") { ?>
 										<tr>
-											<td>Tiket Datang <br>
-												<?php if ($data->tiket_datang) { ?>
-													<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_datang ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
-												<?php } else { ?>
-													<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
-												<?php } ?>
-
+											<td><input type="checkbox" value="1" id="is_transfortasi" name="is_transfortasi" <?php if ($data->is_transfortasi == '1') {
+																																	echo "checked";
+																																} ?>> Tiket Transfortasi ? <br>
+												<div id="type_transfortasi">
+													<label class="radio-inline"><input type="radio" name="type_transfortasi" value="Darat" <?php if ($data->type_transfortasi == 'Darat') {
+																																				echo "checked";
+																																			} ?>> Darat</label>
+													<label class="radio-inline"><input type="radio" name="type_transfortasi" value="Laut" <?php if ($data->type_transfortasi == 'Laut') {
+																																				echo "checked";
+																																			} ?>>Laut</label>
+													<label class="radio-inline"><input type="radio" name="type_transfortasi" value="Udara" <?php if ($data->type_transfortasi == 'Udara') {
+																																				echo "checked";
+																																			} ?>>Udara</label> <br>
+													<?php if ($data->tiket_transfortasi) { ?>
+														<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_transfortasi ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
+													<?php } else { ?>
+														<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
+													<?php } ?>
+												</div>
 											</td>
-											<td>
-												<input type="file" class="form-control" name="tiket_datang" id="tiket_datang" placeholder="" value="" />
-												<small style="color: red">Pilih tiket datang Jika Ingin Merubah Nya (Format File : pdf)</small>
-											</td>
-
-										</tr>
-										<tr>
-											<td>Tiket Pulang <br>
-												<?php if ($data->tiket_pulang) { ?>
-													<a href="<?= base_url() ?>web/download_berkas/<?= $data->tiket_datang ?>" style="color: green;"> <i class="fa fa-download"></i> Download </a>
-												<?php } else { ?>
-													<a href="#" style="color: red;"> <i class="fa fa-times"></i> Belum ada upload </a>
-												<?php } ?>
-
-											</td>
-											<td>
-												<input type="file" class="form-control" name="tiket_pulang" id="tiket_pulang" placeholder="" value="" />
-												<small style="color: red">Pilih tiket pulamg Jika Ingin Merubah Nya (Format File : pdf)</small>
+											<td id="upload_tiket_transfortasi">
+												<input type="file" class="form-control" name="tiket_transfortasi" id="tiket_transfortasi" placeholder="" value="" />
+												<small style="color: red" id="note_tiket_transfortasi">Pilih tiket transfortasi Jika Ingin Merubah Nya (Format File : pdf)</small>
 											</td>
 
 										</tr>
@@ -150,3 +144,25 @@
 			</div>
 	</section>
 </div>
+
+<script>
+	$(document).ready(function() {
+		if ($("#is_transfortasi").is(":checked")) {
+			$('#type_transfortasi').show();
+			$('#upload_tiket_transfortasi').show();
+		} else {
+			$('#type_transfortasi').hide();
+			$('#upload_tiket_transfortasi').hide();
+		}
+		$("#is_transfortasi").change(function() {
+			if (this.checked) {
+				$('#type_transfortasi').show();
+				$('#upload_tiket_transfortasi').show();
+			} else {
+				$('#type_transfortasi').hide();
+				$('#upload_tiket_transfortasi').hide();
+
+			}
+		});
+	});
+</script>
