@@ -35,7 +35,7 @@
 							</tr>
 							<tr>
 								<td>Nip <?php echo form_error('nip') ?></td>
-								<td><input type="number" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" /></td>
+								<td><input type="number" onkeypress="return validateNumber(event)" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" /></td>
 							</tr>
 							<tr>
 								<td>Nama Lengkap <?php echo form_error('nama_lengkap') ?></td>
@@ -143,3 +143,11 @@
 		</div>
 	</section>
 </div>
+
+<script>
+	function validateNumber(e) {
+		const pattern = /^[0-9]$/;
+
+		return pattern.test(e.key)
+	}
+</script>
