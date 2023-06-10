@@ -20,10 +20,10 @@
 
 	<!-- Section: About -->
 	<section>
-		
+
 		<div class="container">
 			<div class="row" style="padding: 15px;">
-			<h2 class="text-uppercase title">Register <span class="text-theme-colored2">Peserta</span></h2>
+				<h2 class="text-uppercase title">Register <span class="text-theme-colored2">Peserta</span></h2>
 				<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
 					<thead>
 						<table id="data-table-default" class="table table-bordered table-hover table-td-valign-middle table-sm">
@@ -35,7 +35,7 @@
 							</tr>
 							<tr>
 								<td>Nip <?php echo form_error('nip') ?></td>
-								<td><input type="text" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" /></td>
+								<td><input type="number" class="form-control" name="nip" id="nip" placeholder="Nip" value="<?php echo $nip; ?>" /></td>
 							</tr>
 							<tr>
 								<td>Nama Lengkap <?php echo form_error('nama_lengkap') ?></td>
@@ -43,7 +43,7 @@
 							</tr>
 							<tr>
 								<td>Email <?php echo form_error('email') ?></td>
-								<td><input type="text" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" /></td>
+								<td><input type="email" class="form-control" name="email" id="email" placeholder="Email" value="<?php echo $email; ?>" /></td>
 							</tr>
 							<tr>
 								<td>No Hp <?php echo form_error('no_hp') ?></td>

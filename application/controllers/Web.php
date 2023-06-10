@@ -402,7 +402,7 @@ class Web extends CI_Controller
 			$this->form_validation->set_rules('password', 'Password', 'trim|required');
 		}
 
-		$this->form_validation->set_rules('nip', 'nip', 'trim|required' . $is_unique);
+		$this->form_validation->set_rules('nip', 'nip', 'trim|required|max_length[18]' . $is_unique);
 		$this->form_validation->set_rules('nama_lengkap', 'nama lengkap', 'trim|required');
 		$this->form_validation->set_rules('email', 'email', 'trim|required');
 		$this->form_validation->set_rules('no_hp', 'no hp', 'trim|required');
