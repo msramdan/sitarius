@@ -187,7 +187,7 @@ function sendWa($noW, $type, $data = null)
 		$data_string = json_encode($data);
 
 
-		$curl = curl_init($rowWaSetting->url . '/chats/send?id=' . $rowWaSetting->session_id);
+		$curl = curl_init($rowWaSetting->url . '/api/send-message?id=' . $rowWaSetting->session_id);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt(
 			$curl,

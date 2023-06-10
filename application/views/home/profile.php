@@ -48,7 +48,8 @@
 					</table>
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+					<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i>
+						Close</button>
 				</div>
 
 			</div>
@@ -108,7 +109,8 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i> Close</button>
+						<button type="button" class="btn btn-danger" data-dismiss="modal"> <i class="fa fa-times"></i>
+							Close</button>
 						<button type="submit" class="btn btn-primary"> <i class="fa fa-save"></i> Simpan</button>
 					</div>
 				</form>
@@ -177,7 +179,8 @@
 								<div>
 									<ul class="nav nav-tabs" role="tablist">
 										<li role="presentation" class="active"><a href="#orders" aria-controls="orders" role="tab" data-toggle="tab" class="font-15 text-uppercase" aria-expanded="true">Profile Peserta</a></li>
-										<li role="presentation" class=""><a href="#free-orders" aria-controls="free-orders" role="tab" data-toggle="tab" class="font-15 text-uppercase" aria-expanded="false">Daftar Pelatihan </a></li>
+										<li role="presentation" class=""><a href="#free-orders" aria-controls="free-orders" role="tab" data-toggle="tab" class="font-15 text-uppercase" aria-expanded="false">Daftar Pelatihan
+											</a></li>
 									</ul>
 									<div class="tab-content">
 										<div role="tabpanel" class="tab-pane active" id="orders">
@@ -185,14 +188,15 @@
 												<div class="row">
 													<div class="form-group col-md-6">
 														<label>Photo</label>
-														<input name="form_name" class="form-control" type="file">
-														<small style="color: red">(Note :Pilih photo Jika Ingin Merubah photo)</small>
+														<input name="photo" class="form-control" type="file">
+														<small style="color: red">(Note :Pilih photo Jika Ingin Merubah
+															photo)</small>
 														<input type="hidden" name="photo_lama" value="<?= $user->photo ?>">
 														<?php echo form_error('photo') ?>
 													</div>
 													<div class="form-group col-md-6">
 														<label>NIP</label>
-														<input class="form-control" type="text" name="nip" value="<?= $user->nip ?>">
+														<input class="form-control" type="number" readonly name="nip" value="<?= $user->nip ?>">
 														<input type="hidden" class="form-control" name="nip_lama" id="nip_lama" placeholder="Nip" value="<?= $user->nip ?>" />
 														<?php echo form_error('nip') ?>
 													</div>
@@ -233,8 +237,10 @@
 														<label>Jenis Kelamin</label>
 														<select name="jenis_kelamin" class="form-control theSelect" value="<?= $jenis_kelamin ?>">
 															<option value="">-- Pilih --</option>
-															<option value="Laki Laki" <?php echo $user->jenis_kelamin == 'Laki Laki' ? 'selected' : 'null' ?>>Laki Laki</option>
-															<option value="Perempuan" <?php echo $user->jenis_kelamin == 'Perempuan' ? 'selected' : 'null' ?>>Perempuan</option>
+															<option value="Laki Laki" <?php echo $user->jenis_kelamin == 'Laki Laki' ? 'selected' : 'null' ?>>
+																Laki Laki</option>
+															<option value="Perempuan" <?php echo $user->jenis_kelamin == 'Perempuan' ? 'selected' : 'null' ?>>
+																Perempuan</option>
 														</select>
 														<?php echo form_error('jenis_kelamin') ?>
 													</div>
@@ -247,9 +253,15 @@
 															<option value="">-- Pilih -- </option>
 															<?php foreach ($data_pangkat as $key => $data) { ?>
 																<?php if ($user->pangkat == $data->pangkat_id) { ?>
-																	<option value="<?php echo $data->pangkat_id ?>" selected><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
+																	<option value="<?php echo $data->pangkat_id ?>" selected>
+																		<?php echo $data->nama_pangkat ?> -
+																		<?php echo $data->golongan ?> -
+																		<?php echo $data->ruangan ?> </option>
 																<?php } else { ?>
-																	<option value="<?php echo $data->pangkat_id ?>"><?php echo $data->nama_pangkat ?> - <?php echo $data->golongan ?> - <?php echo $data->ruangan ?> </option>
+																	<option value="<?php echo $data->pangkat_id ?>">
+																		<?php echo $data->nama_pangkat ?> -
+																		<?php echo $data->golongan ?> -
+																		<?php echo $data->ruangan ?> </option>
 																<?php } ?>
 															<?php } ?>
 														</select>
@@ -269,9 +281,11 @@
 															<option value="">-- Pilih -- </option>
 															<?php foreach ($kantor_wilayah_data as $key => $data) { ?>
 																<?php if ($user->kantor_wilayah == $data->kantor_wilayah_id) { ?>
-																	<option value="<?php echo $data->kantor_wilayah_id ?>" selected><?php echo $data->nama_kantor_wilayah ?></option>
+																	<option value="<?php echo $data->kantor_wilayah_id ?>" selected><?php echo $data->nama_kantor_wilayah ?>
+																	</option>
 																<?php } else { ?>
-																	<option value="<?php echo $data->kantor_wilayah_id ?>"><?php echo $data->nama_kantor_wilayah ?></option>
+																	<option value="<?php echo $data->kantor_wilayah_id ?>">
+																		<?php echo $data->nama_kantor_wilayah ?></option>
 																<?php } ?>
 															<?php } ?>
 														</select>
@@ -291,9 +305,11 @@
 															<option value="">-- Pilih -- </option>
 															<?php foreach ($bank as $key => $data) { ?>
 																<?php if ($user->bank_id == $data->bank_id) { ?>
-																	<option value="<?php echo $data->bank_id ?>" selected><?php echo $data->nama_bank ?></option>
+																	<option value="<?php echo $data->bank_id ?>" selected>
+																		<?php echo $data->nama_bank ?></option>
 																<?php } else { ?>
-																	<option value="<?php echo $data->bank_id ?>"><?php echo $data->nama_bank ?></option>
+																	<option value="<?php echo $data->bank_id ?>">
+																		<?php echo $data->nama_bank ?></option>
 																<?php } ?>
 															<?php } ?>
 														</select>
@@ -310,7 +326,8 @@
 													<div class="form-group col-md-6">
 														<label>Password</label>
 														<input name="password" class="form-control" type="text">
-														<small style="color: red">(Biarkan kosong jika tidak diganti)</small>
+														<small style="color: red">(Biarkan kosong jika tidak
+															diganti)</small>
 														<?php echo form_error('password') ?>
 													</div>
 												</div>
