@@ -179,15 +179,16 @@ function sendWa($noW, $type, $data = null)
 			$message .= "Berikut infomasi yang kami sampaikan, Terimakasih.";
 		}
 		$data = array(
+			'api_key'      => $rowWaSetting->session_id,
 			'receiver'      => $noW,
-			'message'         => [
-				'text'      => $message,
+			'data'         => [
+				'message'      => $message,
 			],
 		);
 		$data_string = json_encode($data);
 
 
-		$curl = curl_init($rowWaSetting->url . '/api/send-message?id=' . $rowWaSetting->session_id);
+		$curl = curl_init($rowWaSetting->url);
 		curl_setopt($curl, CURLOPT_CUSTOMREQUEST, "POST");
 		curl_setopt(
 			$curl,
